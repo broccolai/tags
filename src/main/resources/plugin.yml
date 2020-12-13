@@ -1,0 +1,4 @@
+name: Tags
+version: @version@
+main: broccolai.tags.TagsPlugin
+api-version: 1.16
