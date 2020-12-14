@@ -25,6 +25,10 @@ repositories {
         name = "sonatype"
         url = uri("https://oss.sonatype.org/content/groups/public/")
     }
+    maven {
+        name = "PlaceholderAPI"
+        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    }
 }
 
 dependencies {
@@ -35,6 +39,8 @@ dependencies {
     compileOnlyApi("com.google.guava:guava:21.0")
 
     compileOnly("com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT")
+
+    compileOnly("me.clip:placeholderapi:2.10.9")
 
     api("com.google.inject:guice:4.2.3")
 

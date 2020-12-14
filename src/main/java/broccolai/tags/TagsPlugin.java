@@ -6,6 +6,7 @@ import broccolai.tags.inject.CloudModule;
 import broccolai.tags.inject.DataModule;
 import broccolai.tags.inject.PluginModule;
 import broccolai.tags.inject.UserModule;
+import broccolai.tags.integrations.TagsPlaceholders;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -52,6 +53,7 @@ public final class TagsPlugin extends JavaPlugin {
         this.jdbi = Jdbi.create(this.hikariDataSource);
 
         injector.getInstance(TagsCommand.class);
+        injector.getInstance(TagsPlaceholders.class).register();
     }
 
     @Override
