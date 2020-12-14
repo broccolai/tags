@@ -21,9 +21,9 @@ public final class UserPipeline {
 
     @Inject
     public UserPipeline(final DataService dataService) {
-        this.pipeline.registerServiceType(TypeToken.get(UserService.class), new UserCreateService());
-        this.pipeline.registerServiceImplementation(UserService.class, new UserSQLService(dataService), Collections.emptyList());
-        this.pipeline.registerServiceImplementation(UserService.class, new UserCacheService(), Collections.emptyList());
+        this.pipeline.registerServiceType(TypeToken.get(UserService.class), new UserCreateService())
+                .registerServiceImplementation(UserService.class, new UserSQLService(dataService), Collections.emptyList())
+                .registerServiceImplementation(UserService.class, new UserCacheService(), Collections.emptyList());
     }
 
     public TagsUser get(final @NonNull UUID uniqueId) {
