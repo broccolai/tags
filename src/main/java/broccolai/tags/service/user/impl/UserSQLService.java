@@ -1,6 +1,6 @@
 package broccolai.tags.service.user.impl;
 
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.data.DataService;
 import broccolai.tags.service.user.UserService;
 import org.checkerframework.checker.nullness.qual.NonNull;

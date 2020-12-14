@@ -1,6 +1,6 @@
 package broccolai.tags.service.user;
 
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import cloud.commandframework.services.types.PartialResultService;
 
 import java.util.UUID;

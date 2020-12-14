@@ -1,6 +1,6 @@
 package broccolai.tags.integrations;
 
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.UserPipeline;
 import com.google.inject.Inject;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;

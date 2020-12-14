@@ -1,7 +1,7 @@
 package broccolai.tags.service.user.impl;
 
-import broccolai.tags.model.TagsUser;
-import broccolai.tags.model.impl.ConsoleTagsUser;
+import broccolai.tags.model.user.TagsUser;
+import broccolai.tags.model.user.impl.ConsoleTagsUser;
 import broccolai.tags.service.user.UserService;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

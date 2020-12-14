@@ -1,6 +1,6 @@
 package broccolai.tags.service.user;
 
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.data.DataService;
 import broccolai.tags.service.user.impl.UserCacheService;
 import broccolai.tags.service.user.impl.UserCreateService;

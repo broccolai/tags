@@ -1,6 +1,6 @@
-package broccolai.tags.model.impl;
+package broccolai.tags.model.user.impl;
 
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;

@@ -1,7 +1,7 @@
 package broccolai.tags.commands;
 
 import broccolai.tags.commands.context.CommandUser;
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.UserPipeline;
 import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;

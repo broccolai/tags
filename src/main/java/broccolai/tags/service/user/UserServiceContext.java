@@ -1,6 +1,6 @@
 package broccolai.tags.service.user;
 
-import broccolai.tags.model.TagsUser;
+import broccolai.tags.model.user.TagsUser;
 import cloud.commandframework.services.ChunkedRequestContext;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
