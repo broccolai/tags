@@ -30,7 +30,11 @@ public final class UserCacheService implements UserService {
                 continue;
             }
 
-            results.put(request, this.uuidCache.getIfPresent(request));
+            TagsUser user = this.uuidCache.getIfPresent(request);
+
+            if (user != null) {
+                results.put(request, this.uuidCache.getIfPresent(request));
+            }
         }
 
         return results;
