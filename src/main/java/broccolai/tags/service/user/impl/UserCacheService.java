@@ -2,9 +2,11 @@ package broccolai.tags.service.user.impl;
 
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.model.user.impl.ConsoleTagsUser;
+import broccolai.tags.service.tags.TagsService;
 import broccolai.tags.service.user.UserService;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.inject.Inject;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
@@ -15,8 +17,11 @@ import java.util.UUID;
 public final class UserCacheService implements UserService {
 
     private final Cache<UUID, TagsUser> uuidCache;
+    private final TagsUser consoleUser;
 
-    public UserCacheService() {
+    @Inject
+    public UserCacheService(final TagsService service) {
+        this.consoleUser = new ConsoleTagsUser(service);
         this.uuidCache = CacheBuilder.newBuilder().maximumSize(100).build();
     }
 
@@ -26,7 +31,7 @@ public final class UserCacheService implements UserService {
 
         for (final UUID request : requests) {
             if (request.equals(ConsoleTagsUser.UUID)) {
-                results.put(request, TagsUser.CONSOLE);
+                results.put(request, this.consoleUser);
                 continue;
             }
 
