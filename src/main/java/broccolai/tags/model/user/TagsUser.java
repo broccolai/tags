@@ -7,7 +7,13 @@ import java.util.UUID;
 
 public interface TagsUser {
 
-    TagsUser CONSOLE = new ConsoleTagsUser();
+    @NonNull UUID uuid();
+
+    void setCurrent(@Nullable Tag tag);
+
+    @NonNull Optional<Tag> current();
+
+    @NonNull Collection<Tag> tags();
 
     @NonNull UUID getUuid();
 

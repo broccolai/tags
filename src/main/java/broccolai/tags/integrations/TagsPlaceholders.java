@@ -36,7 +36,7 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
         TagsUser user = this.userPipeline.get(player.getUniqueId());
 
         if (identifier.equalsIgnoreCase("current")) {
-            return user.getUuid().toString();
+            return user.uuid().toString();
         }
 
         return "";
