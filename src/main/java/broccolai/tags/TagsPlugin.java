@@ -14,6 +14,7 @@ import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
@@ -53,6 +54,13 @@ public final class TagsPlugin extends JavaPlugin {
 
         this.jdbi = Jdbi.create(this.hikariDataSource)
             .registerColumnMapper(injector.getInstance(TagsColumnMapper.class));
+
+        Flyway.configure(this.getClass().getClassLoader())
+                .baselineOnMigrate(true)
+                .locations("classpath:queries/migrations")
+                .dataSource(this.hikariDataSource)
+                .load()
+                .migrate();
 
         injector.getInstance(TagsCommand.class);
         injector.getInstance(TagsPlaceholders.class).register();

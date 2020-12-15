@@ -49,6 +49,8 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:3.4.5")
 
+    implementation("org.flywaydb:flyway-core:7.3.1")
+
     implementation("org.spongepowered:configurate-hocon:4.0.0")
 
     api("net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT")
