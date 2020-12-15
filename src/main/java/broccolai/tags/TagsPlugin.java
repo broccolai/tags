@@ -3,11 +3,13 @@ package broccolai.tags;
 import broccolai.tags.commands.TagsCommand;
 import broccolai.tags.config.Configuration;
 import broccolai.tags.data.jdbi.TagsColumnMapper;
+import broccolai.tags.data.jdbi.UserMapper;
 import broccolai.tags.inject.CloudModule;
 import broccolai.tags.inject.DataModule;
 import broccolai.tags.inject.PluginModule;
 import broccolai.tags.inject.UserModule;
 import broccolai.tags.integrations.TagsPlaceholders;
+import broccolai.tags.model.user.TagsUser;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -53,7 +55,8 @@ public final class TagsPlugin extends JavaPlugin {
         this.hikariDataSource = new HikariDataSource(hikariConfig);
 
         this.jdbi = Jdbi.create(this.hikariDataSource)
-            .registerColumnMapper(injector.getInstance(TagsColumnMapper.class));
+                .registerRowMapper(TagsUser.class, new UserMapper())
+                .registerColumnMapper(injector.getInstance(TagsColumnMapper.class));
 
         Flyway.configure(this.getClass().getClassLoader())
                 .baselineOnMigrate(true)
