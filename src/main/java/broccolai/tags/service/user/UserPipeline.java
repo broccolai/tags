@@ -2,6 +2,7 @@ package broccolai.tags.service.user;
 
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.data.DataService;
+import broccolai.tags.service.tags.TagsService;
 import broccolai.tags.service.user.impl.UserCacheService;
 import broccolai.tags.service.user.impl.UserCreateService;
 import broccolai.tags.service.user.impl.UserSQLService;
@@ -20,10 +21,10 @@ public final class UserPipeline {
     private final ServicePipeline pipeline = ServicePipeline.builder().build();
 
     @Inject
-    public UserPipeline(final DataService dataService) {
+    public UserPipeline(final DataService dataService, final TagsService tagsService) {
         this.pipeline.registerServiceType(TypeToken.get(UserService.class), new UserCreateService())
                 .registerServiceImplementation(UserService.class, new UserSQLService(dataService), Collections.emptyList())
-                .registerServiceImplementation(UserService.class, new UserCacheService(), Collections.emptyList());
+                .registerServiceImplementation(UserService.class, new UserCacheService(tagsService), Collections.emptyList());
     }
 
     public TagsUser get(final @NonNull UUID uniqueId) {

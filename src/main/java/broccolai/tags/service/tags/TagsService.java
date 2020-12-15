@@ -5,6 +5,8 @@ import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,5 +26,9 @@ public final class TagsService {
 
     public Tag load(final int id) {
         return this.tags.get(id);
+    }
+
+    public Collection<Tag> allTags() {
+        return Collections.unmodifiableCollection(this.tags.values());
     }
 }

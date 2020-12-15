@@ -1,8 +1,14 @@
 package broccolai.tags.model.user;
 
-import broccolai.tags.model.user.impl.ConsoleTagsUser;
+import broccolai.tags.model.tag.Tag;
+import broccolai.tags.model.user.impl.PlayerTagsUser;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface TagsUser {
@@ -15,6 +21,25 @@ public interface TagsUser {
 
     @NonNull Collection<Tag> tags();
 
-    @NonNull UUID getUuid();
+    class Builder {
 
+        private final UUID uniqueId;
+        private final Integer currentTag;
+        private final Map<Integer, Tag> tags = new HashMap<>();
+
+        public Builder(final UUID uniqueId, final Integer currentTag) {
+            this.uniqueId = uniqueId;
+            this.currentTag = currentTag;
+        }
+
+        public Builder tag(final Tag tag) {
+            this.tags.put(tag.id(), tag);
+
+            return this;
+        }
+
+        public TagsUser build() {
+            return new PlayerTagsUser(uniqueId, tags, currentTag);
+        }
+    }
 }
