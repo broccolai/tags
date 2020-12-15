@@ -2,6 +2,7 @@ package broccolai.tags;
 
 import broccolai.tags.commands.TagsCommand;
 import broccolai.tags.config.Configuration;
+import broccolai.tags.data.jdbi.TagsColumnMapper;
 import broccolai.tags.inject.CloudModule;
 import broccolai.tags.inject.DataModule;
 import broccolai.tags.inject.PluginModule;
@@ -50,7 +51,8 @@ public final class TagsPlugin extends JavaPlugin {
         hikariConfig.setMaximumPoolSize(this.configuration.sql.maxConnections);
         this.hikariDataSource = new HikariDataSource(hikariConfig);
 
-        this.jdbi = Jdbi.create(this.hikariDataSource);
+        this.jdbi = Jdbi.create(this.hikariDataSource)
+            .registerColumnMapper(injector.getInstance(TagsColumnMapper.class));
 
         injector.getInstance(TagsCommand.class);
         injector.getInstance(TagsPlaceholders.class).register();
