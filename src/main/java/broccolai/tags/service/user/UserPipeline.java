@@ -19,12 +19,15 @@ import java.util.UUID;
 public final class UserPipeline {
 
     private final ServicePipeline pipeline = ServicePipeline.builder().build();
+    private final UserCacheService cacheService;
 
     @Inject
     public UserPipeline(final DataService dataService, final TagsService tagsService) {
+        this.cacheService = new UserCacheService(tagsService);
+
         this.pipeline.registerServiceType(TypeToken.get(UserService.class), new UserCreateService())
                 .registerServiceImplementation(UserService.class, new UserSQLService(dataService), Collections.emptyList())
-                .registerServiceImplementation(UserService.class, new UserCacheService(tagsService), Collections.emptyList());
+                .registerServiceImplementation(UserService.class, this.cacheService, Collections.emptyList());
     }
 
     public TagsUser get(final @NonNull UUID uniqueId) {
@@ -32,9 +35,13 @@ public final class UserPipeline {
     }
 
     public @NonNull Map<UUID, TagsUser> get(final @NonNull Collection<UUID> uniqueIds) {
-        return this.pipeline.pump(new UserServiceContext(uniqueIds))
+        Map<UUID, TagsUser> results = this.pipeline.pump(new UserServiceContext(uniqueIds))
                 .through(UserService.class)
                 .getResult();
+
+        this.cacheService.accept(results);
+
+        return results;
     }
 
 }

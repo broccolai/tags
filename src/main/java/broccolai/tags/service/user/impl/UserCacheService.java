@@ -13,8 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
-public final class UserCacheService implements UserService {
+public final class UserCacheService implements UserService, Consumer<Map<UUID, TagsUser>> {
 
     private final Cache<UUID, TagsUser> uuidCache;
     private final TagsUser consoleUser;
@@ -43,6 +44,11 @@ public final class UserCacheService implements UserService {
         }
 
         return results;
+    }
+
+    @Override
+    public void accept(final Map<UUID, TagsUser> uuidTagsUserMap) {
+        this.uuidCache.putAll(uuidTagsUserMap);
     }
 
 }
