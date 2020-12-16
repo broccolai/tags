@@ -3,6 +3,8 @@ package broccolai.tags.service.user.impl;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.data.DataService;
 import broccolai.tags.service.user.UserService;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
@@ -10,10 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Singleton
 public final class UserSQLService implements UserService {
 
     private final DataService dataService;
 
+    @Inject
     public UserSQLService(final DataService dataService) {
         this.dataService = dataService;
     }
