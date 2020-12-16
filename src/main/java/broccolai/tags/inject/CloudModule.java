@@ -10,21 +10,16 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.Plugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class CloudModule extends AbstractModule {
 
-    private final Plugin plugin;
-
-    public CloudModule(final Plugin plugin) {
-        this.plugin = plugin;
-    }
-
     @Provides
     @Singleton
-    CommandManager<CommandUser> provideCommandManager(final BukkitAudiences audiences) {
+    CommandManager<CommandUser> provideCommandManager(final @NonNull Plugin plugin, final @NonNull BukkitAudiences audiences) {
         try {
             PaperCommandManager<CommandUser> commandManager = new PaperCommandManager<>(
-                    this.plugin,
+                    plugin,
                     AsynchronousCommandExecutionCoordinator.<CommandUser>newBuilder().build(),
                     sender -> CommandUser.from(sender, audiences),
                     CommandUser::asSender

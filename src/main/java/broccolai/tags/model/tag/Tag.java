@@ -7,10 +7,10 @@ public final class Tag {
 
     private final int id;
     private final boolean secret;
-    private final Component component;
-    private final String reason;
+    private final @NonNull Component component;
+    private final @NonNull String reason;
 
-    public Tag(final int id, final boolean secret, final Component component, final String reason) {
+    public Tag(final int id, final boolean secret, final @NonNull Component component, final @NonNull String reason) {
         this.id = id;
         this.secret = secret;
         this.component = component;
@@ -32,4 +32,5 @@ public final class Tag {
     public @NonNull String reason() {
         return this.reason;
     }
+
 }

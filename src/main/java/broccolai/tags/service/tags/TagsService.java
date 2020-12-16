@@ -4,6 +4,7 @@ import broccolai.tags.model.tag.Tag;
 import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -12,11 +13,12 @@ import java.util.Map;
 
 @Singleton
 public final class TagsService {
+
     private static final MiniMessage MINI = MiniMessage.get();
 
-    private final Map<Integer, Tag> tags = new HashMap<>();
+    private final @NonNull Map<Integer, Tag> tags = new HashMap<>();
 
-    public void create(final int id, final boolean secret, final String componentString, final String reason) {
+    public void create(final int id, final boolean secret, final @NonNull String componentString, final @NonNull String reason) {
         Component component = MINI.parse(componentString);
 
         Tag tag = new Tag(id, secret, component, reason);
@@ -31,4 +33,5 @@ public final class TagsService {
     public Collection<Tag> allTags() {
         return Collections.unmodifiableCollection(this.tags.values());
     }
+
 }

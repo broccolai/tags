@@ -21,13 +21,13 @@ import java.util.function.Consumer;
 @Singleton
 public final class UserCacheService implements UserService, Consumer<Map<UUID, TagsUser>>, Closeable {
 
-    private final DataService dataService;
+    private final @NonNull DataService dataService;
 
-    private final Cache<UUID, TagsUser> uuidCache;
-    private final TagsUser consoleUser;
+    private final @NonNull Cache<UUID, TagsUser> uuidCache;
+    private final @NonNull TagsUser consoleUser;
 
     @Inject
-    public UserCacheService(final DataService dataService, final TagsService service) {
+    public UserCacheService(final @NonNull DataService dataService, final @NonNull TagsService service) {
         this.dataService = dataService;
         this.consoleUser = new ConsoleTagsUser(service);
         this.uuidCache = Caffeine.newBuilder()
@@ -57,7 +57,7 @@ public final class UserCacheService implements UserService, Consumer<Map<UUID, T
     }
 
     @Override
-    public void accept(final Map<UUID, TagsUser> uuidTagsUserMap) {
+    public void accept(final @NonNull Map<UUID, TagsUser> uuidTagsUserMap) {
         this.uuidCache.putAll(uuidTagsUserMap);
     }
 

@@ -13,11 +13,11 @@ import java.util.UUID;
 public final class ConsoleTagsUser implements TagsUser {
 
     public static final @NonNull UUID UUID = new UUID(0, 0);
-    private final TagsService tagsService;
+    private final @NonNull TagsService tagsService;
 
     private Integer currentTag;
 
-    public ConsoleTagsUser(final TagsService tagsService) {
+    public ConsoleTagsUser(final @NonNull TagsService tagsService) {
         this.tagsService = tagsService;
     }
 
@@ -27,7 +27,7 @@ public final class ConsoleTagsUser implements TagsUser {
     }
 
     @Override
-    public void setCurrent(@Nullable final Tag tag) {
+    public void setCurrent(final @Nullable Tag tag) {
         this.currentTag = tag != null ? tag.id() : null;
     }
 

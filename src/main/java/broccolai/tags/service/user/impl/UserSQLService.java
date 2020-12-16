@@ -15,10 +15,10 @@ import java.util.UUID;
 @Singleton
 public final class UserSQLService implements UserService {
 
-    private final DataService dataService;
+    private final @NonNull DataService dataService;
 
     @Inject
-    public UserSQLService(final DataService dataService) {
+    public UserSQLService(final @NonNull DataService dataService) {
         this.dataService = dataService;
     }
 

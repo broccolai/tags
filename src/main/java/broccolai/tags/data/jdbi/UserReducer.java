@@ -2,6 +2,7 @@ package broccolai.tags.data.jdbi;
 
 import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser.Builder;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jdbi.v3.core.result.RowReducer;
 import org.jdbi.v3.core.result.RowView;
 
@@ -13,12 +14,12 @@ import java.util.stream.Stream;
 public final class UserReducer implements RowReducer<Map<UUID, Builder>, Builder> {
 
     @Override
-    public Map<UUID, Builder> container() {
+    public @NonNull Map<@NonNull UUID, @NonNull Builder> container() {
         return new HashMap<>();
     }
 
     @Override
-    public void accumulate(final Map<UUID, Builder> container, final RowView rowView) {
+    public void accumulate(final @NonNull Map<UUID, Builder> container, final RowView rowView) {
         UUID id = rowView.getColumn("uuid", UUID.class);
 
         Builder builder = container.computeIfAbsent(id, $ -> rowView.getRow(Builder.class));
@@ -30,7 +31,7 @@ public final class UserReducer implements RowReducer<Map<UUID, Builder>, Builder
     }
 
     @Override
-    public Stream<Builder> stream(final Map<UUID, Builder> container) {
+    public @NonNull Stream<Builder> stream(final @NonNull Map<UUID, Builder> container) {
         return container.values().stream();
     }
 

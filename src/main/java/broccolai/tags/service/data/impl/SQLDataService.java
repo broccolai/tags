@@ -17,10 +17,10 @@ public final class SQLDataService implements DataService {
 
     private static final String PATH = "queries/";
 
-    private final Jdbi jdbi;
+    private final @NonNull Jdbi jdbi;
 
     @Inject
-    public SQLDataService(final Jdbi jdbi) {
+    public SQLDataService(final @NonNull Jdbi jdbi) {
         this.jdbi = jdbi;
     }
 

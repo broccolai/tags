@@ -43,10 +43,10 @@ public final class TagsPlugin extends JavaPlugin {
             return;
         }
 
-        injector = Guice.createInjector(
+        this.injector = Guice.createInjector(
                 new PluginModule(this),
                 new DataModule(),
-                new CloudModule(this),
+                new CloudModule(),
                 new UserModule()
         );
 
@@ -59,7 +59,7 @@ public final class TagsPlugin extends JavaPlugin {
 
         this.jdbi = Jdbi.create(this.hikariDataSource)
                 .registerRowMapper(TagsUser.class, new UserMapper())
-                .registerColumnMapper(injector.getInstance(TagsColumnMapper.class));
+                .registerColumnMapper(this.injector.getInstance(TagsColumnMapper.class));
 
         Flyway.configure(this.getClass().getClassLoader())
                 .baselineOnMigrate(true)
@@ -68,8 +68,8 @@ public final class TagsPlugin extends JavaPlugin {
                 .load()
                 .migrate();
 
-        injector.getInstance(TagsCommand.class);
-        injector.getInstance(TagsPlaceholders.class).register();
+        this.injector.getInstance(TagsCommand.class);
+        this.injector.getInstance(TagsPlaceholders.class).register();
     }
 
     @Override

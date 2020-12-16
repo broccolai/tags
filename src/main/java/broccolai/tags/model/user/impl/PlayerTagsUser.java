@@ -13,9 +13,9 @@ import java.util.UUID;
 
 public final class PlayerTagsUser implements TagsUser {
 
-    private final UUID uuid;
-    private final Map<Integer, Tag> tags;
-    private Integer current;
+    private final @NonNull UUID uuid;
+    private final @NonNull Map<Integer, Tag> tags;
+    private @Nullable Integer current;
 
     public PlayerTagsUser(
             final @NonNull UUID uuid,

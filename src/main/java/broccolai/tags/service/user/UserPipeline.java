@@ -17,16 +17,17 @@ import java.util.UUID;
 
 public final class UserPipeline {
 
-    private final ServicePipeline pipeline = ServicePipeline.builder().build();
-    private final UserCacheService cacheService;
+    private final @NonNull ServicePipeline pipeline = ServicePipeline.builder().build();
+    private final @NonNull UserCacheService cacheService;
 
     @Inject
-    public UserPipeline(final Injector injector) {
+    public UserPipeline(final @NonNull Injector injector) {
         this.cacheService = injector.getInstance(UserCacheService.class);
 
         this.pipeline.registerServiceType(TypeToken.get(UserService.class), new UserCreateService())
                 .registerServiceImplementation(UserService.class, injector.getInstance(UserSQLService.class),
-                        Collections.emptyList())
+                        Collections.emptyList()
+                )
                 .registerServiceImplementation(UserService.class, this.cacheService, Collections.emptyList());
     }
 

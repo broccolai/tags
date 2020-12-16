@@ -9,10 +9,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class TagsPlaceholders extends PlaceholderExpansion {
 
-    private final UserPipeline userPipeline;
+    private final @NonNull UserPipeline userPipeline;
 
     @Inject
-    public TagsPlaceholders(final UserPipeline userPipeline) {
+    public TagsPlaceholders(final @NonNull UserPipeline userPipeline) {
         this.userPipeline = userPipeline;
     }
 
@@ -32,7 +32,7 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
     }
 
     @Override
-    public String onRequest(final OfflinePlayer player, final @NonNull String identifier) {
+    public String onRequest(final @NonNull OfflinePlayer player, final @NonNull String identifier) {
         TagsUser user = this.userPipeline.get(player.getUniqueId());
 
         if (identifier.equalsIgnoreCase("current")) {

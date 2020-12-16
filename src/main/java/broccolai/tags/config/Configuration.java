@@ -14,7 +14,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 @NonNull
 public final class Configuration {
 
-    private static final ObjectMapper<Configuration> MAPPER;
+    private static final @NonNull ObjectMapper<Configuration> MAPPER;
 
     static {
         try {
@@ -24,14 +24,14 @@ public final class Configuration {
         }
     }
 
-    public static Configuration loadFrom(final ConfigurationNode node) throws SerializationException {
+    public static Configuration loadFrom(final @NonNull ConfigurationNode node) throws SerializationException {
         return MAPPER.load(node);
     }
 
     @Setting
     public SqlConfig sql = new SqlConfig();
 
-    public <N extends ScopedConfigurationNode<N>> void saveTo(final N node) throws SerializationException {
+    public <N extends ScopedConfigurationNode<N>> void saveTo(final @NonNull N node) throws SerializationException {
         MAPPER.save(this, node);
     }
 

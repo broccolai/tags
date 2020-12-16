@@ -32,14 +32,16 @@ public interface TagsUser {
             this.currentTag = currentTag;
         }
 
-        public Builder tag(final Tag tag) {
+        public @NonNull Builder tag(final Tag tag) {
             this.tags.put(tag.id(), tag);
 
             return this;
         }
 
-        public TagsUser build() {
+        public @NonNull TagsUser build() {
             return new PlayerTagsUser(uniqueId, tags, currentTag);
         }
+
     }
+
 }

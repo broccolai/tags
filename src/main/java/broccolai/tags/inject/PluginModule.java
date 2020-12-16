@@ -11,9 +11,9 @@ import org.jdbi.v3.core.Jdbi;
 
 public final class PluginModule extends AbstractModule {
 
-    private final TagsPlugin plugin;
+    private final @NonNull TagsPlugin plugin;
 
-    public PluginModule(final TagsPlugin plugin) {
+    public PluginModule(final @NonNull TagsPlugin plugin) {
         this.plugin = plugin;
     }
 
