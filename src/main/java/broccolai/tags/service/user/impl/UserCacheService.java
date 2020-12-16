@@ -4,8 +4,8 @@ import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.model.user.impl.ConsoleTagsUser;
 import broccolai.tags.service.tags.TagsService;
 import broccolai.tags.service.user.UserService;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.inject.Inject;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -23,7 +23,7 @@ public final class UserCacheService implements UserService, Consumer<Map<UUID, T
     @Inject
     public UserCacheService(final TagsService service) {
         this.consoleUser = new ConsoleTagsUser(service);
-        this.uuidCache = CacheBuilder.newBuilder().maximumSize(100).build();
+        this.uuidCache = Caffeine.newBuilder().maximumSize(100).build();
     }
 
     @Override
