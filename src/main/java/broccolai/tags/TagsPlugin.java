@@ -80,6 +80,7 @@ public final class TagsPlugin extends JavaPlugin {
         return this.jdbi;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private Configuration loadConfiguration() throws IOException {
         File file = new File(this.getDataFolder(), "config.conf");
         this.getDataFolder().mkdirs();
