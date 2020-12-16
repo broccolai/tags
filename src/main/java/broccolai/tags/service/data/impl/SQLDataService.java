@@ -34,8 +34,19 @@ public final class SQLDataService implements DataService {
         );
     }
 
+    @Override
+    public void saveUser(@NonNull final TagsUser user) {
+        //todo: Save Tags
+        this.jdbi.withHandle(handle -> handle
+                .createUpdate(Query.SAVE_USER.get())
+                .bind("uuid", user.uuid())
+                .execute()
+        );
+    }
+
     private enum Query {
-        SELECT_USER("select-user");
+        SELECT_USER("select-user"),
+        SAVE_USER("save-user");
 
         private final @NonNull String query;
 

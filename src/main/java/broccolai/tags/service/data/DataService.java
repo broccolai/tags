@@ -10,4 +10,6 @@ public interface DataService {
 
     @NonNull Optional<@NonNull TagsUser> getUser(@NonNull UUID uniqueId);
 
+    void saveUser(@NonNull TagsUser user);
+
 }
