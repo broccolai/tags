@@ -10,6 +10,7 @@ import broccolai.tags.inject.PluginModule;
 import broccolai.tags.inject.UserModule;
 import broccolai.tags.integrations.TagsPlaceholders;
 import broccolai.tags.model.user.TagsUser;
+import broccolai.tags.service.user.impl.UserCacheService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -27,6 +28,8 @@ import java.io.IOException;
 @Singleton
 public final class TagsPlugin extends JavaPlugin {
 
+    private Injector injector;
+
     private Configuration configuration;
     private Jdbi jdbi;
     private HikariDataSource hikariDataSource;
@@ -40,7 +43,7 @@ public final class TagsPlugin extends JavaPlugin {
             return;
         }
 
-        Injector injector = Guice.createInjector(
+        injector = Guice.createInjector(
                 new PluginModule(this),
                 new DataModule(),
                 new CloudModule(this),
@@ -74,6 +77,8 @@ public final class TagsPlugin extends JavaPlugin {
         if (this.hikariDataSource != null) {
             this.hikariDataSource.close();
         }
+
+        this.injector.getInstance(UserCacheService.class).close();
     }
 
     public Jdbi getJdbi() {
