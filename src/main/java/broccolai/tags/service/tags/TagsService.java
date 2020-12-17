@@ -16,22 +16,34 @@ public final class TagsService {
 
     private static final MiniMessage MINI = MiniMessage.get();
 
-    private final @NonNull Map<Integer, Tag> tags = new HashMap<>();
+    private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
+    private final @NonNull Map<String, Tag>  nameToTags = new HashMap<>();
 
-    public void create(final int id, final boolean secret, final @NonNull String componentString, final @NonNull String reason) {
+    public void create(
+            final int id,
+            final @NonNull String name,
+            final boolean secret,
+            final @NonNull String componentString,
+            final @NonNull String reason
+    ) {
         Component component = MINI.parse(componentString);
 
-        Tag tag = new Tag(id, secret, component, reason);
+        Tag tag = new Tag(id, name, secret, component, reason);
 
-        this.tags.put(id, tag);
+        this.idToTags.put(id, tag);
+        this.nameToTags.put(name.toLowerCase(), tag);
     }
 
     public Tag load(final int id) {
-        return this.tags.get(id);
+        return this.idToTags.get(id);
+    }
+
+    public Tag load(final String name) {
+        return this.nameToTags.get(name);
     }
 
     public Collection<Tag> allTags() {
-        return Collections.unmodifiableCollection(this.tags.values());
+        return Collections.unmodifiableCollection(this.idToTags.values());
     }
 
 }
