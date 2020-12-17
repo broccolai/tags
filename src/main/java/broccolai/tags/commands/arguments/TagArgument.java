@@ -48,6 +48,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
             }
 
+            inputQueue.remove();
             return ArgumentParseResult.success(tag);
         }
 
