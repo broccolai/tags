@@ -68,4 +68,5 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
         }
 
     }
+
 }

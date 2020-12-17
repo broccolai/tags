@@ -17,7 +17,7 @@ public final class TagsService {
     private static final MiniMessage MINI = MiniMessage.get();
 
     private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
-    private final @NonNull Map<String, Tag>  nameToTags = new HashMap<>();
+    private final @NonNull Map<String, Tag> nameToTags = new HashMap<>();
 
     public void create(
             final int id,
