@@ -8,6 +8,7 @@ import broccolai.tags.inject.CloudModule;
 import broccolai.tags.inject.DataModule;
 import broccolai.tags.inject.PluginModule;
 import broccolai.tags.inject.UserModule;
+import broccolai.tags.inject.factory.CloudArgumentFactoryModule;
 import broccolai.tags.integrations.TagsPlaceholders;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.impl.UserCacheService;
@@ -47,7 +48,8 @@ public final class TagsPlugin extends JavaPlugin {
                 new PluginModule(this),
                 new DataModule(),
                 new CloudModule(),
-                new UserModule()
+                new UserModule(),
+                new CloudArgumentFactoryModule()
         );
 
         final HikariConfig hikariConfig = new HikariConfig();

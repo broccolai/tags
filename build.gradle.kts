@@ -43,6 +43,9 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.10.9")
 
     api("com.google.inject:guice:5.0.0-BETA-1")
+    implementation("com.google.inject.extensions:guice-assistedinject:5.0.0-BETA-1") {
+        isTransitive = false
+    }
     api("org.slf4j:slf4j-nop:1.7.13")
 
     implementation("org.jdbi:jdbi3-core:3.17.0")
