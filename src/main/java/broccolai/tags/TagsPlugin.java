@@ -1,5 +1,6 @@
 package broccolai.tags;
 
+import broccolai.tags.commands.TagsAdminCommand;
 import broccolai.tags.commands.TagsCommand;
 import broccolai.tags.config.Configuration;
 import broccolai.tags.data.jdbi.TagsColumnMapper;
@@ -74,6 +75,7 @@ public final class TagsPlugin extends JavaPlugin {
                 .migrate();
 
         this.injector.getInstance(TagsCommand.class);
+        this.injector.getInstance(TagsAdminCommand.class);
         this.injector.getInstance(TagsPlaceholders.class).register();
     }
 
