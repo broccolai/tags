@@ -4,6 +4,8 @@ import broccolai.tags.commands.context.CommandUser;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public final class PlayerCommandUser extends CommandUser.AbstractCommandUser {
 
     private final Player player;
@@ -21,6 +23,11 @@ public final class PlayerCommandUser extends CommandUser.AbstractCommandUser {
     @Override
     public Player asSender() {
         return this.player;
+    }
+
+    @Override
+    public UUID uniqueId() {
+        return this.player.getUniqueId();
     }
 
 }

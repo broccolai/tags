@@ -10,11 +10,15 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.UUID;
+
 public interface CommandUser extends Audience {
 
     boolean isAuthorized(String permission);
 
     CommandSender asSender();
+
+    UUID uniqueId();
 
     static CommandUser from(CommandSender sender, BukkitAudiences audiences) {
         if (sender instanceof ConsoleCommandSender) {
