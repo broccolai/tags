@@ -29,6 +29,10 @@ repositories {
         name = "PlaceholderAPI"
         url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
+    maven {
+        name = "JitPack"
+        url = uri("https://jitpack.io")
+    }
 }
 
 dependencies {
@@ -41,6 +45,8 @@ dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT")
 
     compileOnly("me.clip:placeholderapi:2.10.9")
+
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
     api("com.google.inject:guice:5.0.0-BETA-1")
     implementation("com.google.inject.extensions:guice-assistedinject:5.0.0-BETA-1") {
