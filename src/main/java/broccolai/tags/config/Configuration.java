@@ -1,7 +1,6 @@
 package broccolai.tags.config;
 
 import com.google.inject.Singleton;
-import org.checkerframework.checker.index.qual.Positive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.ScopedConfigurationNode;
@@ -34,7 +33,7 @@ public final class Configuration {
     }
 
     @Setting
-    public SqlConfig sql = new SqlConfig();
+    public SqlConfiguration sql = new SqlConfiguration();
 
     @Setting
     @Comment(
@@ -43,61 +42,12 @@ public final class Configuration {
                     + "Permissions will use this id as it's reference. \n"
                     + "The name attribute should be a simple one word phrase for selecting tags through commands."
     )
-    public List<TagConfig> tags = new ArrayList<TagConfig>() {{
-        this.add(new TagConfig(1, "example", "<red><bold>example"));
+    public List<TagConfiguration> tags = new ArrayList<TagConfiguration>() {{
+        this.add(new TagConfiguration(1, "example", "<red><bold>example"));
     }};
 
     public <N extends ScopedConfigurationNode<N>> void saveTo(final @NonNull N node) throws SerializationException {
         MAPPER.save(this, node);
-    }
-
-    @ConfigSerializable
-    @NonNull
-    public static final class SqlConfig {
-
-        @Setting
-        @Comment("SQL JDBC URI")
-        public String jdbcUri = "jdbc:mysql://localhost:3306/tags";
-
-        @Setting
-        @Comment("SQL Server username")
-        public String username = "username";
-
-        @Setting
-        @Comment("SQL Server password")
-        public String password = "****";
-
-        @Setting
-        @Comment("Pool connection limit")
-        public @Positive int maxConnections = 10;
-
-    }
-
-    @ConfigSerializable
-    @NonNull
-    public static final class TagConfig {
-
-        @Setting
-        @Comment("Tags unique id")
-        public int id;
-
-        @Setting
-        @Comment("Readable name for players")
-        public String name;
-
-        @Setting
-        @Comment("MiniMessage component to display")
-        public String component;
-
-        public TagConfig() {
-        }
-
-        public TagConfig(final int id, final String name, final String component) {
-            this.id = id;
-            this.name = name;
-            this.component = component;
-        }
-
     }
 
 }
