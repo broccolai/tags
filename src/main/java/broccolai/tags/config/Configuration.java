@@ -43,7 +43,7 @@ public final class Configuration {
                     + "The name attribute should be a simple one word phrase for selecting tags through commands."
     )
     public List<TagConfiguration> tags = new ArrayList<TagConfiguration>() {{
-        this.add(new TagConfiguration(1, "example", "<red><bold>example"));
+        this.add(new TagConfiguration(1, "example", false, "<red><bold>example", "Acquired by playing for an hour"));
     }};
 
     public <N extends ScopedConfigurationNode<N>> void saveTo(final @NonNull N node) throws SerializationException {

@@ -18,16 +18,26 @@ public final class TagConfiguration {
     public String name;
 
     @Setting
+    @Comment("Whether to hide the tag from public displays")
+    public boolean secret = false;
+
+    @Setting
     @Comment("MiniMessage component to display")
     public String component;
+
+    @Setting
+    @Comment("How to obtain this tag, can be null")
+    public String reason = null;
 
     public TagConfiguration() {
     }
 
-    public TagConfiguration(final int id, final String name, final String component) {
+    public TagConfiguration(final int id, final String name, final boolean secret, final String component, final String reason) {
         this.id = id;
         this.name = name;
+        this.secret = secret;
         this.component = component;
+        this.reason = reason;
     }
 
 }
