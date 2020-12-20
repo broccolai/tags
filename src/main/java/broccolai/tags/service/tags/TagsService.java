@@ -1,6 +1,9 @@
 package broccolai.tags.service.tags;
 
+import broccolai.tags.config.Configuration;
+import broccolai.tags.config.TagConfiguration;
 import broccolai.tags.model.tag.Tag;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -18,6 +21,13 @@ public final class TagsService {
 
     private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
     private final @NonNull Map<String, Tag> nameToTags = new HashMap<>();
+
+    @Inject
+    public TagsService(final @NonNull Configuration configuration) {
+        for (TagConfiguration config : configuration.tags) {
+            this.create(config.id, config.name, config.secret, config.component, config.reason);
+        }
+    }
 
     public void create(
             final int id,
