@@ -1,6 +1,7 @@
 package broccolai.tags.inject;
 
 import broccolai.tags.TagsPlugin;
+import broccolai.tags.config.Configuration;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -22,6 +23,7 @@ public final class PluginModule extends AbstractModule {
         this.bind(Plugin.class).toInstance(this.plugin);
         this.bind(TagsPlugin.class).toInstance(this.plugin);
         this.bind(BukkitAudiences.class).toInstance(BukkitAudiences.create(this.plugin));
+        this.bind(Configuration.class).toInstance(this.plugin.getConfiguration());
     }
 
     @Provides

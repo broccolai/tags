@@ -18,6 +18,7 @@ import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -83,8 +84,12 @@ public final class TagsPlugin extends JavaPlugin {
         this.injector.getInstance(UserCacheService.class).close();
     }
 
-    public Jdbi getJdbi() {
+    public @NonNull Jdbi getJdbi() {
         return this.jdbi;
+    }
+
+    public @NonNull Configuration getConfiguration() {
+        return configuration;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

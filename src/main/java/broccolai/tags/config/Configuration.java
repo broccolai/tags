@@ -1,5 +1,6 @@
 package broccolai.tags.config;
 
+import com.google.inject.Singleton;
 import org.checkerframework.checker.index.qual.Positive;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ConfigSerializable
+@Singleton
 @NonNull
 public final class Configuration {
 
