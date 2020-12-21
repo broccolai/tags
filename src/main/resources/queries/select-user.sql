@@ -1,5 +1,3 @@
-SELECT uuid, id, owner
+SELECT uuid, currentTag
 FROM tags_user
-    LEFT JOIN tags_tags
-ON tags_user.uuid = tags_tags.owner
-WHERE tags_user.uuid = :uuid;
+WHERE uuid = :uuid;
