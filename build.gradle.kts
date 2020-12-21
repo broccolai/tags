@@ -33,6 +33,10 @@ repositories {
         name = "JitPack"
         url = uri("https://jitpack.io")
     }
+    maven {
+        name = "broccolai"
+        url = uri("https://repo.broccol.ai")
+    }
 }
 
 dependencies {
@@ -62,6 +66,8 @@ dependencies {
     implementation("org.flywaydb:flyway-core:7.3.1")
 
     implementation("org.spongepowered:configurate-hocon:4.0.0")
+
+    api("broccolai.corn:corn-core:1.0.0")
 
     api("net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT")
     implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT") {

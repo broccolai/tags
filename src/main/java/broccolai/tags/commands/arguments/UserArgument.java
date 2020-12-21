@@ -1,5 +1,6 @@
 package broccolai.tags.commands.arguments;
 
+import broccolai.corn.core.Lists;
 import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.UserPipeline;
@@ -14,7 +15,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -66,13 +66,7 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
                 @NonNull final CommandContext<@NonNull CommandUser> commandContext,
                 @NonNull final String input
         ) {
-            List<String> output = new ArrayList<>();
-
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                output.add(player.getName());
-            }
-
-            return output;
+            return Lists.map(Bukkit.getOnlinePlayers(), Player::getName);
         }
 
     }

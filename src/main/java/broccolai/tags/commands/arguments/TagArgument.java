@@ -1,5 +1,6 @@
 package broccolai.tags.commands.arguments;
 
+import broccolai.corn.core.Lists;
 import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser;
@@ -14,7 +15,6 @@ import net.milkbowl.vault.permission.Permission;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 
@@ -72,22 +72,14 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 @NonNull final CommandContext<@NonNull CommandUser> commandContext,
                 @NonNull final String input
         ) {
-            Collection<Tag> tags = this.tagsService.allTags();
-            List<String> output = new ArrayList<>();
+            List<Tag> tags = new ArrayList<>(this.tagsService.allTags());
 
-            for (Tag tag : tags) {
-                if (shouldCheck) {
-                    TagsUser target = commandContext.get("target");
-
-                    if (!target.hasPermission(this.permission, "tags.tag." + tag.id())) {
-                        continue;
-                    }
-                }
-
-                output.add(tag.name());
+            if (this.shouldCheck) {
+                TagsUser target = commandContext.get("target");
+                tags.removeIf(tag -> !target.hasPermission(this.permission, "tags.tag." + tag.id()));
             }
 
-            return output;
+            return Lists.map(tags, Tag::name);
         }
 
     }
