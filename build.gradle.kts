@@ -68,7 +68,7 @@ dependencies {
         isTransitive = true
     }
 
-    api("cloud.commandframework:cloud-paper:1.2.0")
+    api("cloud.commandframework:cloud-paper:1.3.0")
 }
 
 tasks {
