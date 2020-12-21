@@ -35,10 +35,10 @@ public final class SQLDataService implements DataService {
 
     @Override
     public void saveUser(@NonNull final TagsUser user) {
-        //todo: Save Tags
         this.jdbi.withHandle(handle -> handle
                 .createUpdate(Query.SAVE_USER.get())
                 .bind("uuid", user.uuid())
+                .bind("currentTag", user.current().orElse(null))
                 .execute()
         );
     }
