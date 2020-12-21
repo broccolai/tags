@@ -21,15 +21,16 @@ import java.util.function.Consumer;
 @Singleton
 public final class UserCacheService implements UserService, Consumer<Map<UUID, TagsUser>>, Closeable {
 
+    public static TagsUser CONSOLE;
+
     private final @NonNull DataService dataService;
 
     private final @NonNull Cache<UUID, TagsUser> uuidCache;
-    private final @NonNull TagsUser consoleUser;
 
     @Inject
     public UserCacheService(final @NonNull DataService dataService, final @NonNull TagsService service) {
+        CONSOLE = new ConsoleTagsUser();
         this.dataService = dataService;
-        this.consoleUser = new ConsoleTagsUser(service);
         this.uuidCache = Caffeine.newBuilder()
                 .maximumSize(100)
                 .<UUID, TagsUser>removalListener((uuid, user, cause) -> this.dataService.saveUser(user))
@@ -42,7 +43,7 @@ public final class UserCacheService implements UserService, Consumer<Map<UUID, T
 
         for (final UUID request : requests) {
             if (request.equals(ConsoleTagsUser.UUID)) {
-                results.put(request, this.consoleUser);
+                results.put(request, CONSOLE);
                 continue;
             }
 

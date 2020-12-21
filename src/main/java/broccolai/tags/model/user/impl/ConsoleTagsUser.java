@@ -2,24 +2,18 @@ package broccolai.tags.model.user.impl;
 
 import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser;
-import broccolai.tags.service.tags.TagsService;
+import net.milkbowl.vault.permission.Permission;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
 public final class ConsoleTagsUser implements TagsUser {
 
     public static final @NonNull UUID UUID = new UUID(0, 0);
-    private final @NonNull TagsService tagsService;
 
     private Integer currentTag;
-
-    public ConsoleTagsUser(final @NonNull TagsService tagsService) {
-        this.tagsService = tagsService;
-    }
 
     @Override
     public @NonNull UUID uuid() {
@@ -32,13 +26,16 @@ public final class ConsoleTagsUser implements TagsUser {
     }
 
     @Override
-    public @NonNull Optional<Tag> current() {
-        return Optional.ofNullable(this.tagsService.load(this.currentTag));
+    public boolean hasPermission(
+            final @NonNull Permission permissible,
+            final @NonNull String permission
+    ) {
+        return true;
     }
 
     @Override
-    public @NonNull Collection<Tag> tags() {
-        return this.tagsService.allTags();
+    public @NonNull Optional<Integer> current() {
+        return Optional.ofNullable(this.currentTag);
     }
 
 }

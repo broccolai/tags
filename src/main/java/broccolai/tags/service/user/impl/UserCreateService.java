@@ -17,7 +17,7 @@ public final class UserCreateService implements UserService {
         Map<UUID, TagsUser> results = new HashMap<>();
 
         for (UUID request : requests) {
-            results.put(request, new PlayerTagsUser(request, new HashMap<>(), null));
+            results.put(request, new PlayerTagsUser(request, null));
         }
 
         return results;

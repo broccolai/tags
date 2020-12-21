@@ -2,28 +2,24 @@ package broccolai.tags.model.user.impl;
 
 import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser;
+import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 public final class PlayerTagsUser implements TagsUser {
 
     private final @NonNull UUID uuid;
-    private final @NonNull Map<Integer, Tag> tags;
     private @Nullable Integer current;
 
     public PlayerTagsUser(
             final @NonNull UUID uuid,
-            final @NonNull Map<Integer, Tag> tags,
             final @Nullable Integer current
     ) {
         this.uuid = uuid;
-        this.tags = tags;
         this.current = current;
     }
 
@@ -38,13 +34,13 @@ public final class PlayerTagsUser implements TagsUser {
     }
 
     @Override
-    public @NonNull Optional<Tag> current() {
-        return Optional.ofNullable(this.tags.get(this.current));
+    public boolean hasPermission(final @NonNull Permission permissible, final @NonNull String permission) {
+        return permissible.playerHas(null, Bukkit.getOfflinePlayer(this.uuid), permission);
     }
 
     @Override
-    public @NonNull Collection<Tag> tags() {
-        return Collections.unmodifiableCollection(tags.values());
+    public @NonNull Optional<Integer> current() {
+        return Optional.ofNullable(this.current);
     }
 
 }
