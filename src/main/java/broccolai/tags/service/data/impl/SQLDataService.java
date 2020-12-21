@@ -1,6 +1,5 @@
 package broccolai.tags.service.data.impl;
 
-import broccolai.tags.data.jdbi.UserReducer;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.data.DataService;
 import broccolai.tags.util.ResourceReader;
@@ -28,9 +27,9 @@ public final class SQLDataService implements DataService {
     public @NonNull Optional<@NonNull TagsUser> getUser(final @NonNull UUID uniqueId) {
         return this.jdbi.withHandle(handle -> handle
                 .createQuery(Query.SELECT_USER.get())
-                .reduceRows(new UserReducer())
+                .bind("uuid", uniqueId)
+                .mapTo(TagsUser.class)
                 .findFirst()
-                .map(TagsUser.Builder::build)
         );
     }
 
