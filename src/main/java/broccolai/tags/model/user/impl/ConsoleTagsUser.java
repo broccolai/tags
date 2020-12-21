@@ -27,8 +27,8 @@ public final class ConsoleTagsUser implements TagsUser {
 
     @Override
     public boolean hasPermission(
-            final @NonNull Permission permissible,
-            final @NonNull String permission
+            final @NonNull Permission permission,
+            final @NonNull String perm
     ) {
         return true;
     }
