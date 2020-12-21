@@ -29,8 +29,9 @@ public final class TagsCommand {
         Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tags");
 
         manager.command(tagsCommand
-                .argument(argumentFactory.tag("tag"))
-                .handler(this::handleTags));
+                .argument(argumentFactory.tag("tag", true))
+                .handler(this::handleTags)
+        );
     }
 
     private void handleTags(final @NonNull CommandContext<CommandUser> context) {
