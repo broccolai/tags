@@ -7,7 +7,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public interface CloudArgumentFactory {
 
-    @NonNull TagArgument tag(@Assisted("name") @NonNull String name);
+    @NonNull TagArgument tag(@Assisted("name") @NonNull String name, @Assisted("shouldCheck") boolean shouldCheck);
 
     @NonNull UserArgument user(@Assisted("name") @NonNull String name);
 

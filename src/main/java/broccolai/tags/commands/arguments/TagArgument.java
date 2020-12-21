@@ -2,6 +2,7 @@ package broccolai.tags.commands.arguments;
 
 import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.model.tag.Tag;
+import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.tags.TagsService;
 import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
@@ -9,6 +10,7 @@ import cloud.commandframework.arguments.parser.ArgumentParser;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
+import net.milkbowl.vault.permission.Permission;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayList;
@@ -19,16 +21,29 @@ import java.util.Queue;
 public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull Tag> {
 
     @AssistedInject
-    public TagArgument(final @NonNull TagsService tagsService, final @Assisted("name") @NonNull String name) {
-        super(true, name, new TagParser(tagsService), Tag.class);
+    public TagArgument(
+            final @NonNull TagsService tagsService,
+            final @NonNull Permission permission,
+            final @Assisted("name") @NonNull String name,
+            final @Assisted("shouldCheck") boolean shouldCheck
+    ) {
+        super(true, name, new TagParser(tagsService, permission, shouldCheck), Tag.class);
     }
 
     public static final class TagParser implements ArgumentParser<@NonNull CommandUser, Tag> {
 
         private final @NonNull TagsService tagsService;
+        private final @NonNull Permission permission;
+        private final boolean shouldCheck;
 
-        public TagParser(final @NonNull TagsService tagsService) {
+        public TagParser(
+                final @NonNull TagsService tagsService,
+                final @NonNull Permission permission,
+                final boolean shouldCheck
+        ) {
             this.tagsService = tagsService;
+            this.permission = permission;
+            this.shouldCheck = shouldCheck;
         }
 
         @Override
@@ -61,6 +76,14 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
             List<String> output = new ArrayList<>();
 
             for (Tag tag : tags) {
+                if (shouldCheck) {
+                    TagsUser target = commandContext.get("target");
+
+                    if (!target.hasPermission(this.permission, "tags.tag." + tag.id())) {
+                        continue;
+                    }
+                }
+
                 output.add(tag.name());
             }
 
