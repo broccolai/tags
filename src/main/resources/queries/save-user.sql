@@ -1,2 +1,2 @@
-INSERT OR REPLACE INTO users(uuid)
-VALUES(:uuid);
+INSERT OR REPLACE INTO users(uuid, currentTag)
+VALUES(:uuid, :currentTag);
