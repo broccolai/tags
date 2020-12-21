@@ -3,7 +3,6 @@ package broccolai.tags.commands.arguments;
 import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.UserPipeline;
-import broccolai.tags.service.user.impl.UserCacheService;
 import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
 import cloud.commandframework.arguments.parser.ArgumentParser;
@@ -40,7 +39,7 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
                 @NonNull final Queue<String> inputQueue
         ) {
             if (commandContext.isSuggestions()) {
-                return ArgumentParseResult.success(UserCacheService.CONSOLE);
+                return ArgumentParseResult.success(TagsUser.CONSOLE);
             }
 
             final String input = inputQueue.peek();

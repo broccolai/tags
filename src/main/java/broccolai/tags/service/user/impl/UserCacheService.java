@@ -3,7 +3,6 @@ package broccolai.tags.service.user.impl;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.model.user.impl.ConsoleTagsUser;
 import broccolai.tags.service.data.DataService;
-import broccolai.tags.service.tags.TagsService;
 import broccolai.tags.service.user.UserService;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -21,15 +20,12 @@ import java.util.function.Consumer;
 @Singleton
 public final class UserCacheService implements UserService, Consumer<Map<UUID, TagsUser>>, Closeable {
 
-    public static TagsUser CONSOLE;
-
     private final @NonNull DataService dataService;
 
     private final @NonNull Cache<UUID, TagsUser> uuidCache;
 
     @Inject
-    public UserCacheService(final @NonNull DataService dataService, final @NonNull TagsService service) {
-        CONSOLE = new ConsoleTagsUser();
+    public UserCacheService(final @NonNull DataService dataService) {
         this.dataService = dataService;
         this.uuidCache = Caffeine.newBuilder()
                 .maximumSize(100)
@@ -43,7 +39,7 @@ public final class UserCacheService implements UserService, Consumer<Map<UUID, T
 
         for (final UUID request : requests) {
             if (request.equals(ConsoleTagsUser.UUID)) {
-                results.put(request, CONSOLE);
+                results.put(request, TagsUser.CONSOLE);
                 continue;
             }
 
