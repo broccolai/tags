@@ -11,10 +11,9 @@ import cloud.commandframework.arguments.parser.ArgumentParser;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-import net.milkbowl.vault.permission.Permission;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 
@@ -23,26 +22,22 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
     @AssistedInject
     public TagArgument(
             final @NonNull TagsService tagsService,
-            final @NonNull Permission permission,
             final @Assisted("name") @NonNull String name,
             final @Assisted("shouldCheck") boolean shouldCheck
     ) {
-        super(true, name, new TagParser(tagsService, permission, shouldCheck), Tag.class);
+        super(true, name, new TagParser(tagsService, shouldCheck), Tag.class);
     }
 
     public static final class TagParser implements ArgumentParser<@NonNull CommandUser, Tag> {
 
         private final @NonNull TagsService tagsService;
-        private final @NonNull Permission permission;
         private final boolean shouldCheck;
 
         public TagParser(
                 final @NonNull TagsService tagsService,
-                final @NonNull Permission permission,
                 final boolean shouldCheck
         ) {
             this.tagsService = tagsService;
-            this.permission = permission;
             this.shouldCheck = shouldCheck;
         }
 
@@ -59,7 +54,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
             Tag tag = this.tagsService.load(input);
 
-            if (tag == null) {
+            if (tag == null || !commandContext.getSender().hasPermission("tags.tag." + tag.id())) {
                 return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
             }
 
@@ -72,11 +67,13 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 @NonNull final CommandContext<@NonNull CommandUser> commandContext,
                 @NonNull final String input
         ) {
-            List<Tag> tags = new ArrayList<>(this.tagsService.allTags());
+            Collection<Tag> tags;
 
             if (this.shouldCheck) {
                 TagsUser target = commandContext.get("target");
-                tags.removeIf(tag -> !target.hasPermission(this.permission, "tags.tag." + tag.id()));
+                tags = this.tagsService.allTags(target);
+            } else {
+                tags = this.tagsService.allTags();
             }
 
             return Lists.map(tags, Tag::name);
