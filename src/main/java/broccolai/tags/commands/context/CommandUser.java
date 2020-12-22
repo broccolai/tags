@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public interface CommandUser extends Audience {
 
-    boolean isAuthorized(String permission);
+    boolean hasPermission(String permission);
 
     CommandSender asSender();
 
@@ -42,6 +42,11 @@ public interface CommandUser extends Audience {
         protected AbstractCommandUser(final CommandSender base, final Audience audience) {
             this.base = base;
             this.audience = audience;
+        }
+
+        @Override
+        public boolean hasPermission(final String permission) {
+            return this.base.hasPermission(permission);
         }
 
         @Override

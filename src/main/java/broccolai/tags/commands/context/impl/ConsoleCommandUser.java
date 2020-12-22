@@ -17,11 +17,6 @@ public final class ConsoleCommandUser extends CommandUser.AbstractCommandUser {
     }
 
     @Override
-    public boolean isAuthorized(final String permission) {
-        return true;
-    }
-
-    @Override
     public ConsoleCommandSender asSender() {
         return this.sender;
     }

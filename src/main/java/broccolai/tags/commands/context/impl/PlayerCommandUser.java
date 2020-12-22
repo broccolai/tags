@@ -16,11 +16,6 @@ public final class PlayerCommandUser extends CommandUser.AbstractCommandUser {
     }
 
     @Override
-    public boolean isAuthorized(final String permission) {
-        return this.player.hasPermission(permission);
-    }
-
-    @Override
     public Player asSender() {
         return this.player;
     }
