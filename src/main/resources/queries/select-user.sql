@@ -1,3 +1,3 @@
 SELECT uuid, currentTag
-FROM tags_user
+FROM tags_users
 WHERE uuid = :uuid;
