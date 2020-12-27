@@ -29,7 +29,7 @@ public final class PlayerTagsUser implements TagsUser {
     }
 
     @Override
-    public void setCurrent(@Nullable final Tag tag) {
+    public void setCurrent(final @Nullable Tag tag) {
         this.current = tag != null ? tag.id() : null;
     }
 

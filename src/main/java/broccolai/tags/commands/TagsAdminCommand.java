@@ -31,14 +31,14 @@ public class TagsAdminCommand {
         manager.command(tagsCommand
                 .literal("give")
                 .argument(argumentFactory.user("target"))
-                .argument(argumentFactory.tag("tag", false))
+                .argument(argumentFactory.tag("tag", false, false))
                 .handler(this::handleGive)
         );
 
         manager.command(tagsCommand
                 .literal("remove")
                 .argument(argumentFactory.user("target"))
-                .argument(argumentFactory.tag("tag", false))
+                .argument(argumentFactory.tag("tag", false, false))
                 .handler(this::handleRemove)
         );
     }

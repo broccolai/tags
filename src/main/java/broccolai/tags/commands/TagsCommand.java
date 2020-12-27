@@ -34,9 +34,31 @@ public final class TagsCommand {
         Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tags");
 
         manager.command(tagsCommand
+                .literal("select")
+                .argument(argumentFactory.tag("tag", true, true))
+                .handler(this::handleSelect)
+        );
+
+        manager.command(tagsCommand
                 .literal("list")
                 .handler(this::handleList)
         );
+
+        manager.command(tagsCommand
+                .literal("preview")
+                .argument(argumentFactory.tag("tag", true, true))
+                .handler(this::handlePreview)
+        );
+    }
+
+    private void handleSelect(final @NonNull CommandContext<CommandUser> context) {
+        CommandUser sender = context.getSender();
+        TagsUser user = this.userPipeline.get(sender.uniqueId());
+        Tag tag = context.get("tag");
+        Component message = Component.text("You have selected the " + tag.name() + " prefix");
+
+        user.setCurrent(tag);
+        sender.sendMessage(message);
     }
 
     private void handleList(final @NonNull CommandContext<CommandUser> context) {
@@ -48,12 +70,12 @@ public final class TagsCommand {
         sender.sendMessage(message);
     }
 
-//    private void handleTags(final @NonNull CommandContext<CommandUser> context) {
-//        CommandUser sender = context.getSender();
-//        TagsUser user = this.userPipeline.get(new UUID(0, 0));
-//        Tag tag = context.get("tag");
-//
-//        sender.sendMessage(Component.text(tag.name()));
-//    }
+    private void handlePreview(final @NonNull CommandContext<CommandUser> context) {
+        CommandUser sender = context.getSender();
+        Tag tag = context.get("tag");
+        Component message = Component.text("The " + tag.name() + " prefix will look like this: ").append(tag.component());
+
+        sender.sendMessage(message);
+    }
 
 }
