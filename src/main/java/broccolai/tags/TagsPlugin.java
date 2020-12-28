@@ -79,11 +79,11 @@ public final class TagsPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.injector.getInstance(UserCacheService.class).close();
+
         if (this.hikariDataSource != null) {
             this.hikariDataSource.close();
         }
-
-        this.injector.getInstance(UserCacheService.class).close();
     }
 
     public @NonNull Jdbi getJdbi() {
