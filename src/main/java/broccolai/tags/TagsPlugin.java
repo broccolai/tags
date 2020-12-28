@@ -6,6 +6,7 @@ import broccolai.tags.config.Configuration;
 import broccolai.tags.data.jdbi.UserMapper;
 import broccolai.tags.inject.CloudModule;
 import broccolai.tags.inject.DataModule;
+import broccolai.tags.inject.MessageModule;
 import broccolai.tags.inject.PluginModule;
 import broccolai.tags.inject.UserModule;
 import broccolai.tags.inject.VaultModule;
@@ -50,6 +51,7 @@ public final class TagsPlugin extends JavaPlugin {
                 new PluginModule(this),
                 new DataModule(),
                 new VaultModule(),
+                new MessageModule(),
                 new CloudModule(),
                 new UserModule(),
                 new CloudArgumentFactoryModule()
