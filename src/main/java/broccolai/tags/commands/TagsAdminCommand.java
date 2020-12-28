@@ -4,11 +4,11 @@ import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.factory.CloudArgumentFactory;
 import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser;
+import broccolai.tags.service.message.MessageService;
 import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
-import net.kyori.adventure.text.Component;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -17,14 +17,17 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class TagsAdminCommand {
 
     private final @NonNull Permission permission;
+    private final @NonNull MessageService messageService;
 
     @Inject
     public TagsAdminCommand(
             final @NonNull CommandManager<CommandUser> manager,
             final @NonNull CloudArgumentFactory argumentFactory,
+            final @NonNull MessageService messageService,
             final @NonNull Permission permission
     ) {
         this.permission = permission;
+        this.messageService = messageService;
 
         Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tagsadmin");
 
@@ -49,7 +52,7 @@ public class TagsAdminCommand {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.uuid());
 
         this.permission.playerAdd(null, offlinePlayer, "tags.tag." + tag.id());
-        context.getSender().sendMessage(Component.text("Tag " + tag.name() + " has been given to " + offlinePlayer.getName()));
+        context.getSender().sendMessage(this.messageService.commandAdminGive(tag, target));
     }
 
     private void handleRemove(final @NonNull CommandContext<CommandUser> context) {
@@ -58,7 +61,7 @@ public class TagsAdminCommand {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(target.uuid());
 
         this.permission.playerRemove(null, offlinePlayer, "tags.tag." + tag.id());
-        context.getSender().sendMessage(Component.text("Tag " + tag.name() + " has been removed from " + offlinePlayer.getName()));
+        context.getSender().sendMessage(this.messageService.commandAdminRemove(tag, target));
     }
 
 }
