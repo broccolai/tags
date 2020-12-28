@@ -5,9 +5,8 @@ import broccolai.tags.commands.TagsCommand;
 import broccolai.tags.config.Configuration;
 import broccolai.tags.data.jdbi.UserMapper;
 import broccolai.tags.inject.CloudModule;
-import broccolai.tags.inject.DataModule;
-import broccolai.tags.inject.MessageModule;
 import broccolai.tags.inject.PluginModule;
+import broccolai.tags.inject.ServiceModule;
 import broccolai.tags.inject.UserModule;
 import broccolai.tags.inject.VaultModule;
 import broccolai.tags.inject.factory.CloudArgumentFactoryModule;
@@ -49,9 +48,8 @@ public final class TagsPlugin extends JavaPlugin {
 
         this.injector = Guice.createInjector(
                 new PluginModule(this),
-                new DataModule(),
                 new VaultModule(),
-                new MessageModule(),
+                new ServiceModule(),
                 new CloudModule(),
                 new UserModule(),
                 new CloudArgumentFactoryModule()
