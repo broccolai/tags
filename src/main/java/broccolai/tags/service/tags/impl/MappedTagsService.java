@@ -71,7 +71,7 @@ public final class MappedTagsService implements TagsService {
     @Override
     public @NonNull Collection<Tag> allTags(final @NonNull TagsUser user) {
         List<Tag> filtered = new ArrayList<>(this.idToTags.values());
-        filtered.removeIf(tag -> !user.hasPermission(permission, "tags.tag." + tag.id()));
+        filtered.removeIf(tag -> !user.owns(permission, tag));
 
         return Collections.unmodifiableCollection(filtered);
     }

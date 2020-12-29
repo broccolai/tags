@@ -68,7 +68,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
             Tag tag = this.tagsService.load(input);
 
-            if (tag == null || !commandContext.getSender().hasPermission("tags.tag." + tag.id())) {
+            if (tag == null) {
                 return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
             }
 
@@ -82,7 +82,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                     user = commandContext.get("target");
                 }
 
-                if (!user.hasPermission(permission, "tags.tag." + tag.id())) {
+                if (!user.owns(permission, tag)) {
                     return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
                 }
             }
