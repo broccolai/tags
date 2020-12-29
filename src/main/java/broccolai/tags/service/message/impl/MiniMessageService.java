@@ -11,11 +11,39 @@ import org.bukkit.Bukkit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 @Singleton
 public final class MiniMessageService implements MessageService {
 
     private static final MiniMessage MINI = MiniMessage.get();
+
+    @Override
+    public Component commandSelect(@NonNull final Tag tag) {
+        Template tagComponent = Template.of("tag", tag.component());
+
+        return Messages.COMMAND_SELECT.asComponent(tagComponent);
+    }
+
+    @Override
+    public Component commandList(@NonNull final Collection<Tag> tags) {
+        Component component = Messages.COMMAND_LIST.asComponent();
+
+        for (Tag tag : tags) {
+            Template tagComponent = Template.of("tag", tag.component());
+
+            component.append(Messages.COMMAND_LIST_ENTRY.asComponent(tagComponent));
+        }
+
+        return component;
+    }
+
+    @Override
+    public Component commandPreview(@NonNull final Tag tag) {
+        Template tagComponent = Template.of("tag", tag.component());
+
+        return Messages.COMMAND_PREVIEW.asComponent(tagComponent);
+    }
 
     @Override
     public Component commandAdminGive(
@@ -64,6 +92,10 @@ public final class MiniMessageService implements MessageService {
 
     //todo: Implement locale
     private enum Messages {
+        COMMAND_SELECT("You have selected the tag <tag>"),
+        COMMAND_LIST("You currently own these tags:"),
+        COMMAND_LIST_ENTRY("You currently own these tags: <tags>"),
+        COMMAND_PREVIEW("Your tag will appear like this: <tag>"),
         COMMAND_ADMIN_GIVE("Tag <tag> has been given to <target>"),
         COMMAND_ADMIN_REMOVE("Tag <tag> has been removed from <target>");
 

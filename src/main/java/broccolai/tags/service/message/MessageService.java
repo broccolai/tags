@@ -6,8 +6,17 @@ import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Collection;
+
 @Singleton
 public interface MessageService {
+
+    Component commandSelect(@NonNull Tag tag);
+
+    Component commandList(@NonNull Collection<Tag> tags);
+
+    Component commandPreview(@NonNull Tag tag);
+
     Component commandAdminGive(@NonNull Tag tag, @NonNull TagsUser target);
 
     Component commandAdminRemove(@NonNull Tag tag, @NonNull TagsUser target);
