@@ -64,7 +64,7 @@ public final class MiniMessageService implements MessageService {
         Template tagComponent = Template.of("tag", tag.component());
         Template targetComponent = Template.of("target", this.nameFromUser(target));
 
-        return Messages.COMMAND_ADMIN_GIVE.asComponent(tagComponent, targetComponent);
+        return Messages.COMMAND_ADMIN_REMOVE.asComponent(tagComponent, targetComponent);
     }
 
     //todo: Add user to TagUser object?

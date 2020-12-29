@@ -55,7 +55,7 @@ public final class TagsCommand {
 
     private void handleSelect(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
-        TagsUser user = this.userPipeline.get(sender.uniqueId());
+        TagsUser user = this.userPipeline.get(sender.uuid());
         Tag tag = context.get("tag");
 
         user.setCurrent(tag);
@@ -64,7 +64,7 @@ public final class TagsCommand {
 
     private void handleList(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
-        TagsUser user = this.userPipeline.get(sender.uniqueId());
+        TagsUser user = this.userPipeline.get(sender.uuid());
         Collection<Tag> tags = this.tagsService.allTags(user);
 
         sender.sendMessage(this.messageService.commandList(tags));

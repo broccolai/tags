@@ -17,12 +17,12 @@ public final class ConsoleCommandUser extends CommandUser.AbstractCommandUser {
     }
 
     @Override
-    public ConsoleCommandSender asSender() {
+    public ConsoleCommandSender sender() {
         return this.sender;
     }
 
     @Override
-    public UUID uniqueId() {
+    public UUID uuid() {
         return ConsoleTagsUser.UUID;
     }
 

@@ -77,7 +77,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
                 if (this.selfTarget) {
                     CommandUser commandUser = commandContext.getSender();
-                    user = this.userPipeline.get(commandUser.uniqueId());
+                    user = this.userPipeline.get(commandUser.uuid());
                 } else {
                     user = commandContext.get("target");
                 }
@@ -103,7 +103,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
                 if (this.selfTarget) {
                     CommandUser user = commandContext.getSender();
-                    target = this.userPipeline.get(user.uniqueId());
+                    target = this.userPipeline.get(user.uuid());
                 } else {
                     target = commandContext.get("target");
                 }

@@ -12,7 +12,7 @@ import com.google.inject.Inject;
 import net.milkbowl.vault.permission.Permission;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class TagsAdminCommand {
+public final class TagsAdminCommand {
 
     private final @NonNull Permission permission;
     private final @NonNull MessageService messageService;

@@ -16,12 +16,12 @@ public final class PlayerCommandUser extends CommandUser.AbstractCommandUser {
     }
 
     @Override
-    public Player asSender() {
+    public Player sender() {
         return this.player;
     }
 
     @Override
-    public UUID uniqueId() {
+    public UUID uuid() {
         return this.player.getUniqueId();
     }
 

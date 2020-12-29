@@ -22,7 +22,7 @@ public final class CloudModule extends AbstractModule {
                     plugin,
                     AsynchronousCommandExecutionCoordinator.<CommandUser>newBuilder().build(),
                     sender -> CommandUser.from(sender, audiences),
-                    CommandUser::asSender
+                    CommandUser::sender
             );
 
             if (commandManager.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {

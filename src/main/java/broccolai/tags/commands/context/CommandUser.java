@@ -14,11 +14,9 @@ import java.util.UUID;
 
 public interface CommandUser extends Audience {
 
-    boolean hasPermission(String permission);
+    CommandSender sender();
 
-    CommandSender asSender();
-
-    UUID uniqueId();
+    UUID uuid();
 
     static CommandUser from(CommandSender sender, BukkitAudiences audiences) {
         if (sender instanceof ConsoleCommandSender) {
@@ -45,12 +43,7 @@ public interface CommandUser extends Audience {
         }
 
         @Override
-        public boolean hasPermission(final String permission) {
-            return this.base.hasPermission(permission);
-        }
-
-        @Override
-        public CommandSender asSender() {
+        public CommandSender sender() {
             return this.base;
         }
 
