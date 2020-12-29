@@ -23,8 +23,6 @@ public interface TagsService {
 
     @Nullable Tag load(@NonNull String name);
 
-    void grant(@NonNull TagsUser user, @NonNull Tag tag);
-
     @NonNull Collection<@NonNull Tag> allTags();
 
     @NonNull Collection<@NonNull Tag> allTags(@NonNull TagsUser user);

@@ -64,11 +64,6 @@ public final class MappedTagsService implements TagsService {
     }
 
     @Override
-    public void grant(@NonNull final TagsUser user, @NonNull final Tag tag) {
-        user.addPermission(this.permission, "tags.tag." + tag.id());
-    }
-
-    @Override
     public @NonNull Collection<Tag> allTags() {
         return Collections.unmodifiableCollection(this.idToTags.values());
     }
