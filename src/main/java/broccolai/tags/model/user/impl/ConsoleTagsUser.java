@@ -26,8 +26,18 @@ public final class ConsoleTagsUser implements TagsUser {
     }
 
     @Override
-    public void addPermission(@NonNull final Permission permission, @NonNull final String perm) {
-        // pointless
+    public void grant(@NonNull final Permission permission, @NonNull final Tag tag) {
+        // unnecessary
+    }
+
+    @Override
+    public void remove(@NonNull final Permission permission, @NonNull final Tag tag) {
+        // unnecessary
+    }
+
+    @Override
+    public boolean owns(@NonNull final Permission permission, @NonNull final Tag tag) {
+        return true;
     }
 
     @Override
