@@ -34,6 +34,11 @@ public final class PlayerTagsUser implements TagsUser {
     }
 
     @Override
+    public void addPermission(@NonNull final Permission permission, @NonNull final String perm) {
+        permission.playerAdd(null, Bukkit.getOfflinePlayer(this.uuid), perm);
+    }
+
+    @Override
     public boolean hasPermission(final @NonNull Permission permission, final @NonNull String perm) {
         return permission.playerHas(null, Bukkit.getOfflinePlayer(this.uuid), perm);
     }

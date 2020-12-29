@@ -26,6 +26,11 @@ public final class ConsoleTagsUser implements TagsUser {
     }
 
     @Override
+    public void addPermission(@NonNull final Permission permission, @NonNull final String perm) {
+        // pointless
+    }
+
+    @Override
     public boolean hasPermission(
             final @NonNull Permission permission,
             final @NonNull String perm

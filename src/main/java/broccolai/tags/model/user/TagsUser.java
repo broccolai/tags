@@ -17,6 +17,8 @@ public interface TagsUser {
 
     void setCurrent(@Nullable Tag tag);
 
+    void addPermission(@NonNull Permission permission, @NonNull String perm);
+
     boolean hasPermission(@NonNull Permission permission, @NonNull String perm);
 
     @NonNull Optional<Integer> current();
