@@ -54,7 +54,7 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
             TagsUser user = this.userPipeline.get(offlinePlayer.getUniqueId());
 
             if (user == null) {
-                return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
+                return ArgumentParseResult.failure(new NullPointerException("Could not find user with name " + input));
             }
 
             inputQueue.remove();
