@@ -1,6 +1,7 @@
 package broccolai.tags.service.data.impl;
 
 import broccolai.tags.model.user.TagsUser;
+import broccolai.tags.model.user.impl.ConsoleTagsUser;
 import broccolai.tags.service.data.DataService;
 import broccolai.tags.util.ResourceReader;
 import com.google.inject.Inject;
@@ -35,6 +36,10 @@ public final class SQLDataService implements DataService {
 
     @Override
     public void saveUser(@NonNull final TagsUser user) {
+        if (user instanceof ConsoleTagsUser) {
+            return;
+        }
+
         this.jdbi.withHandle(handle -> handle
                 .createUpdate(Query.SAVE_USER.get())
                 .bind("uuid", user.uuid())
