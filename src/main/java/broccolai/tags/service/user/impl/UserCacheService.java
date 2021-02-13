@@ -60,7 +60,7 @@ public final class UserCacheService implements UserService, Consumer<Map<UUID, T
 
     @Override
     public void close() {
-        this.uuidCache.invalidateAll();
+        this.uuidCache.asMap().values().forEach(this.dataService::saveUser);
     }
 
 }
