@@ -2,13 +2,11 @@ package broccolai.tags.service.message;
 
 import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser;
-import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
 
-@Singleton
 public interface MessageService {
 
     Component commandSelect(@NonNull Tag tag);

@@ -6,6 +6,7 @@ import broccolai.tags.model.tag.Tag;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.tags.TagsService;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.milkbowl.vault.permission.Permission;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Singleton
 public final class MappedTagsService implements TagsService {
 
     private static final MiniMessage MINI = MiniMessage.get();
