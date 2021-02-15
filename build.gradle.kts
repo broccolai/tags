@@ -56,9 +56,8 @@ dependencies {
     implementation("com.google.inject.extensions:guice-assistedinject:5.0.0-BETA-1") {
         isTransitive = false
     }
-    api("org.slf4j:slf4j-nop:1.7.13")
 
-    implementation("org.jdbi:jdbi3-core:3.17.0")
+    implementation("org.jdbi:jdbi3-core:3.18.0")
     api("com.github.ben-manes.caffeine:caffeine:2.8.6")
 
     implementation("com.zaxxer:HikariCP:3.4.5")
@@ -67,14 +66,15 @@ dependencies {
 
     implementation("org.spongepowered:configurate-hocon:4.0.0")
 
-    api("broccolai.corn:corn-core:1.0.0")
+    api("broccolai.corn:corn-core:2.0.0-SNAPSHOT")
 
     api("net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT")
     implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT") {
         isTransitive = true
     }
 
-    api("cloud.commandframework:cloud-paper:1.3.0")
+    api("cloud.commandframework:cloud-paper:1.4.0")
+    api("cloud.commandframework:cloud-minecraft-extras:1.4.0")
 }
 
 tasks {
