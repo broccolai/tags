@@ -3,6 +3,7 @@ package broccolai.tags;
 import broccolai.tags.commands.TagsAdminCommand;
 import broccolai.tags.commands.TagsCommand;
 import broccolai.tags.config.Configuration;
+import broccolai.tags.data.StorageType;
 import broccolai.tags.data.jdbi.UserMapper;
 import broccolai.tags.inject.CloudModule;
 import broccolai.tags.inject.PluginModule;
@@ -11,6 +12,7 @@ import broccolai.tags.inject.UserModule;
 import broccolai.tags.inject.VaultModule;
 import broccolai.tags.inject.factory.CloudArgumentFactoryModule;
 import broccolai.tags.integrations.TagsPlaceholders;
+import broccolai.tags.integrations.VaultIntegration;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.impl.UserCacheService;
 import com.google.inject.Guice;
@@ -18,7 +20,9 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.flywaydb.core.Flyway;
 import org.jdbi.v3.core.Jdbi;
@@ -31,11 +35,11 @@ import java.io.IOException;
 @Singleton
 public final class TagsPlugin extends JavaPlugin {
 
-    private Injector injector;
+    private @MonotonicNonNull Injector injector;
 
-    private Configuration configuration;
-    private Jdbi jdbi;
-    private HikariDataSource hikariDataSource;
+    private @MonotonicNonNull Configuration configuration;
+    private @MonotonicNonNull Jdbi jdbi;
+    private @MonotonicNonNull HikariDataSource hikariDataSource;
 
     @Override
     public void onEnable() {
@@ -77,7 +81,14 @@ public final class TagsPlugin extends JavaPlugin {
 
         this.injector.getInstance(TagsCommand.class);
         this.injector.getInstance(TagsAdminCommand.class);
-        this.injector.getInstance(TagsPlaceholders.class).register();
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            this.injector.getInstance(TagsPlaceholders.class).register();
+        }
+
+        if (Bukkit.getPluginManager().isPluginEnabled("Vault")) {
+            this.injector.getInstance(VaultIntegration.class);
+        }
     }
 
     @Override
@@ -98,7 +109,7 @@ public final class TagsPlugin extends JavaPlugin {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private Configuration loadConfiguration() throws IOException {
+    private @NonNull Configuration loadConfiguration() throws IOException {
         File file = new File(this.getDataFolder(), "config.conf");
         this.getDataFolder().mkdirs();
         file.createNewFile();
