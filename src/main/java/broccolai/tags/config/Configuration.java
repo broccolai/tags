@@ -33,7 +33,7 @@ public final class Configuration {
     }
 
     @Setting
-    public SqlConfiguration sql = new SqlConfiguration();
+    public StorageConfiguration storage = new StorageConfiguration();
 
     @Setting
     @Comment(

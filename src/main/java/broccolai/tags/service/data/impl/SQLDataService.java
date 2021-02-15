@@ -28,7 +28,7 @@ public final class SQLDataService implements DataService {
     public @NonNull Optional<@NonNull TagsUser> getUser(final @NonNull UUID uniqueId) {
         return this.jdbi.withHandle(handle -> handle
                 .createQuery(Query.SELECT_USER.get())
-                .bind("uuid", uniqueId)
+                .bind("uuid", String.valueOf(uniqueId))
                 .mapTo(TagsUser.class)
                 .findFirst()
         );
@@ -42,7 +42,7 @@ public final class SQLDataService implements DataService {
 
         this.jdbi.withHandle(handle -> handle
                 .createUpdate(Query.SAVE_USER.get())
-                .bind("uuid", user.uuid())
+                .bind("uuid", String.valueOf(user.uuid()))
                 .bind("currentTag", user.current().orElse(null))
                 .execute()
         );

@@ -56,10 +56,13 @@ public final class TagsPlugin extends JavaPlugin {
         );
 
         final HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(this.configuration.sql.jdbcUri);
-        hikariConfig.setUsername(this.configuration.sql.username);
-        hikariConfig.setPassword(this.configuration.sql.password);
-        hikariConfig.setMaximumPoolSize(this.configuration.sql.maxConnections);
+
+        if (this.configuration.storage.storageType == StorageType.SQLITE) {
+            File file = new File(this.getDataFolder(), "tickets.db");
+            hikariConfig.setJdbcUrl("jdbc:sqlite:" + file.toString());
+        }
+
+        hikariConfig.setMaximumPoolSize(10);
         this.hikariDataSource = new HikariDataSource(hikariConfig);
 
         this.jdbi = Jdbi.create(this.hikariDataSource)
