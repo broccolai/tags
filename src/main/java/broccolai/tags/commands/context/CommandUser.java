@@ -12,7 +12,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
-public interface CommandUser extends Audience {
+public interface CommandUser extends ForwardingAudience.Single {
 
     CommandSender sender();
 
@@ -32,7 +32,7 @@ public interface CommandUser extends Audience {
         return null;
     }
 
-    abstract class AbstractCommandUser implements CommandUser, ForwardingAudience.Single {
+    abstract class AbstractCommandUser implements CommandUser {
 
         private final CommandSender base;
         private final Audience audience;

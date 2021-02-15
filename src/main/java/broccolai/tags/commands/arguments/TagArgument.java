@@ -10,6 +10,7 @@ import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
 import cloud.commandframework.arguments.parser.ArgumentParser;
 import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import net.milkbowl.vault.permission.Permission;
@@ -63,13 +64,13 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
             final String input = inputQueue.peek();
 
             if (input == null) {
-                return ArgumentParseResult.failure(new NullPointerException("Expected tag name"));
+                return ArgumentParseResult.failure(new NoInputProvidedException(TagParser.class, commandContext));
             }
 
             Tag tag = this.tagsService.load(input);
 
             if (tag == null) {
-                return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
+                return ArgumentParseResult.failure(new TagArgumentException(input));
             }
 
             if (shouldCheck) {
@@ -83,7 +84,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 }
 
                 if (!user.owns(permission, tag)) {
-                    return ArgumentParseResult.failure(new NullPointerException("Could not find tag with name " + input));
+                    return ArgumentParseResult.failure(new TagArgumentException(input));
                 }
             }
 
@@ -93,8 +94,8 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
         @Override
         public @NonNull List<String> suggestions(
-                @NonNull final CommandContext<@NonNull CommandUser> commandContext,
-                @NonNull final String input
+                final @NonNull CommandContext<@NonNull CommandUser> commandContext,
+                final @NonNull String input
         ) {
             Collection<Tag> tags;
 
@@ -118,4 +119,19 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
     }
 
+    public static final class TagArgumentException extends IllegalArgumentException {
+
+        private final String input;
+
+        private TagArgumentException(
+                final @NonNull String input
+        ) {
+            this.input = input;
+        }
+
+        public @NonNull String input() {
+            return this.input;
+        }
+
+    }
 }
