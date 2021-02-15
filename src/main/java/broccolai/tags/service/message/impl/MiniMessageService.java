@@ -19,20 +19,25 @@ public final class MiniMessageService implements MessageService {
     private static final MiniMessage MINI = MiniMessage.get();
 
     @Override
-    public Component commandSelect(@NonNull final Tag tag) {
-        Template tagComponent = Template.of("tag", tag.component());
-
-        return Messages.COMMAND_SELECT.asComponent(tagComponent);
+    public Template prefix() {
+        return Template.of("prefix", Messages.PREFIX.asComponent());
     }
 
     @Override
-    public Component commandList(@NonNull final Collection<Tag> tags) {
-        Component component = Messages.COMMAND_LIST.asComponent();
+    public Component commandSelect(final @NonNull Tag tag) {
+        Template tagComponent = Template.of("tag", tag.component());
+
+        return Messages.COMMAND_SELECT.asComponent(this.prefix(), tagComponent);
+    }
+
+    @Override
+    public Component commandList(final @NonNull Collection<Tag> tags) {
+        Component component = Messages.COMMAND_LIST.asComponent(this.prefix());
 
         for (Tag tag : tags) {
             Template tagComponent = Template.of("tag", tag.component());
 
-            component.append(Messages.COMMAND_LIST_ENTRY.asComponent(tagComponent));
+            component = component.append(Messages.COMMAND_LIST_ENTRY.asComponent(tagComponent));
         }
 
         return component;
@@ -42,7 +47,7 @@ public final class MiniMessageService implements MessageService {
     public Component commandPreview(@NonNull final Tag tag) {
         Template tagComponent = Template.of("tag", tag.component());
 
-        return Messages.COMMAND_PREVIEW.asComponent(tagComponent);
+        return Messages.COMMAND_PREVIEW.asComponent(this.prefix(), tagComponent);
     }
 
     @Override
@@ -53,7 +58,7 @@ public final class MiniMessageService implements MessageService {
         Template tagComponent = Template.of("tag", tag.component());
         Template targetComponent = Template.of("target", this.nameFromUser(target));
 
-        return Messages.COMMAND_ADMIN_GIVE.asComponent(tagComponent, targetComponent);
+        return Messages.COMMAND_ADMIN_GIVE.asComponent(this.prefix(), tagComponent, targetComponent);
     }
 
     @Override
@@ -64,7 +69,20 @@ public final class MiniMessageService implements MessageService {
         Template tagComponent = Template.of("tag", tag.component());
         Template targetComponent = Template.of("target", this.nameFromUser(target));
 
-        return Messages.COMMAND_ADMIN_REMOVE.asComponent(tagComponent, targetComponent);
+        return Messages.COMMAND_ADMIN_REMOVE.asComponent(this.prefix(), tagComponent, targetComponent);
+    }
+
+    @Override
+    public Component commandAdminList(@NonNull final Collection<Tag> tags) {
+        Component component = Messages.COMMAND_ADMIN_LIST.asComponent(this.prefix());
+
+        for (Tag tag : tags) {
+            Template tagComponent = Template.of("tag", tag.component());
+
+            component = component.append(Messages.COMMAND_LIST_ENTRY.asComponent(tagComponent));
+        }
+
+        return component;
     }
 
     //todo: Add user to TagUser object?
@@ -92,12 +110,14 @@ public final class MiniMessageService implements MessageService {
 
     //todo: Implement locale
     private enum Messages {
-        COMMAND_SELECT("You have selected the tag <tag>"),
-        COMMAND_LIST("You currently own these tags:"),
-        COMMAND_LIST_ENTRY("You currently own these tags: <tags>"),
-        COMMAND_PREVIEW("Your tag will appear like this: <tag>"),
-        COMMAND_ADMIN_GIVE("Tag <tag> has been given to <target>"),
-        COMMAND_ADMIN_REMOVE("Tag <tag> has been removed from <target>");
+        PREFIX("<gradient:#764ba2:#667eea><bold>TAGS »</bold></gradient>"),
+        COMMAND_SELECT("<prefix> You have selected the tag <tag>"),
+        COMMAND_LIST("<prefix> You currently own these tags: "),
+        COMMAND_LIST_ENTRY("<tag> "),
+        COMMAND_PREVIEW("<prefix> Your tag will appear like this: <tag>"),
+        COMMAND_ADMIN_GIVE("<prefix> Tag <tag> has been given to <target>"),
+        COMMAND_ADMIN_LIST("<prefix> These tags exist: "),
+        COMMAND_ADMIN_REMOVE("<prefix> Tag <tag> has been removed from <target>");
 
         private final String serialised;
 
