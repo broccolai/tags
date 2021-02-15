@@ -110,7 +110,8 @@ tasks {
                 "io.leangen.geantyref",
                 "cloud.commandframework",
                 "net.kyori.adventure",
-                "net.kyori.examination"
+                "net.kyori.examination",
+                "org.flyway"
         )
 
         archiveFileName.set(project.name + ".jar")

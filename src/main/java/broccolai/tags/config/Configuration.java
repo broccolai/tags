@@ -18,20 +18,6 @@ import java.util.List;
 @NonNull
 public final class Configuration {
 
-    private static final @NonNull ObjectMapper<Configuration> MAPPER;
-
-    static {
-        try {
-            MAPPER = ObjectMapper.factory().get(Configuration.class);
-        } catch (final SerializationException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-    }
-
-    public static Configuration loadFrom(final @NonNull ConfigurationNode node) throws SerializationException {
-        return MAPPER.load(node);
-    }
-
     @Setting
     public StorageConfiguration storage = new StorageConfiguration();
 
@@ -46,8 +32,23 @@ public final class Configuration {
         this.add(new TagConfiguration(1, "example", false, "<red><bold>example", "Acquired by playing for an hour"));
     }};
 
+    //region Configurate
+    private static final @NonNull ObjectMapper<Configuration> MAPPER;
+
+    static {
+        try {
+            MAPPER = ObjectMapper.factory().get(Configuration.class);
+        } catch (final SerializationException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    public static Configuration loadFrom(final @NonNull ConfigurationNode node) throws SerializationException {
+        return MAPPER.load(node);
+    }
+
     public <N extends ScopedConfigurationNode<N>> void saveTo(final @NonNull N node) throws SerializationException {
         MAPPER.save(this, node);
     }
-
+    //endregion
 }
