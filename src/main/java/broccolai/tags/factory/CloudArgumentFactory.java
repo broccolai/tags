@@ -13,6 +13,9 @@ public interface CloudArgumentFactory {
             @Assisted("shouldCheck") boolean shouldCheck
     );
 
-    @NonNull UserArgument user(@Assisted("name") @NonNull String name);
+    @NonNull UserArgument user(
+            @Assisted("name") @NonNull String name,
+            @Assisted("required") boolean required
+    );
 
 }

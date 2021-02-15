@@ -8,6 +8,7 @@ import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
 import cloud.commandframework.arguments.parser.ArgumentParser;
 import cloud.commandframework.context.CommandContext;
+import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
 import org.bukkit.Bukkit;
@@ -21,8 +22,12 @@ import java.util.Queue;
 public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull TagsUser> {
 
     @AssistedInject
-    public UserArgument(final @NonNull UserPipeline userPipeline, final @Assisted("name") @NonNull String name) {
-        super(true, name, new UserParser(userPipeline), TagsUser.class);
+    public UserArgument(
+            final @NonNull UserPipeline userPipeline,
+            final @Assisted("name") @NonNull String name,
+            final @Assisted("required") boolean required
+    ) {
+        super(required, name, new UserParser(userPipeline), TagsUser.class);
     }
 
     public static final class UserParser implements ArgumentParser<@NonNull CommandUser, TagsUser> {
@@ -35,8 +40,8 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
 
         @Override
         public @NonNull ArgumentParseResult<TagsUser> parse(
-                @NonNull final CommandContext<@NonNull CommandUser> commandContext,
-                @NonNull final Queue<String> inputQueue
+                final @NonNull CommandContext<@NonNull CommandUser> commandContext,
+                final @NonNull Queue<String> inputQueue
         ) {
             if (commandContext.isSuggestions()) {
                 return ArgumentParseResult.success(TagsUser.CONSOLE);
@@ -45,7 +50,7 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
             final String input = inputQueue.peek();
 
             if (input == null) {
-                return ArgumentParseResult.failure(new NullPointerException("Expected tag name"));
+                return ArgumentParseResult.failure(new NoInputProvidedException(UserArgument.class, commandContext));
             }
 
             //todo: UUID Pipeline?
@@ -54,7 +59,7 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
             TagsUser user = this.userPipeline.get(offlinePlayer.getUniqueId());
 
             if (user == null) {
-                return ArgumentParseResult.failure(new NullPointerException("Could not find user with name " + input));
+                return ArgumentParseResult.failure(new UserArgumentException(input));
             }
 
             inputQueue.remove();
@@ -63,10 +68,26 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
 
         @Override
         public @NonNull List<String> suggestions(
-                @NonNull final CommandContext<@NonNull CommandUser> commandContext,
-                @NonNull final String input
+                final @NonNull CommandContext<@NonNull CommandUser> commandContext,
+                final @NonNull String input
         ) {
             return Lists.map(Bukkit.getOnlinePlayers(), Player::getName);
+        }
+
+    }
+
+    public static final class UserArgumentException extends IllegalArgumentException {
+
+        private final String input;
+
+        private UserArgumentException(
+                final @NonNull String input
+        ) {
+            this.input = input;
+        }
+
+        public @NonNull String input() {
+            return this.input;
         }
 
     }
