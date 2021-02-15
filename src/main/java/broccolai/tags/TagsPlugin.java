@@ -3,6 +3,8 @@ package broccolai.tags;
 import broccolai.tags.commands.TagsAdminCommand;
 import broccolai.tags.commands.TagsCommand;
 import broccolai.tags.config.Configuration;
+import broccolai.tags.config.LocaleConfiguration;
+import broccolai.tags.config.serializers.LocaleEntrySerializer;
 import broccolai.tags.data.StorageType;
 import broccolai.tags.data.jdbi.UserMapper;
 import broccolai.tags.inject.CloudModule;
@@ -13,6 +15,7 @@ import broccolai.tags.inject.VaultModule;
 import broccolai.tags.inject.factory.CloudArgumentFactoryModule;
 import broccolai.tags.integrations.TagsPlaceholders;
 import broccolai.tags.integrations.VaultIntegration;
+import broccolai.tags.model.locale.LocaleEntry;
 import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.user.impl.UserCacheService;
 import com.google.inject.Guice;
@@ -38,6 +41,7 @@ public final class TagsPlugin extends JavaPlugin {
     private @MonotonicNonNull Injector injector;
 
     private @MonotonicNonNull Configuration configuration;
+    private @MonotonicNonNull LocaleConfiguration localeConfiguration;
     private @MonotonicNonNull Jdbi jdbi;
     private @MonotonicNonNull HikariDataSource hikariDataSource;
 
@@ -45,6 +49,7 @@ public final class TagsPlugin extends JavaPlugin {
     public void onEnable() {
         try {
             this.configuration = this.loadConfiguration();
+            this.localeConfiguration = this.loadLocaleConfiguration();
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -105,7 +110,11 @@ public final class TagsPlugin extends JavaPlugin {
     }
 
     public @NonNull Configuration getConfiguration() {
-        return configuration;
+        return this.configuration;
+    }
+
+    public @NonNull LocaleConfiguration getLocaleConfiguration() {
+        return this.localeConfiguration;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -120,6 +129,31 @@ public final class TagsPlugin extends JavaPlugin {
                 .build();
         CommentedConfigurationNode node = loader.load();
         Configuration config = Configuration.loadFrom(node);
+
+        config.saveTo(node);
+        loader.save(node);
+
+        return config;
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private @NonNull LocaleConfiguration loadLocaleConfiguration() throws IOException {
+        File file = new File(this.getDataFolder(), "locale.conf");
+        this.getDataFolder().mkdirs();
+        file.createNewFile();
+
+        HoconConfigurationLoader loader = HoconConfigurationLoader.builder()
+                .defaultOptions(opts -> {
+                    opts = opts.serializers(builder -> {
+                        builder.register(LocaleEntry.class, LocaleEntrySerializer.INSTANCE);
+                    });
+
+                    return opts.shouldCopyDefaults(true);
+                })
+                .file(file)
+                .build();
+        CommentedConfigurationNode node = loader.load();
+        LocaleConfiguration config = LocaleConfiguration.loadFrom(node);
 
         config.saveTo(node);
         loader.save(node);

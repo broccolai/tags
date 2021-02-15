@@ -2,6 +2,7 @@ package broccolai.tags.inject;
 
 import broccolai.tags.TagsPlugin;
 import broccolai.tags.config.Configuration;
+import broccolai.tags.config.LocaleConfiguration;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -24,6 +25,7 @@ public final class PluginModule extends AbstractModule {
         this.bind(TagsPlugin.class).toInstance(this.plugin);
         this.bind(BukkitAudiences.class).toInstance(BukkitAudiences.create(this.plugin));
         this.bind(Configuration.class).toInstance(this.plugin.getConfiguration());
+        this.bind(LocaleConfiguration.class).toInstance(this.plugin.getLocaleConfiguration());
     }
 
     @Provides
