@@ -6,14 +6,17 @@ import broccolai.tags.service.tags.TagsService;
 import broccolai.tags.service.user.UserPipeline;
 import com.google.inject.Inject;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.OfflinePlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 //todo: https://github.com/Hexaoxide/Carbon/issues/133
 public final class TagsPlaceholders extends PlaceholderExpansion {
 
-    private static final @NonNull MiniMessage MINI = MiniMessage.get();
+    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
+            .hexColors()
+            .character('§')
+            .build();
 
     private final @NonNull UserPipeline userPipeline;
     private final @NonNull TagsService tagsService;
@@ -47,7 +50,7 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
             return user.current()
                     .map(this.tagsService::load)
                     .map(Tag::component)
-                    .map(MINI::serialize)
+                    .map(LEGACY::serialize)
                     .orElse("");
         }
 

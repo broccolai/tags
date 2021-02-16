@@ -16,7 +16,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class VaultIntegration {
 
-    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
+    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
+            .hexColors()
+            .character('§')
+            .build();
 
     @Inject
     public VaultIntegration(
