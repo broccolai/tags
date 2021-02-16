@@ -7,6 +7,7 @@ import broccolai.tags.model.user.TagsUser;
 import broccolai.tags.service.tags.TagsService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.TreeMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.milkbowl.vault.permission.Permission;
@@ -28,7 +29,7 @@ public final class MappedTagsService implements TagsService {
     private static final MiniMessage MINI = MiniMessage.get();
 
     private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
-    private final @NonNull Map<String, Tag> nameToTags = new HashMap<>();
+    private final @NonNull Map<String, Tag> nameToTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     private final @NonNull Permission permission;
     private final int defaultId;
