@@ -7,11 +7,9 @@ import broccolai.tags.service.user.UserPipeline;
 import com.google.inject.Inject;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.OfflinePlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-//todo: https://github.com/Hexaoxide/Carbon/issues/133
 public final class TagsPlaceholders extends PlaceholderExpansion {
 
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
@@ -19,17 +17,14 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
             .character(LegacyComponentSerializer.SECTION_CHAR)
             .build();
 
-    private final @NonNull Permission permission;
     private final @NonNull UserPipeline userPipeline;
     private final @NonNull TagsService tagsService;
 
     @Inject
     public TagsPlaceholders(
-            final @NonNull Permission permission,
             final @NonNull UserPipeline userPipeline,
             final @NonNull TagsService tagsService
     ) {
-        this.permission = permission;
         this.userPipeline = userPipeline;
         this.tagsService = tagsService;
     }
@@ -54,12 +49,8 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
         TagsUser user = this.userPipeline.get(player.getUniqueId());
 
         if (identifier.equalsIgnoreCase("current")) {
-            return user.current()
-                    .map(this.tagsService::load)
-                    .filter(tag -> user.owns(this.permission, tag))
-                    .map(Tag::component)
-                    .map(LEGACY::serialize)
-                    .orElse("");
+            Tag tag = this.tagsService.load(user);
+            return LEGACY.serialize(tag.component());
         }
 
         return "";

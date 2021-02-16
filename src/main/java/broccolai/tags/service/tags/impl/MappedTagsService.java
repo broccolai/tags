@@ -20,23 +20,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
+
 @Singleton
 public final class MappedTagsService implements TagsService {
 
     private static final MiniMessage MINI = MiniMessage.get();
 
-    private final @NonNull Permission permission;
-
     private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
     private final @NonNull Map<String, Tag> nameToTags = new HashMap<>();
+
+    private final @NonNull Permission permission;
+    private final int defaultId;
 
     @Inject
     public MappedTagsService(final @NonNull Configuration configuration, final @NonNull Permission permission) {
         this.permission = permission;
+        this.defaultId = configuration.defaultTag;
 
         for (TagConfiguration config : configuration.tags) {
             this.create(config.id, config.name, config.secret, config.component, config.reason);
         }
+    }
+
+    @Override
+    public @NotNull Tag defaultTag() {
+        return this.load(this.defaultId);
     }
 
     @Override
@@ -61,8 +70,16 @@ public final class MappedTagsService implements TagsService {
     }
 
     @Override
-    public Tag load(final @NonNull String name) {
+    public @Nullable Tag load(final @NonNull String name) {
         return this.nameToTags.get(name);
+    }
+
+    @Override
+    public @NonNull Tag load(final @NonNull TagsUser user) {
+        return user.current()
+                .map(this::load)
+                .filter(tag -> user.owns(permission, tag))
+                .orElse(this.defaultTag());
     }
 
     @Override

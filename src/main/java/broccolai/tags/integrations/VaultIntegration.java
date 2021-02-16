@@ -34,7 +34,6 @@ public final class VaultIntegration {
 
     public static final class ChatHandler extends Chat {
 
-        private final Permission permission;
         private final UserPipeline userPipeline;
         private final TagsService tagsService;
 
@@ -44,7 +43,6 @@ public final class VaultIntegration {
                 final @NonNull TagsService tagsService
         ) {
             super(permission);
-            this.permission = permission;
             this.userPipeline = userPipeline;
             this.tagsService = tagsService;
         }
@@ -68,12 +66,9 @@ public final class VaultIntegration {
         @Override
         public String getPlayerPrefix(final String world, final OfflinePlayer player) {
             TagsUser user = this.userPipeline.get(player.getUniqueId());
-            return user.current()
-                    .map(this.tagsService::load)
-                    .filter(tag -> user.owns(this.permission, tag))
-                    .map(Tag::component)
-                    .map(LEGACY::serialize)
-                    .orElse("");
+            Tag tag = this.tagsService.load(user);
+
+            return LEGACY.serialize(tag.component());
         }
 
         @Override

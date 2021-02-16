@@ -22,6 +22,10 @@ public final class Configuration {
     public StorageConfiguration storage = new StorageConfiguration();
 
     @Setting
+    @Comment("Default tag to use when player has none selected")
+    public int defaultTag = 1;
+
+    @Setting
     @Comment(
             "Potential tags for players to obtain. \n"
                     + "Increment id for each new tag, if you remove a tag, treat the config as if it's id is still there. \n"

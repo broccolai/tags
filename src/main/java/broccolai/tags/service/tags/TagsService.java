@@ -7,7 +7,11 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Collection;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface TagsService {
+
+    @NotNull Tag defaultTag();
 
     void create(
             int id,
@@ -20,6 +24,8 @@ public interface TagsService {
     @Nullable Tag load(int id);
 
     @Nullable Tag load(@NonNull String name);
+
+    @NonNull Tag load(@NonNull TagsUser user);
 
     @NonNull Collection<@NonNull Tag> allTags();
 
