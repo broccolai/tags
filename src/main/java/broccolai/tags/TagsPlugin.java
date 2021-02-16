@@ -67,7 +67,7 @@ public final class TagsPlugin extends JavaPlugin {
         final HikariConfig hikariConfig = new HikariConfig();
 
         if (this.configuration.storage.storageType == StorageType.SQLITE) {
-            File file = new File(this.getDataFolder(), "tickets.db");
+            File file = new File(this.getDataFolder(), "tags.db");
             hikariConfig.setJdbcUrl("jdbc:sqlite:" + file.toString());
         }
 
