@@ -18,7 +18,7 @@ public final class VaultIntegration {
 
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
             .hexColors()
-            .character('§')
+            .character(LegacyComponentSerializer.SECTION_CHAR)
             .build();
 
     @Inject
@@ -34,15 +34,17 @@ public final class VaultIntegration {
 
     public static final class ChatHandler extends Chat {
 
+        private final Permission permission;
         private final UserPipeline userPipeline;
         private final TagsService tagsService;
 
         public ChatHandler(
-                final @NonNull Permission perms,
+                final @NonNull Permission permission,
                 final @NonNull UserPipeline userPipeline,
                 final @NonNull TagsService tagsService
         ) {
-            super(perms);
+            super(permission);
+            this.permission = permission;
             this.userPipeline = userPipeline;
             this.tagsService = tagsService;
         }
@@ -68,6 +70,7 @@ public final class VaultIntegration {
             TagsUser user = this.userPipeline.get(player.getUniqueId());
             return user.current()
                     .map(this.tagsService::load)
+                    .filter(tag -> user.owns(this.permission, tag))
                     .map(Tag::component)
                     .map(LEGACY::serialize)
                     .orElse("");

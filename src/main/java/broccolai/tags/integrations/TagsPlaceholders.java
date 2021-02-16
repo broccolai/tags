@@ -7,6 +7,7 @@ import broccolai.tags.service.user.UserPipeline;
 import com.google.inject.Inject;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.OfflinePlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -15,14 +16,20 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
 
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
             .hexColors()
-            .character('§')
+            .character(LegacyComponentSerializer.SECTION_CHAR)
             .build();
 
+    private final @NonNull Permission permission;
     private final @NonNull UserPipeline userPipeline;
     private final @NonNull TagsService tagsService;
 
     @Inject
-    public TagsPlaceholders(final @NonNull UserPipeline userPipeline, final @NonNull TagsService tagsService) {
+    public TagsPlaceholders(
+            final @NonNull Permission permission,
+            final @NonNull UserPipeline userPipeline,
+            final @NonNull TagsService tagsService
+    ) {
+        this.permission = permission;
         this.userPipeline = userPipeline;
         this.tagsService = tagsService;
     }
@@ -49,6 +56,7 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
         if (identifier.equalsIgnoreCase("current")) {
             return user.current()
                     .map(this.tagsService::load)
+                    .filter(tag -> user.owns(this.permission, tag))
                     .map(Tag::component)
                     .map(LEGACY::serialize)
                     .orElse("");
