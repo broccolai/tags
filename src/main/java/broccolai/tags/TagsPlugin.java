@@ -13,7 +13,7 @@ import broccolai.tags.inject.ServiceModule;
 import broccolai.tags.inject.UserModule;
 import broccolai.tags.inject.VaultModule;
 import broccolai.tags.inject.factory.CloudArgumentFactoryModule;
-import broccolai.tags.integrations.TagsPlaceholders;
+import broccolai.tags.integrations.PapiIntegration;
 import broccolai.tags.integrations.VaultIntegration;
 import broccolai.tags.model.locale.LocaleEntry;
 import broccolai.tags.model.user.TagsUser;
@@ -86,13 +86,10 @@ public final class TagsPlugin extends JavaPlugin {
 
         this.injector.getInstance(TagsCommand.class);
         this.injector.getInstance(TagsAdminCommand.class);
+        this.injector.getInstance(VaultIntegration.class);
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            this.injector.getInstance(TagsPlaceholders.class).register();
-        }
-
-        if (Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-            this.injector.getInstance(VaultIntegration.class);
+            this.injector.getInstance(PapiIntegration.class).register();
         }
     }
 

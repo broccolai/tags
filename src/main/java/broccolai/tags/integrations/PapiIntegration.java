@@ -10,7 +10,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.OfflinePlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class TagsPlaceholders extends PlaceholderExpansion {
+public final class PapiIntegration extends PlaceholderExpansion {
 
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
             .hexColors()
@@ -21,7 +21,7 @@ public final class TagsPlaceholders extends PlaceholderExpansion {
     private final @NonNull TagsService tagsService;
 
     @Inject
-    public TagsPlaceholders(
+    public PapiIntegration(
             final @NonNull UserPipeline userPipeline,
             final @NonNull TagsService tagsService
     ) {
