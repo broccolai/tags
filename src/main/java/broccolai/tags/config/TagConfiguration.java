@@ -18,7 +18,7 @@ public final class TagConfiguration {
     public String name;
 
     @Setting
-    @Comment("Whether to hide the tag from public displays")
+    @Comment("Whether to hide the tag from public info")
     public boolean secret = false;
 
     @Setting
