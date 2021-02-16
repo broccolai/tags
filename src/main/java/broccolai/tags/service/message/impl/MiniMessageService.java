@@ -40,19 +40,22 @@ public final class MiniMessageService implements MessageService {
         Component component = this.locale.commands.player.list.asComponent(this.prefix());
 
         for (Tag tag : tags) {
+            Template nameTemplate = Template.of("name", tag.name());
             Template tagComponent = Template.of("tag", tag.component());
 
-            component = component.append(this.locale.commands.player.listEntry.asComponent(tagComponent));
+            component = component.append(this.locale.commands.player.listEntry.asComponent(nameTemplate, tagComponent));
         }
 
         return component;
     }
 
     @Override
-    public Component commandPreview(final @NonNull Tag tag) {
-        Template tagComponent = Template.of("tag", tag.component());
+    public Component commandInfo(final @NonNull Tag tag) {
+        Template nameTemplate = Template.of("name", tag.name());
+        Template tagTemplate = Template.of("tag", tag.component());
+        Template reasonTemplate = Template.of("reason", tag.reason());
 
-        return this.locale.commands.player.preview.asComponent(this.prefix(), tagComponent);
+        return this.locale.commands.player.info.asComponent(this.prefix(), nameTemplate, tagTemplate, reasonTemplate);
     }
 
     @Override

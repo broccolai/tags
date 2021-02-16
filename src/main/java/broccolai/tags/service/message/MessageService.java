@@ -16,7 +16,7 @@ public interface MessageService {
 
     Component commandList(@NonNull Collection<Tag> tags);
 
-    Component commandPreview(@NonNull Tag tag);
+    Component commandInfo(@NonNull Tag tag);
 
     Component commandAdminGive(@NonNull Tag tag, @NonNull TagsUser target);
 
