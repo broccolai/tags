@@ -1,5 +1,6 @@
 package broccolai.tags.commands;
 
+import broccolai.tags.commands.arguments.modes.TagParserMode;
 import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.factory.CloudArgumentFactory;
 import broccolai.tags.model.tag.Tag;
@@ -39,14 +40,14 @@ public final class TagsAdminCommand {
         manager.command(tagsCommand
                 .literal("give")
                 .argument(argumentFactory.user("target", true))
-                .argument(argumentFactory.tag("tag", false, false))
+                .argument(argumentFactory.tag("tag", TagParserMode.ANY))
                 .handler(this::handleGive)
         );
 
         manager.command(tagsCommand
                 .literal("remove")
                 .argument(argumentFactory.user("target", true))
-                .argument(argumentFactory.tag("tag", false, false))
+                .argument(argumentFactory.tag("tag", TagParserMode.ANY))
                 .handler(this::handleRemove)
         );
 

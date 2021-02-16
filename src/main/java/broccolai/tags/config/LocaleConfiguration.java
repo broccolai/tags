@@ -45,7 +45,8 @@ public final class LocaleConfiguration {
             public LocaleEntry listEntry = new BasicLocaleEntry("<gray>[</gray><name>: <tag><gray>]</gray> ");
 
             @Setting
-            public LocaleEntry preview = new BasicLocaleEntry("<prefix> Your tag will appear like this: <tag>");
+            public LocaleEntry info = new BasicLocaleEntry("<prefix> Your <name> tag will appear like this: <tag> and is "
+                    + "obtained through: <reason>");
         }
 
         @ConfigSerializable

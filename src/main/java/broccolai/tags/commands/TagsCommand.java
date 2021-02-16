@@ -47,8 +47,9 @@ public final class TagsCommand {
         );
 
         manager.command(tagsCommand
-                .literal("preview")
-                .argument(argumentFactory.tag("tag", true, true))
+                .literal("info")
+                .permission("tags.command.user.info")
+                .argument(argumentFactory.tag("tag", TagParserMode.NON_SECRET))
                 .handler(this::handlePreview)
         );
     }
@@ -74,7 +75,7 @@ public final class TagsCommand {
         CommandUser sender = context.getSender();
         Tag tag = context.get("tag");
 
-        sender.sendMessage(this.messageService.commandPreview(tag));
+        sender.sendMessage(this.messageService.commandInfo(tag));
     }
 
 }
