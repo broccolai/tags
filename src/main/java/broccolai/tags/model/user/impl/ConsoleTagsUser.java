@@ -26,17 +26,17 @@ public final class ConsoleTagsUser implements TagsUser {
     }
 
     @Override
-    public void grant(@NonNull final Permission permission, @NonNull final Tag tag) {
+    public void grant(final @NonNull Permission permission, final @NonNull Tag tag) {
         // unnecessary
     }
 
     @Override
-    public void remove(@NonNull final Permission permission, @NonNull final Tag tag) {
+    public void remove(final @NonNull Permission permission, final @NonNull Tag tag) {
         // unnecessary
     }
 
     @Override
-    public boolean owns(@NonNull final Permission permission, @NonNull final Tag tag) {
+    public boolean owns(final @NonNull Permission permission, final @NonNull Tag tag) {
         return true;
     }
 

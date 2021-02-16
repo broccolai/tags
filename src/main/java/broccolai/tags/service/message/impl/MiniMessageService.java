@@ -49,7 +49,7 @@ public final class MiniMessageService implements MessageService {
     }
 
     @Override
-    public Component commandPreview(@NonNull final Tag tag) {
+    public Component commandPreview(final @NonNull Tag tag) {
         Template tagComponent = Template.of("tag", tag.component());
 
         return this.locale.commands.player.preview.asComponent(this.prefix(), tagComponent);
@@ -57,8 +57,8 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandAdminGive(
-            @NonNull final Tag tag,
-            @NonNull final TagsUser target
+            final @NonNull Tag tag,
+            final @NonNull TagsUser target
     ) {
         Template tagComponent = Template.of("tag", tag.component());
         Template targetComponent = Template.of("target", this.nameFromUser(target));
@@ -68,8 +68,8 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandAdminRemove(
-            @NonNull final Tag tag,
-            @NonNull final TagsUser target
+            final @NonNull Tag tag,
+            final @NonNull TagsUser target
     ) {
         Template tagComponent = Template.of("tag", tag.component());
         Template targetComponent = Template.of("target", this.nameFromUser(target));
@@ -78,7 +78,7 @@ public final class MiniMessageService implements MessageService {
     }
 
     @Override
-    public Component commandAdminList(@NonNull final Collection<Tag> tags) {
+    public Component commandAdminList(final @NonNull Collection<Tag> tags) {
         Component component = this.locale.commands.admin.list.asComponent(this.prefix());
 
         for (Tag tag : tags) {

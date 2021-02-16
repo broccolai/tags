@@ -34,17 +34,17 @@ public final class PlayerTagsUser implements TagsUser {
     }
 
     @Override
-    public void grant(@NonNull final Permission permission, @NonNull final Tag tag) {
+    public void grant(final @NonNull Permission permission, final @NonNull Tag tag) {
         permission.playerAdd(null, Bukkit.getOfflinePlayer(this.uuid), "tags.tag." + tag.id());
     }
 
     @Override
-    public void remove(@NonNull final Permission permission, @NonNull final Tag tag) {
+    public void remove(final @NonNull Permission permission, final @NonNull Tag tag) {
         permission.playerRemove(null, Bukkit.getOfflinePlayer(this.uuid), "tags.tag." + tag.id());
     }
 
     @Override
-    public boolean owns(@NonNull final Permission permission, @NonNull final Tag tag) {
+    public boolean owns(final @NonNull Permission permission, final @NonNull Tag tag) {
         return this.hasPermission(permission, "tags.tag." + tag.id());
     }
 

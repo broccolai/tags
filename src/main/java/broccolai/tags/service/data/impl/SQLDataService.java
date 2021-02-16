@@ -35,7 +35,7 @@ public final class SQLDataService implements DataService {
     }
 
     @Override
-    public void saveUser(@NonNull final TagsUser user) {
+    public void saveUser(final @NonNull TagsUser user) {
         if (user instanceof ConsoleTagsUser) {
             return;
         }

@@ -58,8 +58,8 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
         @Override
         public @NonNull ArgumentParseResult<Tag> parse(
-                @NonNull final CommandContext<@NonNull CommandUser> commandContext,
-                @NonNull final Queue<String> inputQueue
+                final @NonNull CommandContext<@NonNull CommandUser> commandContext,
+                final @NonNull Queue<String> inputQueue
         ) {
             final String input = inputQueue.peek();
 
