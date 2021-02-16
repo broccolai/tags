@@ -35,10 +35,12 @@ public final class TagsAdminCommand {
         this.messageService = messageService;
         this.tagsService = tagsService;
 
-        Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tagsadmin");
+        Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tagsadmin")
+                .permission("tags.command.admin");
 
         manager.command(tagsCommand
                 .literal("give")
+                .permission("tags.command.admin.give")
                 .argument(argumentFactory.user("target", true))
                 .argument(argumentFactory.tag("tag", TagParserMode.ANY))
                 .handler(this::handleGive)
@@ -46,6 +48,7 @@ public final class TagsAdminCommand {
 
         manager.command(tagsCommand
                 .literal("remove")
+                .permission("tags.command.admin.remove")
                 .argument(argumentFactory.user("target", true))
                 .argument(argumentFactory.tag("tag", TagParserMode.ANY))
                 .handler(this::handleRemove)
@@ -53,6 +56,7 @@ public final class TagsAdminCommand {
 
         manager.command(tagsCommand
                 .literal("list")
+                .permission("tags.command.admin.list")
                 .argument(argumentFactory.user("target", false))
                 .handler(this::handleList)
         );

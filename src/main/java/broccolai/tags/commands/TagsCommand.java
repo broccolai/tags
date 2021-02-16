@@ -1,5 +1,6 @@
 package broccolai.tags.commands;
 
+import broccolai.tags.commands.arguments.modes.TagParserMode;
 import broccolai.tags.commands.context.CommandUser;
 import broccolai.tags.factory.CloudArgumentFactory;
 import broccolai.tags.model.tag.Tag;
@@ -37,12 +38,14 @@ public final class TagsCommand {
 
         manager.command(tagsCommand
                 .literal("select")
-                .argument(argumentFactory.tag("tag", true, true))
+                .permission("tags.command.user.select")
+                .argument(argumentFactory.tag("tag", TagParserMode.SELF))
                 .handler(this::handleSelect)
         );
 
         manager.command(tagsCommand
                 .literal("list")
+                .permission("tags.command.user.list")
                 .handler(this::handleList)
         );
 
