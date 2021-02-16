@@ -90,6 +90,20 @@ public final class MiniMessageService implements MessageService {
         return component;
     }
 
+    @Override
+    public Component commandErrorUserNotFound(final @NonNull String input) {
+        Template inputTemplate = Template.of("input", input);
+
+        return this.locale.commands.error.userNotFound.asComponent(this.prefix(), inputTemplate);
+    }
+
+    @Override
+    public Component commandErrorTagNotFound(final @NonNull String input) {
+        Template inputTemplate = Template.of("input", input);
+
+        return this.locale.commands.error.tagNotFound.asComponent(this.prefix(), inputTemplate);
+    }
+
     //todo: Add user to TagUser object?
     private String nameFromUser(final @NonNull TagsUser user) {
         return Bukkit.getOfflinePlayer(user.uuid()).getName();

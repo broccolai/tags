@@ -3,6 +3,7 @@ package broccolai.tags.inject;
 import broccolai.tags.commands.arguments.TagArgument;
 import broccolai.tags.commands.arguments.UserArgument;
 import broccolai.tags.commands.context.CommandUser;
+import broccolai.tags.service.message.MessageService;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.bukkit.CloudBukkitCapabilities;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
@@ -13,8 +14,6 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -22,7 +21,11 @@ public final class CloudModule extends AbstractModule {
 
     @Provides
     @Singleton
-    CommandManager<CommandUser> provideCommandManager(final @NonNull Plugin plugin, final @NonNull BukkitAudiences audiences) {
+    CommandManager<CommandUser> provideCommandManager(
+            final @NonNull Plugin plugin,
+            final @NonNull BukkitAudiences audiences,
+            final @NonNull MessageService messageService
+    ) {
         try {
             PaperCommandManager<CommandUser> commandManager = new PaperCommandManager<>(
                     plugin,
@@ -44,11 +47,11 @@ public final class CloudModule extends AbstractModule {
                     .apply(commandManager, ForwardingAudience.Single::audience);
 
             commandManager.registerExceptionHandler(UserArgument.UserArgumentException.class, (user, ex) -> {
-                user.sendMessage(Component.text("User not found for: " + ex.input(), NamedTextColor.RED));
+                user.sendMessage(messageService.commandErrorUserNotFound(ex.input()));
             });
 
             commandManager.registerExceptionHandler(TagArgument.TagArgumentException.class, (user, ex) -> {
-                user.sendMessage(Component.text("Tag not found for: " + ex.input(), NamedTextColor.RED));
+                user.sendMessage(messageService.commandErrorTagNotFound(ex.input()));
             });
 
             return commandManager;

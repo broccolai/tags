@@ -30,6 +30,8 @@ public final class LocaleConfiguration {
 
         public AdminFeedbackLocaleConfiguration admin = new AdminFeedbackLocaleConfiguration();
 
+        public ErrorLocaleConfiguration error = new ErrorLocaleConfiguration();
+
         @ConfigSerializable
         public static final class PlayerFeedbackLocaleConfiguration {
 
@@ -40,7 +42,7 @@ public final class LocaleConfiguration {
             public LocaleEntry list = new BasicLocaleEntry("<prefix> You currently own these tags: ");
 
             @Setting
-            public LocaleEntry listEntry = new BasicLocaleEntry("<tag> ");
+            public LocaleEntry listEntry = new BasicLocaleEntry("<gray>[</gray><name>: <tag><gray>]</gray> ");
 
             @Setting
             public LocaleEntry preview = new BasicLocaleEntry("<prefix> Your tag will appear like this: <tag>");
@@ -56,10 +58,20 @@ public final class LocaleConfiguration {
             public LocaleEntry list = new BasicLocaleEntry("<prefix> These tags exist: ");
 
             @Setting
-            public LocaleEntry listEntry = new BasicLocaleEntry("<tag> ");
+            public LocaleEntry listEntry = new BasicLocaleEntry("<gray>[</gray><name>: <tag><gray>]</gray> ");
 
             @Setting
             public LocaleEntry remove = new BasicLocaleEntry("<prefix> Tag <tag> has been removed from <target>");
+        }
+
+        @ConfigSerializable
+        public static final class ErrorLocaleConfiguration {
+
+            @Setting
+            public LocaleEntry userNotFound = new BasicLocaleEntry("<prefix> User not found for: <input>");
+
+            @Setting
+            public LocaleEntry tagNotFound = new BasicLocaleEntry("<prefix> Tag not found for: <input>");
         }
     }
 

@@ -23,4 +23,8 @@ public interface MessageService {
     Component commandAdminRemove(@NonNull Tag tag, @NonNull TagsUser target);
 
     Component commandAdminList(@NonNull Collection<Tag> tags);
+
+    Component commandErrorUserNotFound(@NonNull String input);
+
+    Component commandErrorTagNotFound(@NonNull String input);
 }
