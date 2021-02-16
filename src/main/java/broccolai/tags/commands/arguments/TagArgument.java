@@ -73,7 +73,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 return ArgumentParseResult.failure(new TagArgumentException(input));
             }
 
-            if (shouldCheck) {
+            if (this.shouldCheck) {
                 TagsUser user;
 
                 if (this.selfTarget) {
@@ -83,7 +83,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                     user = commandContext.get("target");
                 }
 
-                if (!user.owns(permission, tag)) {
+                if (!user.owns(this.permission, tag)) {
                     return ArgumentParseResult.failure(new TagArgumentException(input));
                 }
             }

@@ -78,7 +78,7 @@ public final class MappedTagsService implements TagsService {
     public @NonNull Tag load(final @NonNull TagsUser user) {
         return user.current()
                 .map(this::load)
-                .filter(tag -> user.owns(permission, tag))
+                .filter(tag -> user.owns(this.permission, tag))
                 .orElse(this.defaultTag());
     }
 
@@ -90,7 +90,7 @@ public final class MappedTagsService implements TagsService {
     @Override
     public @NonNull Collection<Tag> allTags(final @NonNull TagsUser user) {
         List<Tag> filtered = new ArrayList<>(this.idToTags.values());
-        filtered.removeIf(tag -> !user.owns(permission, tag));
+        filtered.removeIf(tag -> !user.owns(this.permission, tag));
 
         return Collections.unmodifiableCollection(filtered);
     }
