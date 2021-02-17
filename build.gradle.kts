@@ -57,8 +57,7 @@ dependencies {
         isTransitive = false
     }
 
-    implementation("org.jdbi:jdbi3-core:3.18.0")
-    api("com.github.ben-manes.caffeine:caffeine:2.8.6")
+    implementation("org.jdbi:jdbi3-core:3.18.1-SCUFFED")
 
     implementation("com.zaxxer:HikariCP:3.4.5")
 
