@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "broccolai.tags"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_1_8
