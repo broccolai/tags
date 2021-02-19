@@ -86,7 +86,11 @@ public final class TagsPlugin extends JavaPlugin {
 
         this.injector.getInstance(TagsCommand.class);
         this.injector.getInstance(TagsAdminCommand.class);
-        this.injector.getInstance(VaultIntegration.class);
+
+        this.getServer().getPluginManager().registerEvents(
+                this.injector.getInstance(VaultIntegration.class),
+                this
+        );
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             this.injector.getInstance(PapiIntegration.class).register();
