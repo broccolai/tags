@@ -33,7 +33,8 @@ fun Project.setupShadowJar() {
                     "cloud.commandframework",
                     "net.kyori.adventure",
                     "net.kyori.examination",
-                    "org.flyway"
+                    "org.flyway",
+                    "broccolai.corn"
             )
 
             archiveFileName.set(project.name + ".jar")

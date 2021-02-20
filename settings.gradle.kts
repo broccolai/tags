@@ -1,6 +1,12 @@
 rootProject.name = "tags"
 
-use("core", "api")
+//include("api")
+//include("core")
+//
+//project(":api").name = "tags-api"
+//project(":core").name = "tags-core"
+
+use("api", "core", "bukkit")
 
 fun use(vararg names: String) {
     for (name in names) {
