@@ -39,6 +39,7 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
         }
 
         @Override
+        @SuppressWarnings("deprecation")
         public @NonNull ArgumentParseResult<TagsUser> parse(
                 final @NonNull CommandContext<@NonNull CommandUser> commandContext,
                 final @NonNull Queue<String> inputQueue
@@ -54,7 +55,6 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
             }
 
             //todo: UUID Pipeline?
-            //noinspection deprecation
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(input);
             TagsUser user = this.userPipeline.get(offlinePlayer.getUniqueId());
 
@@ -77,6 +77,8 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
     }
 
     public static final class UserArgumentException extends IllegalArgumentException {
+
+        private static final long serialVersionUID = 7407374822368222827L;
 
         private final String input;
 

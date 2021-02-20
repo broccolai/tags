@@ -133,6 +133,8 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
 
     public static final class TagArgumentException extends IllegalArgumentException {
 
+        private static final long serialVersionUID = 926974199863043883L;
+
         private final String input;
 
         private TagArgumentException(
