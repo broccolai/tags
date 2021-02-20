@@ -1,130 +1,67 @@
-import org.apache.tools.ant.filters.ReplaceTokens
+import net.kyori.indra.sonatypeSnapshots
 
 plugins {
-    id("java")
-    id("java-library")
-    id("checkstyle")
-    id("com.github.johnrengelman.shadow") version("6.1.0")
+    id("net.kyori.indra") version Versions.INDRA
+    id("net.kyori.indra.checkstyle") version Versions.INDRA
 }
 
 group = "broccolai.tags"
 version = "1.0"
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = sourceCompatibility
-}
-
 repositories {
     mavenCentral()
-    maven {
-        name = "papermc-repo"
-        url = uri("https://papermc.io/repo/repository/maven-public/")
-    }
-    maven {
-        name = "sonatype"
-        url = uri("https://oss.sonatype.org/content/groups/public/")
-    }
-    maven {
-        name = "PlaceholderAPI"
-        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    }
-    maven {
-        name = "JitPack"
-        url = uri("https://jitpack.io")
-    }
-    maven {
-        name = "broccolai"
-        url = uri("https://repo.broccol.ai")
-    }
+    sonatypeSnapshots()
+    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    maven("https://jitpack.io")
+    maven("https://repo.broccol.ai")
 }
 
 dependencies {
-    checkstyle("ca.stellardrift:stylecheck:0.1-SNAPSHOT")
+    compileOnlyApi("com.google.guava", "guava", Versions.GUAVA)
 
-    compileOnlyApi("org.checkerframework:checker-qual:3.5.0")
+    compileOnly("com.destroystokyo.paper", "paper-api", Versions.PAPER)
+    compileOnly("me.clip", "placeholderapi", Versions.PAPI)
+    compileOnly("com.github.MilkBowl", "VaultAPI", Versions.VAULT)
 
-    compileOnlyApi("com.google.guava:guava:21.0")
-
-    compileOnly("com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT")
-
-    compileOnly("me.clip:placeholderapi:2.10.9")
-
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-
-    api("com.google.inject:guice:5.0.0-BETA-1")
-    implementation("com.google.inject.extensions:guice-assistedinject:5.0.0-BETA-1") {
+    api("com.google.inject", "guice", Versions.GUICE)
+    implementation("com.google.inject.extensions", "guice-assistedinject", Versions.GUICE) {
         isTransitive = false
     }
 
-    implementation("org.jdbi:jdbi3-core:3.18.1-SCUFFED")
+    implementation("org.jdbi", "jdbi3-core", Versions.JDBI)
+    implementation("com.zaxxer", "HikariCP", Versions.HIKARI)
+    implementation("org.flywaydb", "flyway-core", Versions.FLYWAY)
 
-    implementation("com.zaxxer:HikariCP:3.4.5")
+    implementation("org.spongepowered", "configurate-hocon", Versions.CONFIGURATE)
 
-    implementation("org.flywaydb:flyway-core:7.3.1")
+    api("broccolai.corn", "corn-core", Versions.CORN)
 
-    implementation("org.spongepowered:configurate-hocon:4.0.0")
-
-    api("broccolai.corn:corn-core:2.0.0-SNAPSHOT")
-
-    api("net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT")
-    implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT") {
+    api("net.kyori", "adventure-platform-bukkit", Versions.ADVENTURE)
+    implementation("net.kyori", "adventure-text-minimessage", Versions.MINI_MESSAGE) {
         isTransitive = true
     }
 
-    api("cloud.commandframework:cloud-paper:1.4.0")
-    api("cloud.commandframework:cloud-minecraft-extras:1.4.0")
+    api("cloud.commandframework", "cloud-paper", Versions.CLOUD)
+    api("cloud.commandframework", "cloud-minecraft-extras", Versions.CLOUD)
 }
 
+setupShadowJar()
+
 tasks {
-    build {
-        dependsOn(shadowJar)
-    }
+    indra {
+        gpl3OnlyLicense()
 
-    shadowJar {
-        fun relocates(vararg dependencies: String) {
-            dependencies.forEach {
-                val split = it.split('.')
-                val name = split.last();
-                relocate(it, "${rootProject.group}.dependencies.$name")
-            }
+        javaVersions {
+            target.set(8)
         }
 
-        dependencies {
-            exclude(dependency("com.google.guava:"))
-            exclude(dependency("com.google.errorprone:"))
-            exclude(dependency("org.checkerframework:"))
+        github("broccolai", "tickets") {
+            ci = true
         }
-
-        relocates(
-                "com.github.benmanes.caffeine",
-                "com.typesafe.config",
-                "com.zaxxer.hikari",
-                "com.google.inject",
-                "org.antlr",
-                "org.slf4j",
-                "org.jdbi",
-                "org.aopalliance",
-                "org.spongepowered.configurate",
-                "io.leangen.geantyref",
-                "cloud.commandframework",
-                "net.kyori.adventure",
-                "net.kyori.examination",
-                "org.flyway"
-        )
-
-        archiveFileName.set(project.name + ".jar")
-        minimize()
-    }
-
-    checkstyle {
-        val configRoot = File(rootProject.projectDir, ".checkstyle")
-        toolVersion = "8.34"
-        configDirectory.set(configRoot)
-        configProperties["basedir"] = configRoot.absolutePath
     }
 
     processResources {
-        filter<ReplaceTokens>("tokens" to mapOf("version" to project.version))
+        expand("version" to project.version)
     }
 }
