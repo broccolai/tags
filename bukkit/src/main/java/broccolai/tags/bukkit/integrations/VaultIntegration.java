@@ -58,7 +58,6 @@ public final class VaultIntegration implements Listener, EventListener {
 
     @Subscribe
     public void onTagChange(final @NonNull TagChangeEvent event) {
-        System.out.println("lol");
         Player player = Bukkit.getPlayer(event.user().uuid());
         this.chat.setPlayerPrefix(player, LEGACY.serialize(event.tag().component()));
     }
