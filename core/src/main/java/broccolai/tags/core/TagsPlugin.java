@@ -1,5 +1,6 @@
 package broccolai.tags.core;
 
+import broccolai.tags.api.TagsApi;
 import broccolai.tags.core.commands.PluginCommand;
 import broccolai.tags.core.commands.TagsAdminCommand;
 import broccolai.tags.core.commands.TagsCommand;
@@ -24,6 +25,8 @@ public final class TagsPlugin {
     }
 
     public void start() {
+        TagsApi.register(this.injector);
+
         Flyway.configure(this.getClass().getClassLoader())
                 .baselineOnMigrate(true)
                 .locations("classpath:queries/migrations")
