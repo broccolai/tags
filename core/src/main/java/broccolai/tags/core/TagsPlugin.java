@@ -5,6 +5,8 @@ import broccolai.tags.core.commands.PluginCommand;
 import broccolai.tags.core.commands.TagsAdminCommand;
 import broccolai.tags.core.commands.TagsCommand;
 import broccolai.tags.core.commands.context.CommandUser;
+import broccolai.tags.core.config.MainConfiguration;
+import broccolai.tags.core.data.StorageMethod;
 import broccolai.tags.core.service.user.partials.UserCacheService;
 import cloud.commandframework.CommandManager;
 import com.google.inject.Inject;
@@ -12,7 +14,6 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariDataSource;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.flywaydb.core.Flyway;
 
 @Singleton
 public final class TagsPlugin {
@@ -26,13 +27,6 @@ public final class TagsPlugin {
 
     public void start() {
         TagsApi.register(this.injector);
-
-        Flyway.configure(this.getClass().getClassLoader())
-                .baselineOnMigrate(true)
-                .locations("classpath:queries/migrations")
-                .dataSource(this.injector.getInstance(HikariDataSource.class))
-                .load()
-                .migrate();
 
         this.injector.getInstance(TagsCommand.class);
         this.injector.getInstance(TagsAdminCommand.class);
@@ -49,7 +43,10 @@ public final class TagsPlugin {
 
     public void shutdown() {
         this.injector.getInstance(UserCacheService.class).close();
-        this.injector.getInstance(HikariDataSource.class).close();
+
+        if (this.injector.getInstance(MainConfiguration.class).storage.storageMethod != StorageMethod.LUCKPERMS) {
+            this.injector.getInstance(HikariDataSource.class).close();
+        }
     }
 
 
