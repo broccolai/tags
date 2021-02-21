@@ -90,9 +90,10 @@ public final class MiniMessageService implements MessageService {
         Component component = this.locale.commands.admin.list.asComponent(this.prefix());
 
         for (Tag tag : tags) {
-            Template tagComponent = Template.of("tag", tag.component());
+            Template nameTemplate = Template.of("name", tag.name());
+            Template tagTemplate = Template.of("tag", tag.component());
 
-            component = component.append(this.locale.commands.admin.listEntry.asComponent(tagComponent));
+            component = component.append(this.locale.commands.admin.listEntry.asComponent(nameTemplate, tagTemplate));
         }
 
         return component;
