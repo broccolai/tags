@@ -12,6 +12,7 @@ import com.google.inject.Module;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public interface TagsPlatform {
+
     @NonNull Module @NonNull [] STANDARD_MODULES = new Module[]{
             new ConfigurationModule(),
             new PluginModule(),
@@ -23,4 +24,5 @@ public interface TagsPlatform {
             TagsCommand.class,
             TagsAdminCommand.class
     );
+
 }

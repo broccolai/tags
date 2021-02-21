@@ -47,6 +47,7 @@ public final class LocaleConfiguration implements Configuration {
             @Setting
             public LocaleEntry info = new BasicLocaleEntry("<prefix> Your <name> tag will appear like this: <tag> and is "
                     + "obtained through: <reason>");
+
         }
 
         @ConfigSerializable
@@ -63,6 +64,7 @@ public final class LocaleConfiguration implements Configuration {
 
             @Setting
             public LocaleEntry remove = new BasicLocaleEntry("<prefix> Tag <tag> has been removed from <target>");
+
         }
 
         @ConfigSerializable
@@ -73,7 +75,9 @@ public final class LocaleConfiguration implements Configuration {
 
             @Setting
             public LocaleEntry tagNotFound = new BasicLocaleEntry("<prefix> Tag not found for: <input>");
+
         }
+
     }
 
     //region Configurate

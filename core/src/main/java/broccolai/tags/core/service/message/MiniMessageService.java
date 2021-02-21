@@ -1,10 +1,10 @@
 package broccolai.tags.core.service.message;
 
+import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.UserService;
 import broccolai.tags.core.config.LocaleConfiguration;
-import broccolai.tags.api.model.tag.Tag;
-import broccolai.tags.api.model.user.TagsUser;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;

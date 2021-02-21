@@ -1,13 +1,13 @@
 package broccolai.tags.core.commands.arguments;
 
 import broccolai.corn.core.Lists;
+import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.PermissionService;
+import broccolai.tags.api.service.TagsService;
 import broccolai.tags.api.service.UserService;
 import broccolai.tags.core.commands.arguments.modes.TagParserMode;
 import broccolai.tags.core.commands.context.CommandUser;
-import broccolai.tags.api.model.user.TagsUser;
-import broccolai.tags.api.model.tag.Tag;
-import broccolai.tags.api.service.TagsService;
 import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
 import cloud.commandframework.arguments.parser.ArgumentParser;
@@ -15,11 +15,9 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-
-import java.util.ArrayList;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
@@ -77,7 +75,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 CommandUser self = commandContext.getSender();
                 TagsUser user = this.userService.get(self.uuid());
 
-                if (!this.permissionService.has(user, tag))  {
+                if (!this.permissionService.has(user, tag)) {
                     return ArgumentParseResult.failure(new TagArgumentException(input));
                 }
             } else if (this.mode == TagParserMode.SELF || this.mode == TagParserMode.TARGET) {
@@ -91,7 +89,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 }
 
 
-                if (!this.permissionService.has(user, tag))  {
+                if (!this.permissionService.has(user, tag)) {
                     return ArgumentParseResult.failure(new TagArgumentException(input));
                 }
             }

@@ -5,5 +5,7 @@ import cloud.commandframework.CommandManager;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public interface PluginCommand {
+
     void register(@NonNull CommandManager<@NonNull CommandUser> commandManager);
+
 }

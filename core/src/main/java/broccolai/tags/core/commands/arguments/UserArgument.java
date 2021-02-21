@@ -1,8 +1,8 @@
 package broccolai.tags.core.commands.arguments;
 
-import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.UserService;
+import broccolai.tags.core.commands.context.CommandUser;
 import cloud.commandframework.arguments.CommandArgument;
 import cloud.commandframework.arguments.parser.ArgumentParseResult;
 import cloud.commandframework.arguments.parser.ArgumentParser;

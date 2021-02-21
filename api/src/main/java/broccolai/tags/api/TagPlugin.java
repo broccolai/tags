@@ -6,6 +6,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class TagPlugin {
+
     private static @MonotonicNonNull Injector INJECTOR;
 
     private TagPlugin() {
@@ -18,4 +19,5 @@ public final class TagPlugin {
     public static <T extends Service> T getService(final @NonNull Class<T> clazz) {
         return INJECTOR.getInstance(clazz);
     }
+
 }

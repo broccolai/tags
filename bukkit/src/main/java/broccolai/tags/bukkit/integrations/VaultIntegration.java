@@ -1,7 +1,7 @@
 package broccolai.tags.bukkit.integrations;
 
-import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.TagsService;
 import broccolai.tags.api.service.UserService;
 import com.google.inject.Inject;
@@ -50,4 +50,5 @@ public final class VaultIntegration implements Listener {
             this.chat.setPlayerPrefix(player, LEGACY.serialize(tag.component()));
         });
     }
+
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface UserService extends Service {
+
     @NonNull TagsUser get(@NonNull UUID uuid);
 
     @NonNull TagsUser get(@NonNull String username);
@@ -19,4 +20,5 @@ public interface UserService extends Service {
     @NonNull String name(@NonNull TagsUser user);
 
     @NonNull List<@NonNull String> onlineNames();
+
 }

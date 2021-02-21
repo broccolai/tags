@@ -1,6 +1,6 @@
-import net.kyori.indra.sonatypeSnapshots
 import net.kyori.indra.IndraCheckstylePlugin
 import net.kyori.indra.IndraPlugin
+import net.kyori.indra.sonatypeSnapshots
 
 plugins {
     id("net.kyori.indra") version Versions.INDRA
