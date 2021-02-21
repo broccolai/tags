@@ -32,6 +32,9 @@ fun Project.setupShadowJar() {
                     "cloud.commandframework",
                     "net.kyori.adventure",
                     "net.kyori.examination",
+                    "net.kyori.event",
+                    "net.kyori.coffee",
+                    "org.objectweb.asm",
                     "org.flyway",
                     "broccolai.corn"
             )
