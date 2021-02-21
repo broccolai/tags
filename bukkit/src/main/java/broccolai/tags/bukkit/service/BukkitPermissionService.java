@@ -20,17 +20,17 @@ public final class BukkitPermissionService implements PermissionService {
 
     @Override
     public boolean has(final TagsUser user, final Permissible permissible) {
-        return this.permission.playerHas(this.player(user), permissible.permission());
+        return this.permission.playerHas(null, this.player(user), permissible.permission());
     }
 
     @Override
     public void grant(final TagsUser user, final Permissible permissible) {
-        this.permission.playerAdd(this.player(user), permissible.permission());
+        this.permission.playerAdd(null, this.player(user), permissible.permission());
     }
 
     @Override
     public void remove(final TagsUser user, final Permissible permissible) {
-        this.permission.playerRemove(this.player(user), permissible.permission());
+        this.permission.playerRemove(null, this.player(user), permissible.permission());
     }
 
     private Player player(final @NonNull TagsUser user) {
