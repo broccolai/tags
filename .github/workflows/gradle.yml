@@ -1,8 +1,4 @@
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -30,4 +26,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: tags.jar
-          path: build/libs/tags.jar
+          path: bukkit/build/libs/tags.jar
