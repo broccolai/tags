@@ -15,5 +15,7 @@ object Versions {
     const val ADVENTURE = "4.5.0"
     const val ADVENTURE_PLATFORM = "4.0.0-SNAPSHOT"
     const val MINI_MESSAGE = "4.1.0-SNAPSHOT"
+    const val EVENT = "4.0.0-SNAPSHOT"
+    const val COFFEE = "1.0.0-SNAPSHOT"
     const val CLOUD = "1.4.0"
 }
