@@ -1,6 +1,6 @@
 name : Tags
-version : @version@
-main : broccolai.tags.TagsPlugin
+version : $version
+main : broccolai.tags.bukkit.BukkitTagsPlatform
 api-version : 1.16
 depend : [ Vault ]
 softdepend : [ PlaceholderAPI ]
