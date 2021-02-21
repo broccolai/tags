@@ -5,4 +5,6 @@ dependencies {
     api("net.kyori", "adventure-text-minimessage", Versions.MINI_MESSAGE) {
         isTransitive = true
     }
+
+    api("net.kyori", "event-api", "4.0.0-SNAPSHOT")
 }
