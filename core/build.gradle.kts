@@ -1,5 +1,3 @@
-setupShadowJar()
-
 dependencies {
     api(project(":tags-api"))
     compileOnlyApi("com.google.guava", "guava", Versions.GUAVA)

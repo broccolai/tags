@@ -1,3 +1,5 @@
+setupShadowJar()
+
 dependencies {
     api(project(":tags-core"))
 
