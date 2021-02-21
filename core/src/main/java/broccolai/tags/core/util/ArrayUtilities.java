@@ -1,15 +1,15 @@
 package broccolai.tags.core.util;
 
 import com.google.inject.Module;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 public final class ArrayUtilities {
+
     private ArrayUtilities() {
         // utility class
     }

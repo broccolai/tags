@@ -1,9 +1,9 @@
 package broccolai.tags.core.service.data;
 
 import broccolai.tags.api.model.user.TagsUser;
+import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
 import broccolai.tags.api.service.DataService;
 import broccolai.tags.core.util.ResourceReader;
-import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.checkerframework.checker.nullness.qual.NonNull;

@@ -2,9 +2,9 @@ package broccolai.tags.core.inject;
 
 import broccolai.tags.api.service.DataService;
 import broccolai.tags.api.service.MessageService;
+import broccolai.tags.api.service.TagsService;
 import broccolai.tags.core.service.data.SQLDataService;
 import broccolai.tags.core.service.message.MiniMessageService;
-import broccolai.tags.api.service.TagsService;
 import broccolai.tags.core.service.tags.MappedTagsService;
 import com.google.inject.AbstractModule;
 

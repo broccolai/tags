@@ -28,4 +28,5 @@ public interface MessageService extends Service {
     Component commandErrorUserNotFound(@NonNull String input);
 
     Component commandErrorTagNotFound(@NonNull String input);
+
 }

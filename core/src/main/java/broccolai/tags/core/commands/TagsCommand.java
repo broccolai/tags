@@ -1,13 +1,13 @@
 package broccolai.tags.core.commands;
 
-import broccolai.tags.core.commands.arguments.modes.TagParserMode;
-import broccolai.tags.core.commands.context.CommandUser;
-import broccolai.tags.core.factory.CloudArgumentFactory;
 import broccolai.tags.api.model.tag.Tag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.TagsService;
 import broccolai.tags.api.service.UserService;
+import broccolai.tags.core.commands.arguments.modes.TagParserMode;
+import broccolai.tags.core.commands.context.CommandUser;
+import broccolai.tags.core.factory.CloudArgumentFactory;
 import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;

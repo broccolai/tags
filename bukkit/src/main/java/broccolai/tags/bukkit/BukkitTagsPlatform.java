@@ -119,4 +119,5 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
 
         return null;
     }
+
 }

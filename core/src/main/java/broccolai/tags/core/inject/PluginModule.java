@@ -9,11 +9,10 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import java.io.File;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jdbi.v3.core.Jdbi;
+
+import java.io.File;
 
 public final class PluginModule extends AbstractModule {
 

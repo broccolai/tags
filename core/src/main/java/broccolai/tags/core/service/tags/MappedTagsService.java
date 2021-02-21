@@ -1,18 +1,18 @@
 package broccolai.tags.core.service.tags;
 
+import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.PermissionService;
+import broccolai.tags.api.service.TagsService;
 import broccolai.tags.core.config.MainConfiguration;
 import broccolai.tags.core.config.TagConfiguration;
-import broccolai.tags.api.model.user.TagsUser;
-import broccolai.tags.api.model.tag.Tag;
-import broccolai.tags.api.service.TagsService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import java.util.TreeMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,8 +20,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.jetbrains.annotations.NotNull;
+import java.util.TreeMap;
 
 @Singleton
 public final class MappedTagsService implements TagsService {
@@ -35,7 +34,10 @@ public final class MappedTagsService implements TagsService {
     private final int defaultId;
 
     @Inject
-    public MappedTagsService(final @NonNull MainConfiguration mainConfiguration, final @NonNull PermissionService permissionService) {
+    public MappedTagsService(
+            final @NonNull MainConfiguration mainConfiguration,
+            final @NonNull PermissionService permissionService
+    ) {
         this.permissionService = permissionService;
         this.defaultId = mainConfiguration.defaultTag;
 

@@ -5,10 +5,9 @@ import broccolai.tags.api.model.tag.Tag;
 import broccolai.tags.api.model.user.TagsUser;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-
-import org.jetbrains.annotations.NotNull;
 
 public interface TagsService extends Service {
 

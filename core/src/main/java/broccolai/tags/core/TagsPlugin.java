@@ -1,16 +1,15 @@
 package broccolai.tags.core;
 
 import broccolai.tags.core.commands.PluginCommand;
-import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.core.commands.TagsAdminCommand;
 import broccolai.tags.core.commands.TagsCommand;
+import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.core.service.user.partials.UserCacheService;
 import cloud.commandframework.CommandManager;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariDataSource;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.flywaydb.core.Flyway;
 

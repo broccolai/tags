@@ -6,6 +6,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.util.UUID;
 
 public interface CommandUser extends ForwardingAudience.Single {
+
     UUID uuid();
 
     @SuppressWarnings("unchecked")

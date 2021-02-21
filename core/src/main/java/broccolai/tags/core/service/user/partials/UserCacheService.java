@@ -1,9 +1,9 @@
 package broccolai.tags.core.service.user.partials;
 
 import broccolai.tags.api.model.user.TagsUser;
+import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
 import broccolai.tags.api.service.DataService;
 import broccolai.tags.core.service.user.PartialUserService;
-import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
