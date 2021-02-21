@@ -37,7 +37,7 @@ subprojects {
         }
 
         processResources {
-            expand("version" to project.version)
+            expand("version" to rootProject.version)
         }
     }
 }
