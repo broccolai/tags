@@ -1,5 +1,6 @@
 package broccolai.tags.bukkit;
 
+import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.bukkit.commands.context.BukkitCommandUser;
 import broccolai.tags.bukkit.commands.context.BukkitConsoleCommandUser;
@@ -51,8 +52,10 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
                 injector.getInstance(MessageService.class)
         );
 
+        VaultIntegration vaultIntegration = injector.getInstance(VaultIntegration.class);
+
         this.getServer().getPluginManager().registerEvents(
-                injector.getInstance(VaultIntegration.class),
+                vaultIntegration,
                 this
         );
 
@@ -60,6 +63,7 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
             injector.getInstance(PapiIntegration.class).register();
         }
 
+        injector.getInstance(EventService.class).registerListeners(vaultIntegration);
         this.plugin.commands(commandManager, COMMANDS);
     }
 

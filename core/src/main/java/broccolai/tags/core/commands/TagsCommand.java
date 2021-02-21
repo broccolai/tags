@@ -1,7 +1,9 @@
 package broccolai.tags.core.commands;
 
+import broccolai.tags.api.events.event.TagChangeEvent;
 import broccolai.tags.api.model.tag.Tag;
 import broccolai.tags.api.model.user.TagsUser;
+import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.TagsService;
 import broccolai.tags.api.service.UserService;
@@ -22,18 +24,21 @@ public final class TagsCommand implements PluginCommand {
     private final @NonNull MessageService messageService;
     private final @NonNull UserService userService;
     private final @NonNull TagsService tagsService;
+    private final @NonNull EventService eventService;
 
     @Inject
     public TagsCommand(
             final @NonNull CloudArgumentFactory argumentFactory,
             final @NonNull MessageService messageService,
             final @NonNull UserService userService,
-            final @NonNull TagsService tagsService
+            final @NonNull TagsService tagsService,
+            final @NonNull EventService eventService
     ) {
         this.argumentFactory = argumentFactory;
         this.messageService = messageService;
         this.userService = userService;
         this.tagsService = tagsService;
+        this.eventService = eventService;
     }
 
     @Override
@@ -68,7 +73,8 @@ public final class TagsCommand implements PluginCommand {
         TagsUser user = this.userService.get(sender.uuid());
         Tag tag = context.get("tag");
 
-        user.setCurrent(tag);
+        user.setCurrent(tag); //todo: Move this into a listener
+        this.eventService.post(new TagChangeEvent(user, this.tagsService.load(user)));
         sender.sendMessage(this.messageService.commandSelect(tag));
     }
 
