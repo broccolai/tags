@@ -85,18 +85,9 @@ public final class ConfigurationModule extends AbstractModule {
     }
 
     public static <N extends ConfigurationNode> N updateNode(final N node) throws ConfigurateException {
-        System.out.println("start");
         if (!node.virtual()) { // we only want to migrate existing data
-            System.out.println("start-wo");
             final ConfigurationTransformation.Versioned trans = create();
-            final int startVersion = trans.version(node);
-            System.out.println("start " + startVersion);
             trans.apply(node);
-            final int endVersion = trans.version(node);
-            System.out.println("end " + endVersion);
-            if (startVersion != endVersion) { // we might not have made any changes
-                System.out.println("Updated config schema from " + startVersion + " to " + endVersion);
-            }
         }
         return node;
     }
