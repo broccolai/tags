@@ -17,47 +17,53 @@ import java.util.Collection;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class TagsAdminCommand {
+public final class TagsAdminCommand implements PluginCommand {
 
+    private final @NonNull CloudArgumentFactory argumentFactory;
     private final @NonNull PermissionService permissionService;
     private final @NonNull MessageService messageService;
     private final @NonNull TagsService tagsService;
 
     @Inject
     public TagsAdminCommand(
-            final @NonNull CommandManager<CommandUser> manager,
             final @NonNull CloudArgumentFactory argumentFactory,
             final @NonNull PermissionService permissionService,
             final @NonNull MessageService messageService,
             final @NonNull TagsService tagsService
     ) {
+        this.argumentFactory = argumentFactory;
         this.permissionService = permissionService;
         this.messageService = messageService;
         this.tagsService = tagsService;
+    }
 
-        Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tagsadmin")
+    @Override
+    public void register(
+            @NonNull final CommandManager<@NonNull CommandUser> commandManager
+    ) {
+        Command.Builder<CommandUser> tagsCommand = commandManager.commandBuilder("tagsadmin")
                 .permission("tags.command.admin");
 
-        manager.command(tagsCommand
+        commandManager.command(tagsCommand
                 .literal("give")
                 .permission("tags.command.admin.give")
-                .argument(argumentFactory.user("target", true))
-                .argument(argumentFactory.tag("tag", TagParserMode.ANY))
+                .argument(this.argumentFactory.user("target", true))
+                .argument(this.argumentFactory.tag("tag", TagParserMode.ANY))
                 .handler(this::handleGive)
         );
 
-        manager.command(tagsCommand
+        commandManager.command(tagsCommand
                 .literal("remove")
                 .permission("tags.command.admin.remove")
-                .argument(argumentFactory.user("target", true))
-                .argument(argumentFactory.tag("tag", TagParserMode.ANY))
+                .argument(this.argumentFactory.user("target", true))
+                .argument(this.argumentFactory.tag("tag", TagParserMode.ANY))
                 .handler(this::handleRemove)
         );
 
-        manager.command(tagsCommand
+        commandManager.command(tagsCommand
                 .literal("list")
                 .permission("tags.command.admin.list")
-                .argument(argumentFactory.user("target", false))
+                .argument(this.argumentFactory.user("target", false))
                 .handler(this::handleList)
         );
     }
