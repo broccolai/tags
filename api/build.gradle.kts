@@ -6,5 +6,5 @@ dependencies {
         isTransitive = true
     }
 
-    api("net.kyori", "event-api", "4.0.0-SNAPSHOT")
+    api("net.kyori", "event-api", Versions.EVENT)
 }

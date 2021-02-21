@@ -15,7 +15,7 @@ dependencies {
     api("broccolai.corn", "corn-core", Versions.CORN)
 
     api("cloud.commandframework", "cloud-core", Versions.CLOUD)
-    api("net.kyori", "coffee-functional", "1.0.0-SNAPSHOT")
+    api("net.kyori", "coffee-functional", Versions.COFFEE)
 
-    api("net.kyori", "event-method-asm", "4.0.0-SNAPSHOT")
+    api("net.kyori", "event-method-asm", Versions.EVENT)
 }
