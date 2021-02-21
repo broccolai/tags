@@ -1,6 +1,6 @@
 package broccolai.tags.core.config;
 
-import broccolai.tags.core.data.StorageType;
+import broccolai.tags.core.data.StorageMethod;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
@@ -9,7 +9,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public class StorageConfiguration {
 
     @Setting
-    @Comment("Storage Type. Current options are: SQLITE")
-    public StorageType storageType = StorageType.SQLITE;
+    @Comment("Storage method. Current options are: LUCKPERMS, SQLITE")
+    public StorageMethod storageMethod = StorageMethod.LUCKPERMS;
 
 }

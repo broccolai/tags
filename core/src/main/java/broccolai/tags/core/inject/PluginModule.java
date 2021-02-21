@@ -2,7 +2,7 @@ package broccolai.tags.core.inject;
 
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.core.config.MainConfiguration;
-import broccolai.tags.core.data.StorageType;
+import broccolai.tags.core.data.StorageMethod;
 import broccolai.tags.core.data.jdbi.UserMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -24,7 +24,7 @@ public final class PluginModule extends AbstractModule {
     ) {
         HikariConfig hikariConfig = new HikariConfig();
 
-        if (configuration.storage.storageType == StorageType.SQLITE) {
+        if (configuration.storage.storageMethod == StorageMethod.SQLITE) {
             File file = new File(folder, "tags.db");
             hikariConfig.setJdbcUrl("jdbc:sqlite:" + file);
         }
