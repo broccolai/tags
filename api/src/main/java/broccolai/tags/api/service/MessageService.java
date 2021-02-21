@@ -25,6 +25,8 @@ public interface MessageService extends Service {
 
     Component commandAdminList(@NonNull Collection<Tag> tags);
 
+    Component commandAdminSet(@NonNull Tag tag, @NonNull TagsUser target);
+
     Component commandErrorUserNotFound(@NonNull String input);
 
     Component commandErrorTagNotFound(@NonNull String input);

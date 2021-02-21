@@ -65,6 +65,9 @@ public final class LocaleConfiguration implements Configuration {
             @Setting
             public LocaleEntry remove = new BasicLocaleEntry("<prefix> Tag <tag> has been removed from <target>");
 
+            @Setting
+            public LocaleEntry set = new BasicLocaleEntry("<prefix> <target> had their tag set to <tag>");
+
         }
 
         @ConfigSerializable

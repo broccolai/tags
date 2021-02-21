@@ -100,6 +100,14 @@ public final class MiniMessageService implements MessageService {
     }
 
     @Override
+    public Component commandAdminSet(@NonNull final Tag tag, @NonNull final TagsUser target) {
+        Template tagTemplate = Template.of("tag", tag.component());
+        Template targetTemplate = Template.of("target", this.nameFromUser(target));
+
+        return this.locale.commands.admin.list.asComponent(this.prefix(), tagTemplate, targetTemplate);
+    }
+
+    @Override
     public Component commandErrorUserNotFound(final @NonNull String input) {
         Template inputTemplate = Template.of("input", input);
 

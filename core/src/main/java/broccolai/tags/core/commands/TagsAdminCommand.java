@@ -12,9 +12,10 @@ import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class TagsAdminCommand implements PluginCommand {
 
@@ -65,6 +66,14 @@ public final class TagsAdminCommand implements PluginCommand {
                 .argument(this.argumentFactory.user("target", false))
                 .handler(this::handleList)
         );
+
+        commandManager.command(tagsCommand
+                .literal("set")
+                .permission("tags.command.admin.set")
+                .argument(this.argumentFactory.user("target", true))
+                .argument(this.argumentFactory.tag("tag", TagParserMode.TARGET))
+                .handler(this::handleSet)
+        );
     }
 
     private void handleGive(final @NonNull CommandContext<CommandUser> context) {
@@ -92,6 +101,15 @@ public final class TagsAdminCommand implements PluginCommand {
                 .orElse(this.tagsService.allTags());
 
         sender.sendMessage(this.messageService.commandAdminList(tags));
+    }
+
+    private void handleSet(final @NonNull CommandContext<CommandUser> context) {
+        CommandUser sender = context.getSender();
+        TagsUser target = context.get("target");
+        Tag tag = context.get("tag");
+
+        target.setCurrent(tag);
+        sender.sendMessage(this.messageService.commandAdminSet(tag, target));
     }
 
 }
