@@ -16,43 +16,49 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
 
-public final class TagsCommand {
+public final class TagsCommand implements PluginCommand {
 
+    private final @NonNull CloudArgumentFactory argumentFactory;
     private final @NonNull MessageService messageService;
     private final @NonNull UserService userService;
     private final @NonNull TagsService tagsService;
 
     @Inject
     public TagsCommand(
-            final @NonNull CommandManager<CommandUser> manager,
             final @NonNull CloudArgumentFactory argumentFactory,
             final @NonNull MessageService messageService,
             final @NonNull UserService userService,
             final @NonNull TagsService tagsService
     ) {
+        this.argumentFactory = argumentFactory;
         this.messageService = messageService;
         this.userService = userService;
         this.tagsService = tagsService;
+    }
 
-        Command.Builder<CommandUser> tagsCommand = manager.commandBuilder("tags");
+    @Override
+    public void register(
+            @NonNull final CommandManager<@NonNull CommandUser> commandManager
+    ) {
+        Command.Builder<CommandUser> tagsCommand = commandManager.commandBuilder("tags");
 
-        manager.command(tagsCommand
+        commandManager.command(tagsCommand
                 .literal("select")
                 .permission("tags.command.user.select")
-                .argument(argumentFactory.tag("tag", TagParserMode.SELF))
+                .argument(this.argumentFactory.tag("tag", TagParserMode.SELF))
                 .handler(this::handleSelect)
         );
 
-        manager.command(tagsCommand
+        commandManager.command(tagsCommand
                 .literal("list")
                 .permission("tags.command.user.list")
                 .handler(this::handleList)
         );
 
-        manager.command(tagsCommand
+        commandManager.command(tagsCommand
                 .literal("info")
                 .permission("tags.command.user.info")
-                .argument(argumentFactory.tag("tag", TagParserMode.NON_SECRET))
+                .argument(this.argumentFactory.tag("tag", TagParserMode.NON_SECRET))
                 .handler(this::handlePreview)
         );
     }
