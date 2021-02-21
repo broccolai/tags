@@ -1,6 +1,7 @@
 dependencies {
     api(project(":tags-api"))
     compileOnlyApi("com.google.guava", "guava", Versions.GUAVA)
+    compileOnly("net.luckperms", "api", Versions.LUCKPERMS)
 
     implementation("com.google.inject.extensions", "guice-assistedinject", Versions.GUICE) {
         isTransitive = false

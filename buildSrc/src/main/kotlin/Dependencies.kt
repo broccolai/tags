@@ -18,4 +18,5 @@ object Versions {
     const val EVENT = "4.0.0-SNAPSHOT"
     const val COFFEE = "1.0.0-SNAPSHOT"
     const val CLOUD = "1.4.0"
+    const val LUCKPERMS = "5.2"
 }
