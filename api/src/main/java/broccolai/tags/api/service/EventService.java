@@ -8,6 +8,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 public interface EventService extends EventBus<Event>, Service {
 
-    void registerListeners(@NonNull EventListener... events);
+    void register(@NonNull EventListener listener);
 
 }
