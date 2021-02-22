@@ -3,7 +3,7 @@ object Versions {
     const val SHADOW = "6.1.0"
 
     const val GUAVA = "21.0"
-    const val PAPER = "1.16.5-R0.1-SNAPSHOT"
+    const val SPIGOT = "1.16.5-R0.1-SNAPSHOT"
     const val PAPI = "2.10.9"
     const val VAULT = "1.7"
     const val GUICE = "5.0.0-BETA-1"
