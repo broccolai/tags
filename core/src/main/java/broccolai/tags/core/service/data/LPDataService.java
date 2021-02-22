@@ -1,18 +1,16 @@
 package broccolai.tags.core.service.data;
 
 import broccolai.tags.api.model.user.TagsUser;
-
 import broccolai.tags.api.model.user.impl.PlayerTagsUser;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import net.luckperms.api.LuckPerms;
 import broccolai.tags.api.service.DataService;
+import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.MetaNode;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public final class LPDataService implements DataService {
 

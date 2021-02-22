@@ -12,6 +12,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Singleton
 public final class ASMEventService extends SimpleEventBus<Event> implements EventService {
+
     private final MethodSubscriptionAdapter<EventListener> methodAdapter = new SimpleMethodSubscriptionAdapter<>(
             this,
             new MethodHandleEventExecutorFactory<>()
@@ -27,4 +28,5 @@ public final class ASMEventService extends SimpleEventBus<Event> implements Even
             this.methodAdapter.register(listener);
         }
     }
+
 }

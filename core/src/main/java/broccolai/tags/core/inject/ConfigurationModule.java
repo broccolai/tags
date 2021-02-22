@@ -15,13 +15,12 @@ import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
-
-import java.io.File;
-import java.io.IOException;
-
 import org.spongepowered.configurate.loader.ConfigurationLoader;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import org.spongepowered.configurate.transformation.TransformAction;
+
+import java.io.File;
+import java.io.IOException;
 
 public final class ConfigurationModule extends AbstractModule {
 

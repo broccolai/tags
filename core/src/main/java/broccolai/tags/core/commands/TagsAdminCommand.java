@@ -12,10 +12,9 @@ import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
-
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class TagsAdminCommand implements PluginCommand {
 
