@@ -48,7 +48,7 @@ public final class Tag implements Permissible {
 
     @Override
     public @NonNull String permission() {
-        return "null";
+        return "tags.tag." + this.id();
     }
 
 }
