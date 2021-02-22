@@ -49,6 +49,8 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
 
     @Override
     public void onEnable() {
+        this.getDataFolder().mkdirs();
+
         Injector injector = Guice.createInjector(ArrayUtilities.merge(
                 STANDARD_MODULES,
                 new PlatformModule(this),
