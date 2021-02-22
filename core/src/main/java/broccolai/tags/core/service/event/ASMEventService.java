@@ -23,10 +23,8 @@ public final class ASMEventService extends SimpleEventBus<Event> implements Even
     }
 
     @Override
-    public void registerListeners(final @NonNull EventListener... events) {
-        for (final EventListener listener : events) {
-            this.methodAdapter.register(listener);
-        }
+    public void register(@NonNull final EventListener listener) {
+        this.methodAdapter.register(listener);
     }
 
 }
