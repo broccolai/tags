@@ -60,6 +60,7 @@ public final class LPDataService implements DataService {
 
         MetaNode metaNode = MetaNode.builder(CURRENT_TAG_NODE, String.valueOf(potentialId.get())).build();
 
+        luckpermsUser.data().clear(node -> node.getKey().equals(CURRENT_TAG_NODE));
         luckpermsUser.data().add(metaNode);
         this.luckPerms.getUserManager().saveUser(luckpermsUser);
     }
