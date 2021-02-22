@@ -1,5 +1,6 @@
 package broccolai.tags.bukkit;
 
+import broccolai.tags.api.events.EventListener;
 import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.bukkit.commands.context.BukkitCommandUser;
@@ -9,6 +10,7 @@ import broccolai.tags.bukkit.inject.PlatformModule;
 import broccolai.tags.bukkit.inject.VaultModule;
 import broccolai.tags.bukkit.integrations.PapiIntegration;
 import broccolai.tags.bukkit.integrations.VaultIntegration;
+import broccolai.tags.bukkit.listeners.PlayerListener;
 import broccolai.tags.core.TagsPlugin;
 import broccolai.tags.core.commands.arguments.TagArgument;
 import broccolai.tags.core.commands.arguments.UserArgument;
@@ -28,11 +30,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform {
+
+    private static final @NonNull Class<? extends Listener>[] BUKKIT_LISTENERS = ArrayUtilities.create(
+            PlayerListener.class
+    );
+
+    private static final @NonNull Class<? extends EventListener>[] LISTENERS = ArrayUtilities.create(
+            VaultIntegration.class
+    );
 
     private @MonotonicNonNull TagsPlugin plugin;
 
@@ -52,18 +63,23 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
                 injector.getInstance(MessageService.class)
         );
 
-        VaultIntegration vaultIntegration = injector.getInstance(VaultIntegration.class);
-
-        this.getServer().getPluginManager().registerEvents(
-                vaultIntegration,
-                this
-        );
-
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             injector.getInstance(PapiIntegration.class).register();
         }
 
-        injector.getInstance(EventService.class).registerListeners(vaultIntegration);
+        EventService eventService = injector.getInstance(EventService.class);
+        for (final Class<? extends EventListener> listener : LISTENERS) {
+            eventService.register(injector.getInstance(listener));
+        }
+
+        for (final Class<? extends Listener> bukkitListener : BUKKIT_LISTENERS) {
+            this.getServer().getPluginManager().registerEvents(
+                    injector.getInstance(bukkitListener),
+                    this
+            );
+        }
+
+
         this.plugin.commands(commandManager, COMMANDS);
     }
 
