@@ -73,7 +73,7 @@ public final class TagsCommand implements PluginCommand {
         TagsUser user = this.userService.get(sender.uuid());
         Tag tag = context.get("tag");
 
-        TagChangeEvent event = new TagChangeEvent(user, this.tagsService.load(user));
+        TagChangeEvent event = new TagChangeEvent(user, tag);
         this.eventService.post(event);
 
         if (!event.cancelled()) {
