@@ -35,8 +35,9 @@ subprojects {
                 target.set(8)
             }
 
-            github("broccolai", "tickets") {
+            github("broccolai", "tags") {
                 ci = true
+                publishing = true
             }
         }
 
