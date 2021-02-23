@@ -11,8 +11,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       - name: Publish package
-        run: gradle build publish -x signMavenPublication
+        run: ./gradlew build publish -x signMavenPublication
         env:
           ORG_GRADLE_PROJECT_broccolaiUsername: ${{ secrets.BROCCOLAI_USERNAME }}
           ORG_GRADLE_PROJECT_broccolaiPassword: ${{ secrets.BROCCOLAI_PASSWORD }}
