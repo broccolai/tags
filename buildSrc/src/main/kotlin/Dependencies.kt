@@ -11,7 +11,7 @@ object Versions {
     const val HIKARI = "4.0.2"
     const val FLYWAY = "7.5.3"
     const val CONFIGURATE = "4.0.0"
-    const val CORN = "2.0.0-SNAPSHOT"
+    const val CORN = "2.0.0"
     const val ADVENTURE = "4.5.0"
     const val ADVENTURE_PLATFORM = "4.0.0-SNAPSHOT"
     const val MINI_MESSAGE = "4.1.0-SNAPSHOT"
