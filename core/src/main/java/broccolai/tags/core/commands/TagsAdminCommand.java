@@ -1,7 +1,9 @@
 package broccolai.tags.core.commands;
 
+import broccolai.tags.api.events.event.TagChangeEvent;
 import broccolai.tags.api.model.tag.Tag;
 import broccolai.tags.api.model.user.TagsUser;
+import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.PermissionService;
 import broccolai.tags.api.service.TagsService;
@@ -21,6 +23,7 @@ public final class TagsAdminCommand implements PluginCommand {
     private final @NonNull CloudArgumentFactory argumentFactory;
     private final @NonNull PermissionService permissionService;
     private final @NonNull MessageService messageService;
+    private final @NonNull EventService eventService;
     private final @NonNull TagsService tagsService;
 
     @Inject
@@ -28,17 +31,19 @@ public final class TagsAdminCommand implements PluginCommand {
             final @NonNull CloudArgumentFactory argumentFactory,
             final @NonNull PermissionService permissionService,
             final @NonNull MessageService messageService,
+            final @NonNull EventService eventService,
             final @NonNull TagsService tagsService
     ) {
         this.argumentFactory = argumentFactory;
         this.permissionService = permissionService;
         this.messageService = messageService;
+        this.eventService = eventService;
         this.tagsService = tagsService;
     }
 
     @Override
     public void register(
-            @NonNull final CommandManager<@NonNull CommandUser> commandManager
+            final @NonNull CommandManager<@NonNull CommandUser> commandManager
     ) {
         Command.Builder<CommandUser> tagsCommand = commandManager.commandBuilder("tagsadmin")
                 .permission("tags.command.admin");
@@ -107,8 +112,12 @@ public final class TagsAdminCommand implements PluginCommand {
         TagsUser target = context.get("target");
         Tag tag = context.get("tag");
 
-        target.setCurrent(tag);
-        sender.sendMessage(this.messageService.commandAdminSet(tag, target));
+        TagChangeEvent event = new TagChangeEvent(target, tag);
+        this.eventService.post(event);
+
+        if (!event.cancelled()) {
+            sender.sendMessage(this.messageService.commandAdminSet(tag, target));
+        }
     }
 
 }
