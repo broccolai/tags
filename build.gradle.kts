@@ -1,9 +1,11 @@
+import net.kyori.indra.IndraPublishingPlugin
 import net.kyori.indra.IndraCheckstylePlugin
 import net.kyori.indra.IndraPlugin
 import net.kyori.indra.sonatypeSnapshots
 
 plugins {
     id("net.kyori.indra") version Versions.INDRA
+    id("net.kyori.indra.publishing") version Versions.INDRA
     id("net.kyori.indra.checkstyle") version Versions.INDRA
 }
 
@@ -12,6 +14,7 @@ version = "1.1.3"
 
 subprojects {
     apply<IndraPlugin>()
+    apply<IndraPublishingPlugin>()
     apply<IndraCheckstylePlugin>()
 
     repositories {
@@ -26,6 +29,7 @@ subprojects {
     tasks {
         indra {
             gpl3OnlyLicense()
+            publishReleasesTo("broccolai", "https://repo.broccol.ai/releases")
 
             javaVersions {
                 target.set(8)
