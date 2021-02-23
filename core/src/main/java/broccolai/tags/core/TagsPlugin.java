@@ -1,13 +1,15 @@
 package broccolai.tags.core;
 
 import broccolai.tags.api.TagsApi;
+import broccolai.tags.api.events.EventListener;
+import broccolai.tags.api.service.EventService;
 import broccolai.tags.core.commands.PluginCommand;
-import broccolai.tags.core.commands.TagsAdminCommand;
-import broccolai.tags.core.commands.TagsCommand;
 import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.core.config.MainConfiguration;
 import broccolai.tags.core.data.StorageMethod;
 import broccolai.tags.core.service.user.partials.UserCacheService;
+import broccolai.tags.core.subscribers.TagChangeSubscriber;
+import broccolai.tags.core.util.ArrayUtilities;
 import cloud.commandframework.CommandManager;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -17,6 +19,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Singleton
 public final class TagsPlugin {
+
+    private static final @NonNull Class<? extends EventListener>[] SUBSCRIBERS = ArrayUtilities.create(
+            TagChangeSubscriber.class
+    );
 
     private final @NonNull Injector injector;
 
@@ -28,8 +34,11 @@ public final class TagsPlugin {
     public void start() {
         TagsApi.register(this.injector);
 
-        this.injector.getInstance(TagsCommand.class);
-        this.injector.getInstance(TagsAdminCommand.class);
+        EventService eventService = this.injector.getInstance(EventService.class);
+
+        for (final Class<? extends EventListener> subscriber : SUBSCRIBERS) {
+            eventService.register(this.injector.getInstance(subscriber));
+        }
     }
 
     public void commands(
@@ -48,6 +57,5 @@ public final class TagsPlugin {
             this.injector.getInstance(HikariDataSource.class).close();
         }
     }
-
 
 }

@@ -9,6 +9,8 @@ import broccolai.tags.api.service.TagsService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.event.PostOrders;
+import net.kyori.event.method.annotation.PostOrder;
 import net.kyori.event.method.annotation.Subscribe;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
@@ -44,6 +46,7 @@ public final class VaultIntegration implements EventListener {
     }
 
     @Subscribe
+    @PostOrder(PostOrders.LATE)
     public void onTagChange(final @NonNull TagChangeEvent event) {
         Player player = Bukkit.getPlayer(event.user().uuid());
         this.chat.setPlayerPrefix(null, player, LEGACY.serialize(event.tag().component()));
