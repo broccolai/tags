@@ -104,7 +104,7 @@ public final class MiniMessageService implements MessageService {
         Template tagTemplate = Template.of("tag", tag.component());
         Template targetTemplate = Template.of("target", this.nameFromUser(target));
 
-        return this.locale.commands.admin.list.asComponent(this.prefix(), tagTemplate, targetTemplate);
+        return this.locale.commands.admin.set.asComponent(this.prefix(), tagTemplate, targetTemplate);
     }
 
     @Override
