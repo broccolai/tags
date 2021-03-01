@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.TreeMap;
 
 @Singleton
@@ -93,7 +92,7 @@ public final class MappedTagsService implements TagsService {
         Collections.sort(keys);
         Collections.reverse(keys);
 
-        for (Integer index : keys) {
+        for (int index : keys) {
             Tag tag = this.idToTags.get(index);
             if (this.permissionService.has(user, tag)) {
                 return tag;
