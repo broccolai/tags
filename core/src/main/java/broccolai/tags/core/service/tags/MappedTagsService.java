@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.TreeMap;
 
 @Singleton
@@ -79,10 +81,26 @@ public final class MappedTagsService implements TagsService {
 
     @Override
     public @NonNull Tag load(final @NonNull TagsUser user) {
-        return user.current()
+        Optional<Tag> current = user.current()
                 .map(this::load)
-                .filter(tag -> this.permissionService.has(user, tag))
-                .orElse(this.defaultTag());
+                .filter(tag -> this.permissionService.has(user, tag));
+
+        if (current.isPresent()) {
+            return current.get();
+        }
+
+        List<Integer> keys = new ArrayList<>(this.idToTags.keySet());
+        Collections.sort(keys);
+        Collections.reverse(keys);
+
+        for (Integer index : keys) {
+            Tag tag = this.idToTags.get(index);
+            if (this.permissionService.has(user, tag)) {
+                return tag;
+            }
+        }
+
+        return this.defaultTag();
     }
 
     @Override
