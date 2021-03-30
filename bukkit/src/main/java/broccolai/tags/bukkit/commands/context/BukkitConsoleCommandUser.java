@@ -9,11 +9,8 @@ import java.util.UUID;
 
 public final class BukkitConsoleCommandUser extends BukkitCommandUser {
 
-    public BukkitConsoleCommandUser(
-            final @NonNull CommandSender source,
-            final @NonNull Audience audience
-    ) {
-        super(source, audience);
+    public BukkitConsoleCommandUser(final @NonNull CommandSender source) {
+        super(source);
     }
 
     @Override

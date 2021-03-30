@@ -3,7 +3,7 @@ setupShadowJar()
 dependencies {
     api(project(":tags-core"))
 
-    compileOnly("org.spigotmc", "spigot-api", Versions.SPIGOT)
+    compileOnly("com.destroystokyo.paper", "paper-api", Versions.SPIGOT)
     compileOnly("me.clip", "placeholderapi", Versions.PAPI)
     compileOnly("com.github.MilkBowl", "VaultAPI", Versions.VAULT)
 

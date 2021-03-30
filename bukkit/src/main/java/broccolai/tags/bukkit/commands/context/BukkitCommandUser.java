@@ -8,11 +8,9 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public abstract class BukkitCommandUser implements CommandUser {
 
     private final CommandSender source;
-    private final Audience audience;
 
-    public BukkitCommandUser(final @NonNull CommandSender source, final @NonNull Audience audience) {
+    public BukkitCommandUser(final @NonNull CommandSender source) {
         this.source = source;
-        this.audience = audience;
     }
 
     public final @NonNull CommandSender sender() {
@@ -21,7 +19,7 @@ public abstract class BukkitCommandUser implements CommandUser {
 
     @Override
     public final @NonNull Audience audience() {
-        return this.audience;
+        return this.source;
     }
 
 }

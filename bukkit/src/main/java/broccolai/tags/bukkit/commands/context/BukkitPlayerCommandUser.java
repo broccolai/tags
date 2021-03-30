@@ -1,6 +1,5 @@
 package broccolai.tags.bukkit.commands.context;
 
-import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -11,10 +10,9 @@ public final class BukkitPlayerCommandUser extends BukkitCommandUser {
     private final Player player;
 
     public BukkitPlayerCommandUser(
-            final @NonNull Player player,
-            final @NonNull Audience audience
+            final @NonNull Player player
     ) {
-        super(player, audience);
+        super(player);
         this.player = player;
     }
 

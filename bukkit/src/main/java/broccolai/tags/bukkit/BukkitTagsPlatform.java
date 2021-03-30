@@ -25,7 +25,6 @@ import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import net.kyori.adventure.audience.ForwardingAudience;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -61,7 +60,6 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         this.plugin.start();
 
         CommandManager<CommandUser> commandManager = this.getCommandManager(
-                injector.getInstance(BukkitAudiences.class),
                 injector.getInstance(MessageService.class)
         );
 
@@ -91,14 +89,13 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
     }
 
     private CommandManager<CommandUser> getCommandManager(
-            final @NonNull BukkitAudiences audiences,
             final @NonNull MessageService messageService
     ) {
         try {
             PaperCommandManager<CommandUser> commandManager = new PaperCommandManager<>(
                     this,
                     AsynchronousCommandExecutionCoordinator.<CommandUser>newBuilder().build(),
-                    sender -> from(sender, audiences),
+                    BukkitTagsPlatform::from,
                     user -> user.<BukkitCommandUser>cast().sender()
             );
 
@@ -128,15 +125,15 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         }
     }
 
-    private static CommandUser from(final @NonNull CommandSender sender, final @NonNull BukkitAudiences audiences) {
+    private static CommandUser from(final @NonNull CommandSender sender) {
         if (sender instanceof ConsoleCommandSender) {
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
 
-            return new BukkitConsoleCommandUser(console, audiences.console());
+            return new BukkitConsoleCommandUser(console);
         } else if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            return new BukkitPlayerCommandUser(player, audiences.player(player));
+            return new BukkitPlayerCommandUser(player);
         }
 
         return null;
