@@ -1,15 +1,13 @@
 package broccolai.tags.bukkit;
 
-import broccolai.tags.api.events.EventListener;
-import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.bukkit.commands.context.BukkitCommandUser;
 import broccolai.tags.bukkit.commands.context.BukkitConsoleCommandUser;
 import broccolai.tags.bukkit.commands.context.BukkitPlayerCommandUser;
 import broccolai.tags.bukkit.inject.PlatformModule;
 import broccolai.tags.bukkit.inject.VaultModule;
+import broccolai.tags.bukkit.integrations.BasicIntegration;
 import broccolai.tags.bukkit.integrations.PapiIntegration;
-import broccolai.tags.bukkit.integrations.VaultIntegration;
 import broccolai.tags.bukkit.listeners.PlayerListener;
 import broccolai.tags.core.TagsPlugin;
 import broccolai.tags.core.commands.arguments.TagArgument;
@@ -37,11 +35,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform {
 
     private static final @NonNull Class<? extends Listener>[] BUKKIT_LISTENERS = ArrayUtilities.create(
-            PlayerListener.class
-    );
-
-    private static final @NonNull Class<? extends EventListener>[] LISTENERS = ArrayUtilities.create(
-            VaultIntegration.class
+            PlayerListener.class,
+            BasicIntegration.class
     );
 
     private @MonotonicNonNull TagsPlugin plugin;
@@ -65,11 +60,6 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             injector.getInstance(PapiIntegration.class).register();
-        }
-
-        EventService eventService = injector.getInstance(EventService.class);
-        for (final Class<? extends EventListener> listener : LISTENERS) {
-            eventService.register(injector.getInstance(listener));
         }
 
         for (final Class<? extends Listener> bukkitListener : BUKKIT_LISTENERS) {

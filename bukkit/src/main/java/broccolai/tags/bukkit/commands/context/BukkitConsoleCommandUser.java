@@ -1,7 +1,6 @@
 package broccolai.tags.bukkit.commands.context;
 
 import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
-import net.kyori.adventure.audience.Audience;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
