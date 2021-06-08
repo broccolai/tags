@@ -6,7 +6,7 @@ object Versions {
     const val SPIGOT = "1.16.5-R0.1-SNAPSHOT"
     const val PAPI = "2.10.9"
     const val VAULT = "1.7"
-    const val GUICE = "5.0.0-BETA-1"
+    const val GUICE = "5.0.1"
     const val JDBI = "3.18.1-SCUFFED"
     const val HIKARI = "4.0.2"
     const val FLYWAY = "7.5.3"
