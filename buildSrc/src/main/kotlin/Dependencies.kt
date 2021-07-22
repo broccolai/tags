@@ -17,6 +17,6 @@ object Versions {
     const val MINI_MESSAGE = "4.1.0-SNAPSHOT"
     const val EVENT = "4.0.0-SNAPSHOT"
     const val COFFEE = "1.0.0-SNAPSHOT"
-    const val CLOUD = "1.4.0"
+    const val CLOUD = "1.5.0"
     const val LUCKPERMS = "5.2"
 }
