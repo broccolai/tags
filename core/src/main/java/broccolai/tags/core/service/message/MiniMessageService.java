@@ -8,7 +8,8 @@ import broccolai.tags.core.config.LocaleConfiguration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
@@ -29,13 +30,13 @@ public final class MiniMessageService implements MessageService {
     }
 
     @Override
-    public Template prefix() {
-        return Template.of("prefix", this.locale.prefix.asComponent());
+    public TagResolver prefix() {
+        return Placeholder.component("prefix", this.locale.prefix.asComponent());
     }
 
     @Override
     public Component commandSelect(final @NonNull Tag tag) {
-        Template tagComponent = Template.of("tag", tag.component());
+        TagResolver tagComponent = Placeholder.component("tag", tag.component());
 
         return this.locale.commands.player.select.asComponent(this.prefix(), tagComponent);
     }
@@ -45,10 +46,10 @@ public final class MiniMessageService implements MessageService {
         Component component = this.locale.commands.player.list.asComponent(this.prefix());
 
         for (Tag tag : tags) {
-            Template nameTemplate = Template.of("name", tag.name());
-            Template tagComponent = Template.of("tag", tag.component());
+            TagResolver nameTagResolver = Placeholder.unparsed("name", tag.name());
+            TagResolver tagComponent = Placeholder.component("tag", tag.component());
 
-            component = component.append(this.locale.commands.player.listEntry.asComponent(nameTemplate, tagComponent));
+            component = component.append(this.locale.commands.player.listEntry.asComponent(nameTagResolver, tagComponent));
         }
 
         return component;
@@ -56,11 +57,11 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandInfo(final @NonNull Tag tag) {
-        Template nameTemplate = Template.of("name", tag.name());
-        Template tagTemplate = Template.of("tag", tag.component());
-        Template reasonTemplate = Template.of("reason", tag.reason());
+        TagResolver nameTagResolver = Placeholder.unparsed("name", tag.name());
+        TagResolver tagTagResolver = Placeholder.component("tag", tag.component());
+        TagResolver reasonTagResolver = Placeholder.parsed("reason", tag.reason());
 
-        return this.locale.commands.player.info.asComponent(this.prefix(), nameTemplate, tagTemplate, reasonTemplate);
+        return this.locale.commands.player.info.asComponent(this.prefix(), nameTagResolver, tagTagResolver, reasonTagResolver);
     }
 
     @Override
@@ -68,8 +69,8 @@ public final class MiniMessageService implements MessageService {
             final @NonNull Tag tag,
             final @NonNull TagsUser target
     ) {
-        Template tagComponent = Template.of("tag", tag.component());
-        Template targetComponent = Template.of("target", this.nameFromUser(target));
+        TagResolver tagComponent = Placeholder.component("tag", tag.component());
+        TagResolver targetComponent = Placeholder.unparsed("target", this.nameFromUser(target));
 
         return this.locale.commands.admin.give.asComponent(this.prefix(), tagComponent, targetComponent);
     }
@@ -79,8 +80,8 @@ public final class MiniMessageService implements MessageService {
             final @NonNull Tag tag,
             final @NonNull TagsUser target
     ) {
-        Template tagComponent = Template.of("tag", tag.component());
-        Template targetComponent = Template.of("target", this.nameFromUser(target));
+        TagResolver tagComponent = Placeholder.component("tag", tag.component());
+        TagResolver targetComponent = Placeholder.unparsed("target", this.nameFromUser(target));
 
         return this.locale.commands.admin.remove.asComponent(this.prefix(), tagComponent, targetComponent);
     }
@@ -90,10 +91,10 @@ public final class MiniMessageService implements MessageService {
         Component component = this.locale.commands.admin.list.asComponent(this.prefix());
 
         for (Tag tag : tags) {
-            Template nameTemplate = Template.of("name", tag.name());
-            Template tagTemplate = Template.of("tag", tag.component());
+            TagResolver nameTagResolver = Placeholder.unparsed("name", tag.name());
+            TagResolver tagTagResolver = Placeholder.component("tag", tag.component());
 
-            component = component.append(this.locale.commands.admin.listEntry.asComponent(nameTemplate, tagTemplate));
+            component = component.append(this.locale.commands.admin.listEntry.asComponent(nameTagResolver, tagTagResolver));
         }
 
         return component;
@@ -101,24 +102,24 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandAdminSet(@NonNull final Tag tag, @NonNull final TagsUser target) {
-        Template tagTemplate = Template.of("tag", tag.component());
-        Template targetTemplate = Template.of("target", this.nameFromUser(target));
+        TagResolver tagTagResolver = Placeholder.component("tag", tag.component());
+        TagResolver targetTagResolver = Placeholder.unparsed("target", this.nameFromUser(target));
 
-        return this.locale.commands.admin.set.asComponent(this.prefix(), tagTemplate, targetTemplate);
+        return this.locale.commands.admin.set.asComponent(this.prefix(), tagTagResolver, targetTagResolver);
     }
 
     @Override
     public Component commandErrorUserNotFound(final @NonNull String input) {
-        Template inputTemplate = Template.of("input", input);
+        TagResolver inputTagResolver = Placeholder.parsed("input", input);
 
-        return this.locale.commands.error.userNotFound.asComponent(this.prefix(), inputTemplate);
+        return this.locale.commands.error.userNotFound.asComponent(this.prefix(), inputTagResolver);
     }
 
     @Override
     public Component commandErrorTagNotFound(final @NonNull String input) {
-        Template inputTemplate = Template.of("input", input);
+        TagResolver inputTagResolver = Placeholder.parsed("input", input);
 
-        return this.locale.commands.error.tagNotFound.asComponent(this.prefix(), inputTemplate);
+        return this.locale.commands.error.tagNotFound.asComponent(this.prefix(), inputTagResolver);
     }
 
     //todo: Add user to TagUser object?

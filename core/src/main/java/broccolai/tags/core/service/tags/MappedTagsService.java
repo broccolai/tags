@@ -26,7 +26,7 @@ import java.util.TreeMap;
 @Singleton
 public final class MappedTagsService implements TagsService {
 
-    private static final MiniMessage MINI = MiniMessage.get();
+    private static final MiniMessage MINI = MiniMessage.miniMessage();
 
     private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
     private final @NonNull Map<String, Tag> nameToTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
@@ -60,7 +60,7 @@ public final class MappedTagsService implements TagsService {
             final @NonNull String componentString,
             final @NonNull String reason
     ) {
-        Component component = MINI.parse(componentString);
+        Component component = MINI.deserialize(componentString);
 
         Tag tag = new Tag(id, name, secret, component, reason);
 

@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "broccolai.tags"
-version = "1.1.3"
+version = "1.2.0"
 
 subprojects {
     apply<IndraPlugin>()
@@ -32,7 +32,7 @@ subprojects {
             publishReleasesTo("broccolai", "https://repo.broccol.ai/releases")
 
             javaVersions {
-                target.set(8)
+                target.set(17)
             }
 
             github("broccolai", "tags") {

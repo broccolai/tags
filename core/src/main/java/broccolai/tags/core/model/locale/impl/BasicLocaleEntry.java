@@ -3,12 +3,12 @@ package broccolai.tags.core.model.locale.impl;
 import broccolai.tags.core.model.locale.LocaleEntry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class BasicLocaleEntry implements LocaleEntry {
 
-    private static final MiniMessage MINI = MiniMessage.get();
+    private static final MiniMessage MINI = MiniMessage.miniMessage();
 
     private final String serialised;
 
@@ -17,8 +17,8 @@ public final class BasicLocaleEntry implements LocaleEntry {
     }
 
     @Override
-    public Component asComponent(final Template... templates) {
-        return MINI.parse(this.serialised, templates);
+    public Component asComponent(final TagResolver... templates) {
+        return MINI.deserialize(this.serialised, templates);
     }
 
     @Override

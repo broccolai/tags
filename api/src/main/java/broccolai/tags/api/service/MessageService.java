@@ -4,14 +4,14 @@ import broccolai.tags.api.model.Service;
 import broccolai.tags.api.model.tag.Tag;
 import broccolai.tags.api.model.user.TagsUser;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Collection;
 
 public interface MessageService extends Service {
 
-    Template prefix();
+    TagResolver prefix();
 
     Component commandSelect(@NonNull Tag tag);
 

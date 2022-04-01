@@ -1,10 +1,10 @@
 package broccolai.tags.core.model.locale;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.Template;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 public interface LocaleEntry {
 
-    Component asComponent(Template... templates);
+    Component asComponent(TagResolver... templates);
 
 }

@@ -9,7 +9,6 @@ import broccolai.tags.bukkit.service.BukkitPipelineUserService;
 import broccolai.tags.bukkit.service.BukkitTaskService;
 import broccolai.tags.core.platform.TagsPlatform;
 import com.google.inject.AbstractModule;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -27,7 +26,6 @@ public final class PlatformModule extends AbstractModule {
     protected void configure() {
         this.bind(Plugin.class).toInstance(this.plugin);
         this.bind(TagsPlatform.class).toInstance(this.plugin);
-        this.bind(BukkitAudiences.class).toInstance(BukkitAudiences.create(this.plugin));
         this.bind(File.class).toInstance(this.plugin.getDataFolder());
         this.bind(TaskService.class).to(BukkitTaskService.class);
         this.bind(UserService.class).to(BukkitPipelineUserService.class);
