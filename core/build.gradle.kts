@@ -1,22 +1,21 @@
 dependencies {
     api(project(":tags-api"))
-    compileOnlyApi("com.google.guava", "guava", Versions.GUAVA)
+    compileOnlyApi(libs.guava)
     compileOnly("net.luckperms", "api", Versions.LUCKPERMS)
 
-    implementation("com.google.inject.extensions", "guice-assistedinject", Versions.GUICE) {
+    implementation(libs.guice.assisted) {
         isTransitive = false
     }
 
-    api("org.jdbi", "jdbi3-core", Versions.JDBI)
-    implementation("com.zaxxer", "HikariCP", Versions.HIKARI)
-    implementation("org.flywaydb", "flyway-core", Versions.FLYWAY)
+    api(libs.jdbi.core)
+    implementation(libs.hikari)
+    implementation(libs.flyway)
 
-    implementation("org.spongepowered", "configurate-hocon", Versions.CONFIGURATE)
+    implementation(libs.configurate)
 
-    api("broccolai.corn", "corn-core", Versions.CORN)
+    api(libs.corn.core)
 
-    api("cloud.commandframework", "cloud-core", Versions.CLOUD)
-    api("net.kyori", "coffee-functional", Versions.COFFEE)
-
-    api("net.kyori", "event-method-asm", Versions.EVENT)
+    api(libs.cloud.core)
+    api(libs.event.asm)
+    api(libs.coffee)
 }

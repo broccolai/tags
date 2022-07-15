@@ -7,12 +7,12 @@ setupShadowJar()
 dependencies {
     api(project(":tags-core"))
 
-    compileOnly("io.papermc.paper", "paper-api", Versions.PAPER)
+    compileOnly(libs.paper.api)
     compileOnly("me.clip", "placeholderapi", Versions.PAPI)
     compileOnly("com.github.MilkBowl", "VaultAPI", Versions.VAULT)
 
-    api("cloud.commandframework", "cloud-paper", Versions.CLOUD)
-    api("cloud.commandframework", "cloud-minecraft-extras", Versions.CLOUD)
+    api(libs.cloud.paper)
+    api(libs.cloud.extras)
 }
 
 tasks {
