@@ -1,7 +1,7 @@
 dependencies {
     api(project(":tags-api"))
     compileOnlyApi(libs.guava)
-    compileOnly("net.luckperms", "api", Versions.LUCKPERMS)
+    compileOnly(libs.luckperms)
 
     implementation(libs.guice.assisted) {
         isTransitive = false

@@ -8,8 +8,8 @@ dependencies {
     api(project(":tags-core"))
 
     compileOnly(libs.paper.api)
-    compileOnly("me.clip", "placeholderapi", Versions.PAPI)
-    compileOnly("com.github.MilkBowl", "VaultAPI", Versions.VAULT)
+    compileOnly(libs.papi)
+    compileOnly(libs.vault)
 
     api(libs.cloud.paper)
     api(libs.cloud.extras)
