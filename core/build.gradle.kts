@@ -13,7 +13,7 @@ dependencies {
 
     implementation(libs.configurate)
 
-    api(libs.corn.core)
+    api(libs.corn.misc)
 
     api(libs.cloud.core)
     api(libs.event.asm)
