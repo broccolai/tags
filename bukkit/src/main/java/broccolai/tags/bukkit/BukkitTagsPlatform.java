@@ -98,11 +98,11 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
                     user -> user.<BukkitCommandUser>cast().sender()
             );
 
-            if (commandManager.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+            if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
                 commandManager.registerAsynchronousCompletions();
             }
 
-            if (commandManager.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
+            if (commandManager.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
                 commandManager.registerBrigadier();
             }
 
