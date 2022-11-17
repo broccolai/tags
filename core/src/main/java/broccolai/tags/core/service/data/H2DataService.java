@@ -13,14 +13,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Singleton
-public final class SQLDataService implements DataService {
+public final class H2DataService implements DataService {
 
     private static final String PATH = "queries/";
 
     private final @NonNull Jdbi jdbi;
 
     @Inject
-    public SQLDataService(final @NonNull Jdbi jdbi) {
+    public H2DataService(final @NonNull Jdbi jdbi) {
         this.jdbi = jdbi;
     }
 

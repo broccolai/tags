@@ -24,7 +24,7 @@ public final class BasicIntegration implements Listener {
 
     @EventHandler
     public void onChat(final @NonNull AsyncChatEvent event) {
-        event.composer(((source, name, message) -> {
+        event.renderer(((source, name, message, viewer) -> {
             Tag tag = this.tagsService.load(this.userService.get(source.getUniqueId()));
             return message.replaceText(builder -> builder.matchLiteral("%tag%").replacement(tag.component()));
         }));

@@ -13,6 +13,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jdbi.v3.core.Jdbi;
 
 import java.io.File;
+import java.io.IOException;
 
 public final class PluginModule extends AbstractModule {
 
@@ -21,12 +22,17 @@ public final class PluginModule extends AbstractModule {
     public @NonNull HikariDataSource provideDataSource(
             final @NonNull File folder,
             final @NonNull MainConfiguration configuration
-    ) {
+    ) throws IOException {
         HikariConfig hikariConfig = new HikariConfig();
 
-        if (configuration.storage.storageMethod == StorageMethod.SQLITE) {
+        //todo(josh): cleanup
+        if (configuration.storage.storageMethod == StorageMethod.H2) {
             File file = new File(folder, "tags.db");
-            hikariConfig.setJdbcUrl("jdbc:sqlite:" + file);
+            file.mkdirs();
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            hikariConfig.setJdbcUrl("jdbc:h2:" + file);
         }
 
         hikariConfig.setMaximumPoolSize(10);
