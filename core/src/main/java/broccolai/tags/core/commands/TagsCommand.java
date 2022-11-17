@@ -1,7 +1,7 @@
 package broccolai.tags.core.commands;
 
 import broccolai.tags.api.events.event.TagChangeEvent;
-import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
@@ -71,7 +71,7 @@ public final class TagsCommand implements PluginCommand {
     private void handleSelect(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
         TagsUser user = this.userService.get(sender.uuid());
-        Tag tag = context.get("tag");
+        ConstructedTag tag = context.get("tag");
 
         TagChangeEvent event = new TagChangeEvent(user, tag);
         this.eventService.post(event);
@@ -84,14 +84,14 @@ public final class TagsCommand implements PluginCommand {
     private void handleList(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
         TagsUser user = this.userService.get(sender.uuid());
-        Collection<Tag> tags = this.tagsService.allTags(user);
+        Collection<ConstructedTag> tags = this.tagsService.allTags(user);
 
         sender.sendMessage(this.messageService.commandList(tags));
     }
 
     private void handlePreview(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
-        Tag tag = context.get("tag");
+        ConstructedTag tag = context.get("tag");
 
         sender.sendMessage(this.messageService.commandInfo(tag));
     }

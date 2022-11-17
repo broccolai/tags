@@ -1,6 +1,6 @@
 package broccolai.tags.api.model.user;
 
-import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -14,7 +14,7 @@ public interface TagsUser {
 
     @NonNull UUID uuid();
 
-    void setCurrent(@Nullable Tag tag);
+    void setCurrent(@Nullable ConstructedTag tag);
 
     @NonNull Optional<Integer> current();
 

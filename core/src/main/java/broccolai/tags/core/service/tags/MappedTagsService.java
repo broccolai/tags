@@ -1,6 +1,6 @@
 package broccolai.tags.core.service.tags;
 
-import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.PermissionService;
 import broccolai.tags.api.service.TagsService;
@@ -26,10 +26,10 @@ import java.util.TreeMap;
 @Singleton
 public final class MappedTagsService implements TagsService {
 
-    private static final MiniMessage MINI = MiniMessage.get();
+    private static final MiniMessage MINI = MiniMessage.miniMessage();
 
-    private final @NonNull Map<Integer, Tag> idToTags = new HashMap<>();
-    private final @NonNull Map<String, Tag> nameToTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final @NonNull Map<Integer, ConstructedTag> idToTags = new HashMap<>();
+    private final @NonNull Map<String, ConstructedTag> nameToTags = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     private final @NonNull PermissionService permissionService;
     private final int defaultId;
@@ -48,7 +48,7 @@ public final class MappedTagsService implements TagsService {
     }
 
     @Override
-    public @NotNull Tag defaultTag() {
+    public @NotNull ConstructedTag defaultTag() {
         return this.load(this.defaultId);
     }
 
@@ -60,27 +60,27 @@ public final class MappedTagsService implements TagsService {
             final @NonNull String componentString,
             final @NonNull String reason
     ) {
-        Component component = MINI.parse(componentString);
+        Component component = MINI.deserialize(componentString);
 
-        Tag tag = new Tag(id, name, secret, component, reason);
+        ConstructedTag tag = new ConstructedTag(id, name, secret, component, reason);
 
         this.idToTags.put(id, tag);
         this.nameToTags.put(name.toLowerCase(), tag);
     }
 
     @Override
-    public @Nullable Tag load(final int id) {
+    public @Nullable ConstructedTag load(final int id) {
         return this.idToTags.get(id);
     }
 
     @Override
-    public @Nullable Tag load(final @NonNull String name) {
+    public @Nullable ConstructedTag load(final @NonNull String name) {
         return this.nameToTags.get(name);
     }
 
     @Override
-    public @NonNull Tag load(final @NonNull TagsUser user) {
-        Optional<Tag> current = user.current()
+    public @NonNull ConstructedTag load(final @NonNull TagsUser user) {
+        Optional<ConstructedTag> current = user.current()
                 .map(this::load)
                 .filter(tag -> this.permissionService.has(user, tag));
 
@@ -93,7 +93,7 @@ public final class MappedTagsService implements TagsService {
         Collections.reverse(keys);
 
         for (int index : keys) {
-            Tag tag = this.idToTags.get(index);
+            ConstructedTag tag = this.idToTags.get(index);
             if (this.permissionService.has(user, tag)) {
                 return tag;
             }
@@ -103,13 +103,13 @@ public final class MappedTagsService implements TagsService {
     }
 
     @Override
-    public @NonNull Collection<Tag> allTags() {
+    public @NonNull Collection<ConstructedTag> allTags() {
         return Collections.unmodifiableCollection(this.idToTags.values());
     }
 
     @Override
-    public @NonNull Collection<Tag> allTags(final @NonNull TagsUser user) {
-        List<Tag> filtered = new ArrayList<>(this.idToTags.values());
+    public @NonNull Collection<ConstructedTag> allTags(final @NonNull TagsUser user) {
+        List<ConstructedTag> filtered = new ArrayList<>(this.idToTags.values());
         filtered.removeIf(tag -> !this.permissionService.has(user, tag));
 
         return Collections.unmodifiableCollection(filtered);

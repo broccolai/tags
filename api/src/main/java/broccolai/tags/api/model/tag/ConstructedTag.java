@@ -4,7 +4,7 @@ import broccolai.tags.api.model.Permissible;
 import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class Tag implements Permissible {
+public final class ConstructedTag implements Permissible {
 
     private final int id;
     private final String name;
@@ -12,7 +12,7 @@ public final class Tag implements Permissible {
     private final @NonNull Component component;
     private final @NonNull String reason;
 
-    public Tag(
+    public ConstructedTag(
             final int id,
             final @NonNull String name,
             final boolean secret,

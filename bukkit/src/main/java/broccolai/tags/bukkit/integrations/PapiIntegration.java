@@ -1,6 +1,6 @@
 package broccolai.tags.bukkit.integrations;
 
-import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.TagsService;
 import broccolai.tags.api.service.UserService;
@@ -49,7 +49,7 @@ public final class PapiIntegration extends PlaceholderExpansion {
         TagsUser user = this.userService.get(player.getUniqueId());
 
         if (identifier.equalsIgnoreCase("current")) {
-            Tag tag = this.tagsService.load(user);
+            ConstructedTag tag = this.tagsService.load(user);
             return LEGACY.serialize(tag.component());
         }
 

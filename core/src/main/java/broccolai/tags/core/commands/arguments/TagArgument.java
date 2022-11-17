@@ -1,7 +1,7 @@
 package broccolai.tags.core.commands.arguments;
 
 import broccolai.corn.core.Lists;
-import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.PermissionService;
 import broccolai.tags.api.service.TagsService;
@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 
-public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull Tag> {
+public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull ConstructedTag> {
 
     @AssistedInject
     public TagArgument(
@@ -32,10 +32,10 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
             final @Assisted("name") @NonNull String name,
             final @Assisted("mode") @NonNull TagParserMode mode
     ) {
-        super(true, name, new TagParser(permissionService, tagsService, userService, mode), Tag.class);
+        super(true, name, new TagParser(permissionService, tagsService, userService, mode), ConstructedTag.class);
     }
 
-    public static final class TagParser implements ArgumentParser<@NonNull CommandUser, Tag> {
+    public static final class TagParser implements ArgumentParser<@NonNull CommandUser, ConstructedTag> {
 
         private final @NonNull PermissionService permissionService;
         private final @NonNull TagsService tagsService;
@@ -55,7 +55,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
         }
 
         @Override
-        public @NonNull ArgumentParseResult<Tag> parse(
+        public @NonNull ArgumentParseResult<ConstructedTag> parse(
                 final @NonNull CommandContext<@NonNull CommandUser> commandContext,
                 final @NonNull Queue<String> inputQueue
         ) {
@@ -65,7 +65,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 return ArgumentParseResult.failure(new NoInputProvidedException(TagParser.class, commandContext));
             }
 
-            Tag tag = this.tagsService.load(input);
+            ConstructedTag tag = this.tagsService.load(input);
 
             if (tag == null) {
                 return ArgumentParseResult.failure(new TagArgumentException(input));
@@ -104,7 +104,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 final @NonNull String input
         ) {
             if (this.mode == TagParserMode.ANY || this.mode == TagParserMode.NON_SECRET) {
-                Collection<Tag> tags = new ArrayList<>(this.tagsService.allTags());
+                Collection<ConstructedTag> tags = new ArrayList<>(this.tagsService.allTags());
 
                 if (this.mode == TagParserMode.NON_SECRET) {
                     CommandUser self = commandContext.getSender();
@@ -113,7 +113,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                     tags.removeIf(tag -> !(this.permissionService.has(user, tag) || tag.secret()));
                 }
 
-                return Lists.map(this.tagsService.allTags(), Tag::name);
+                return Lists.map(this.tagsService.allTags(), ConstructedTag::name);
             }
 
             final TagsUser target;
@@ -125,7 +125,7 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 target = commandContext.get("target");
             }
 
-            return Lists.map(this.tagsService.allTags(target), Tag::name);
+            return Lists.map(this.tagsService.allTags(target), ConstructedTag::name);
         }
 
     }
