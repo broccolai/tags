@@ -6,6 +6,7 @@ import org.gradle.kotlin.dsl.withType
 
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("xyz.jpenilla.run-paper") version "2.0.0"
 }
 
 apply<ShadowPlugin>()
@@ -37,16 +38,18 @@ tasks {
                 "net.kyori.event",
                 "net.kyori.coffee",
                 "org.objectweb.asm",
-                "org.flyway",
                 "broccolai.corn"
         )
 
         archiveFileName.set(project.name + ".jar")
-        minimize()
     }
 
     getByName("build") {
         dependsOn(withType<ShadowJar>())
+    }
+
+    runServer {
+        minecraftVersion("1.19.2")
     }
 }
 

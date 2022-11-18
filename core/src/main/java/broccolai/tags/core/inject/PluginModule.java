@@ -14,6 +14,8 @@ import org.jdbi.v3.core.Jdbi;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public final class PluginModule extends AbstractModule {
 
@@ -27,12 +29,12 @@ public final class PluginModule extends AbstractModule {
 
         //todo(josh): cleanup
         if (configuration.storage.storageMethod == StorageMethod.H2) {
-            File file = new File(folder, "tags.db");
-            file.mkdirs();
-            if (!file.exists()) {
-                file.createNewFile();
+            Path file = folder.toPath().resolve("storage.db");
+            if (!Files.exists(file)) {
+                Files.createFile(file);
             }
-            hikariConfig.setJdbcUrl("jdbc:h2:" + file.getAbsolutePath() + ";MODE=MySQL;DATABASE_TO_LOWER=TRUE");
+            hikariConfig.setDriverClassName("org.h2.Driver");
+            hikariConfig.setJdbcUrl("jdbc:h2:" + file.toAbsolutePath() + ";MODE=MySQL;DATABASE_TO_LOWER=TRUE");
         }
 
         hikariConfig.setMaximumPoolSize(10);
