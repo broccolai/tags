@@ -32,7 +32,7 @@ public final class PluginModule extends AbstractModule {
             if (!file.exists()) {
                 file.createNewFile();
             }
-            hikariConfig.setJdbcUrl("jdbc:h2:" + file);
+            hikariConfig.setJdbcUrl("jdbc:h2:" + file.getAbsolutePath() + ";MODE=MySQL;DATABASE_TO_LOWER=TRUE");
         }
 
         hikariConfig.setMaximumPoolSize(10);

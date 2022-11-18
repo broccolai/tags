@@ -19,4 +19,6 @@ dependencies {
     api("net.kyori", "coffee-functional", Versions.COFFEE)
 
     api("net.kyori", "event-method-asm", Versions.EVENT)
+
+    implementation( "com.h2database", "h2", "2.1.214")
 }
