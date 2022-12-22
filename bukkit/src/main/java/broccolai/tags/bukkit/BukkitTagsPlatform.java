@@ -122,7 +122,6 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
             return new BukkitConsoleCommandUser(console);
         } else if (sender instanceof Player) {
             Player player = (Player) sender;
-
             return new BukkitPlayerCommandUser(player);
         }
 
