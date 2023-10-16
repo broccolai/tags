@@ -13,6 +13,8 @@ dependencies {
 
     api(libs.cloud.paper)
     api(libs.cloud.extras)
+
+    implementation(libs.h2)
 }
 
 tasks {

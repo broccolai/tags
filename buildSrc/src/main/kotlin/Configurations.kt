@@ -37,7 +37,6 @@ fun Project.setupShadowJar() {
             )
 
             archiveFileName.set(project.name + ".jar")
-            minimize()
         }
 
         getByName("build") {

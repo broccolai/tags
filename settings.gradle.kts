@@ -4,7 +4,6 @@ plugins {
 
 rootProject.name = "tags"
 
-
 use("api", "core", "bukkit")
 
 fun use(vararg names: String) {
