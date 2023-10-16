@@ -1,5 +1,6 @@
 package broccolai.tags.core.config;
 
+import broccolai.tags.api.model.tag.TagDisplayInformation;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Comment;
@@ -28,6 +29,9 @@ public final class TagConfiguration {
     @Setting
     @Comment("How to obtain this tag, can be null")
     public String reason = null;
+
+    @Setting
+    public TagDisplayInformation displayInformation = null;
 
     public TagConfiguration() {
     }

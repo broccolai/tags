@@ -3,6 +3,7 @@ package broccolai.tags.api.model.tag;
 import broccolai.tags.api.model.Permissible;
 import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class ConstructedTag implements Permissible {
 
@@ -11,19 +12,22 @@ public final class ConstructedTag implements Permissible {
     private final boolean secret;
     private final @NonNull Component component;
     private final @NonNull String reason;
+    private final @Nullable TagDisplayInformation displayInformation;
 
     public ConstructedTag(
             final int id,
             final @NonNull String name,
             final boolean secret,
             final @NonNull Component component,
-            final @NonNull String reason
+            final @NonNull String reason,
+            final @Nullable TagDisplayInformation displayInformation
     ) {
         this.id = id;
         this.name = name;
         this.secret = secret;
         this.component = component;
         this.reason = reason;
+        this.displayInformation = displayInformation;
     }
 
     public int id() {
@@ -49,6 +53,10 @@ public final class ConstructedTag implements Permissible {
     @Override
     public @NonNull String permission() {
         return "tags.tag." + this.id();
+    }
+
+    public @Nullable TagDisplayInformation displayInformation() {
+        return this.displayInformation;
     }
 
 }

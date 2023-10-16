@@ -1,10 +1,9 @@
+plugins {
+    id("ca.stellardrift.polyglot-version-catalogs") version "6.0.0"
+}
+
 rootProject.name = "tags"
 
-//include("api")
-//include("core")
-//
-//project(":api").name = "tags-api"
-//project(":core").name = "tags-core"
 
 use("api", "core", "bukkit")
 

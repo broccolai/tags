@@ -1,6 +1,7 @@
 package broccolai.tags.core.service.tags;
 
 import broccolai.tags.api.model.tag.ConstructedTag;
+import broccolai.tags.api.model.tag.TagDisplayInformation;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.PermissionService;
 import broccolai.tags.api.service.TagsService;
@@ -43,7 +44,7 @@ public final class MappedTagsService implements TagsService {
         this.defaultId = mainConfiguration.defaultTag;
 
         for (TagConfiguration config : mainConfiguration.tags) {
-            this.create(config.id, config.name, config.secret, config.component, config.reason);
+            this.create(config.id, config.name, config.secret, config.component, config.reason, config.displayInformation);
         }
     }
 
@@ -58,11 +59,12 @@ public final class MappedTagsService implements TagsService {
             final @NonNull String name,
             final boolean secret,
             final @NonNull String componentString,
-            final @NonNull String reason
+            final @NonNull String reason,
+            final @Nullable TagDisplayInformation displayInformation
     ) {
         Component component = MINI.deserialize(componentString);
 
-        ConstructedTag tag = new ConstructedTag(id, name, secret, component, reason);
+        ConstructedTag tag = new ConstructedTag(id, name, secret, component, reason, displayInformation);
 
         this.idToTags.put(id, tag);
         this.nameToTags.put(name.toLowerCase(), tag);

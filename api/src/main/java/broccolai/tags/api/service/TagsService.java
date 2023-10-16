@@ -2,6 +2,7 @@ package broccolai.tags.api.service;
 
 import broccolai.tags.api.model.Service;
 import broccolai.tags.api.model.tag.ConstructedTag;
+import broccolai.tags.api.model.tag.TagDisplayInformation;
 import broccolai.tags.api.model.user.TagsUser;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -18,7 +19,8 @@ public interface TagsService extends Service {
             @NonNull String name,
             boolean secret,
             @NonNull String componentString,
-            @NonNull String reason
+            @NonNull String reason,
+            @Nullable TagDisplayInformation information
     );
 
     @Nullable ConstructedTag load(int id);

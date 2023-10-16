@@ -22,7 +22,6 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import net.kyori.adventure.audience.ForwardingAudience;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -84,22 +83,22 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         try {
             PaperCommandManager<CommandUser> commandManager = new PaperCommandManager<>(
                     this,
-                    AsynchronousCommandExecutionCoordinator.<CommandUser>newBuilder().build(),
+                    AsynchronousCommandExecutionCoordinator.<CommandUser>builder().build(),
                     BukkitTagsPlatform::from,
                     user -> user.<BukkitCommandUser>cast().sender()
             );
 
-            if (commandManager.queryCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+            if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
                 commandManager.registerAsynchronousCompletions();
             }
 
-            if (commandManager.queryCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
+            if (commandManager.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
                 commandManager.registerBrigadier();
             }
 
             new MinecraftExceptionHandler<CommandUser>()
                     .withDefaultHandlers()
-                    .apply(commandManager, ForwardingAudience.Single::audience);
+                    .apply(commandManager, (e) -> e);
 
             commandManager.registerExceptionHandler(UserArgument.UserArgumentException.class, (user, ex) -> {
                 user.sendMessage(messageService.commandErrorUserNotFound(ex.input()));
@@ -116,12 +115,9 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
     }
 
     private static CommandUser from(final @NonNull CommandSender sender) {
-        if (sender instanceof ConsoleCommandSender) {
-            ConsoleCommandSender console = (ConsoleCommandSender) sender;
-
+        if (sender instanceof ConsoleCommandSender console) {
             return new BukkitConsoleCommandUser(console);
-        } else if (sender instanceof Player) {
-            Player player = (Player) sender;
+        } else if (sender instanceof Player player) {
             return new BukkitPlayerCommandUser(player);
         }
 
