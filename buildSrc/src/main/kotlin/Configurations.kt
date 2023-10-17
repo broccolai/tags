@@ -17,6 +17,8 @@ fun Project.setupShadowJar() {
                 exclude(dependency("org.checkerframework:"))
             }
 
+            exclude("**/Utils21.class")
+
             relocate(
                     rootProject.group,
                     "com.github.benmanes.caffeine",
