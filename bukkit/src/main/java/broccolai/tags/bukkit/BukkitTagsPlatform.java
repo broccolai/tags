@@ -1,6 +1,7 @@
 package broccolai.tags.bukkit;
 
 import broccolai.tags.api.service.MessageService;
+import broccolai.tags.bukkit.commands.BukkitTagsCommand;
 import broccolai.tags.bukkit.commands.context.BukkitCommandUser;
 import broccolai.tags.bukkit.commands.context.BukkitConsoleCommandUser;
 import broccolai.tags.bukkit.commands.context.BukkitPlayerCommandUser;
@@ -10,6 +11,7 @@ import broccolai.tags.bukkit.integrations.BasicIntegration;
 import broccolai.tags.bukkit.integrations.PapiIntegration;
 import broccolai.tags.bukkit.listeners.PlayerListener;
 import broccolai.tags.core.TagsPlugin;
+import broccolai.tags.core.commands.PluginCommand;
 import broccolai.tags.core.commands.arguments.TagArgument;
 import broccolai.tags.core.commands.arguments.UserArgument;
 import broccolai.tags.core.commands.context.CommandUser;
@@ -31,11 +33,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Collection;
+
 public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform {
 
     private static final @NonNull Class<? extends Listener>[] BUKKIT_LISTENERS = ArrayUtilities.create(
             PlayerListener.class,
             BasicIntegration.class
+    );
+
+    private static final @NonNull Collection<Class<? extends PluginCommand>> BUKKIT_COMMANDS = ArrayUtilities.merge(
+            COMMANDS,
+            BukkitTagsCommand.class
     );
 
     private @MonotonicNonNull TagsPlugin plugin;
@@ -69,7 +78,7 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         }
 
 
-        this.plugin.commands(commandManager, COMMANDS);
+        this.plugin.commands(commandManager, BUKKIT_COMMANDS);
     }
 
     @Override

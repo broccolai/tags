@@ -21,4 +21,8 @@ public final class BukkitPlayerCommandUser extends BukkitCommandUser {
         return this.player.getUniqueId();
     }
 
+    public @NonNull Player player() {
+        return this.player;
+    }
+
 }

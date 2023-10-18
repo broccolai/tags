@@ -1,5 +1,6 @@
 package broccolai.tags.core.config;
 
+import broccolai.tags.api.model.tag.TagDisplayInformation;
 import com.google.inject.Singleton;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -32,8 +33,18 @@ public final class MainConfiguration implements Configuration {
                     + "Permissions will use this id as it's reference. \n"
                     + "The name attribute should be a simple one word phrase for selecting tags through commands."
     )
-    public List<TagConfiguration> tags = new ArrayList<TagConfiguration>() {{
-        this.add(new TagConfiguration(1, "example", false, "<red><bold>example", "Acquired by playing for an hour"));
+    public List<TagConfiguration> tags = new ArrayList<>() {{
+        this.add(new TagConfiguration(
+                1,
+                "example",
+                false,
+                "<red><bold>example",
+                "Acquired by playing for an hour",
+                new TagDisplayInformation(
+                        "stick",
+                        5
+                )
+        ));
     }};
 
     //region Configurate

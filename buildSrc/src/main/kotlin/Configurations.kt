@@ -34,7 +34,6 @@ fun Project.setupShadowJar() {
                     "net.kyori.event",
                     "net.kyori.coffee",
                     "org.objectweb.asm",
-                    "org.flyway",
                     "broccolai.corn"
             )
 

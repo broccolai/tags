@@ -13,12 +13,15 @@ dependencies {
 
     api(libs.cloud.paper)
     api(libs.cloud.extras)
+    api(libs.corn.minecraft.paper)
+
+    api(libs.interfaces.paper)
 
     implementation(libs.h2)
 }
 
 tasks {
     runServer {
-        minecraftVersion("1.20")
+        minecraftVersion("1.20.2")
     }
 }

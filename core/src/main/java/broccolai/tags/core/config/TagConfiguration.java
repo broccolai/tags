@@ -36,12 +36,20 @@ public final class TagConfiguration {
     public TagConfiguration() {
     }
 
-    public TagConfiguration(final int id, final String name, final boolean secret, final String component, final String reason) {
+    public TagConfiguration(
+            final int id,
+            final String name,
+            final boolean secret,
+            final String component,
+            final String reason,
+            final TagDisplayInformation displayInformation
+    ) {
         this.id = id;
         this.name = name;
         this.secret = secret;
         this.component = component;
         this.reason = reason;
+        this.displayInformation = displayInformation;
     }
 
 }

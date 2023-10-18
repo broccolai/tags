@@ -1,6 +1,5 @@
 package broccolai.tags.core.util;
 
-import com.google.inject.Module;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.ArrayDeque;
@@ -19,10 +18,11 @@ public final class ArrayUtilities {
         return entries;
     }
 
-    public static Collection<Module> merge(final @NonNull Module[] initial, final @NonNull Module... extra) {
-        Deque<Module> modules = new ArrayDeque<>(Arrays.asList(initial));
+    @SafeVarargs
+    public static <T> Collection<T> merge(final @NonNull T[] initial, final @NonNull T... extra) {
+        Deque<T> modules = new ArrayDeque<>(Arrays.asList(initial));
 
-        for (final Module module : extra) {
+        for (final T module : extra) {
             modules.addFirst(module);
         }
 
