@@ -11,27 +11,25 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public final class TagConfiguration {
 
     @Setting
-    @Comment("Tags unique id")
     public int id;
 
     @Setting
-    @Comment("Readable name for players")
     public String name;
 
     @Setting
-    @Comment("Whether to hide the tag from public info")
     public boolean secret = false;
 
     @Setting
-    @Comment("MiniMessage component to display")
     public String component;
 
     @Setting
-    @Comment("How to obtain this tag, can be null")
     public String reason = null;
 
     @Setting
-    public TagDisplayInformation displayInformation = null;
+    public TagDisplayInformation displayInformation = new TagDisplayInformation(
+            "stick",
+            0
+    );
 
     public TagConfiguration() {
     }

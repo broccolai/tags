@@ -11,6 +11,7 @@ import broccolai.tags.core.platform.TagsPlatform;
 import com.google.inject.AbstractModule;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.slf4j.Logger;
 
 import java.io.File;
 
@@ -27,6 +28,7 @@ public final class PlatformModule extends AbstractModule {
         this.bind(Plugin.class).toInstance(this.plugin);
         this.bind(TagsPlatform.class).toInstance(this.plugin);
         this.bind(File.class).toInstance(this.plugin.getDataFolder());
+        this.bind(Logger.class).toInstance(this.plugin.getSLF4JLogger());
         this.bind(TaskService.class).to(BukkitTaskService.class);
         this.bind(UserService.class).to(BukkitPipelineUserService.class);
         this.bind(PermissionService.class).to(BukkitPermissionService.class);

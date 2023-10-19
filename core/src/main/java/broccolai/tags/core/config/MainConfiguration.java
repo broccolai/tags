@@ -28,10 +28,21 @@ public final class MainConfiguration implements Configuration {
 
     @Setting
     @Comment(
-            "Potential tags for players to obtain. \n"
-                    + "Increment id for each new tag, if you remove a tag, treat the config as if it's id is still there. \n"
-                    + "Permissions will use this id as it's reference. \n"
-                    + "The name attribute should be a simple one word phrase for selecting tags through commands."
+            """
+                    Potential tags for players to obtain.
+                    Increment id for each new tag, if you remove a tag, treat the config as if it's id is still there.
+                    Permissions will use this id as it's reference.
+                    The name attribute should be a simple one word phrase for selecting tags through commands.
+                    
+                    Tag configuration is described as followed:
+                        id -> the unique numerical id for tags
+                        name -> the unique name for a tag to be used in a command
+                        component -> the component to be rendered in chat / menu first line
+                        reason -> how a player could obtain the tag
+                        display-information:
+                            material -> the material id to use for the menu representation
+                            custom-model-data -> the custom model id to use on items, optionally
+                    """
     )
     public List<TagConfiguration> tags = new ArrayList<>() {{
         this.add(new TagConfiguration(
