@@ -1,11 +1,13 @@
 package broccolai.tags.core.inject;
 
+import broccolai.tags.api.service.ActionService;
 import broccolai.tags.api.service.DataService;
 import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.TagsService;
 import broccolai.tags.core.config.MainConfiguration;
 import broccolai.tags.core.data.StorageMethod;
+import broccolai.tags.core.service.action.EventActionService;
 import broccolai.tags.core.service.data.LPDataService;
 import broccolai.tags.core.service.data.H2DataService;
 import broccolai.tags.core.service.event.ASMEventService;
@@ -26,6 +28,7 @@ public final class ServiceModule extends AbstractModule {
         this.bind(MessageService.class).to(MiniMessageService.class);
         this.bind(TagsService.class).to(MappedTagsService.class);
         this.bind(EventService.class).to(ASMEventService.class);
+        this.bind(ActionService.class).to(EventActionService.class);
     }
 
     @Provides

@@ -23,6 +23,10 @@ public final class LocaleConfiguration implements Configuration {
     @Comment("Locales for command feedback related messages")
     public FeedbackLocaleConfiguration commands = new FeedbackLocaleConfiguration();
 
+    @Setting
+    @Comment("Locales for menu related translations")
+    public MenuLocaleConfiguration menu = new MenuLocaleConfiguration();
+
     @ConfigSerializable
     public static final class FeedbackLocaleConfiguration {
 
@@ -80,6 +84,17 @@ public final class LocaleConfiguration implements Configuration {
             public LocaleEntry tagNotFound = new BasicLocaleEntry("<prefix> Tag not found for: <input>");
 
         }
+
+    }
+
+    @ConfigSerializable
+    public static final class MenuLocaleConfiguration {
+
+        @Setting
+        public LocaleEntry title = new BasicLocaleEntry("Tags Menu");
+
+        @Setting
+        public LocaleEntry equip = new BasicLocaleEntry("<gray>Left click to equip");
 
     }
 

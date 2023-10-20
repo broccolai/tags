@@ -3,6 +3,7 @@ package broccolai.tags.core.commands;
 import broccolai.tags.api.events.event.TagChangeEvent;
 import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
+import broccolai.tags.api.service.ActionService;
 import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.TagsService;
@@ -24,7 +25,7 @@ public final class TagsCommand implements PluginCommand {
     private final @NonNull MessageService messageService;
     private final @NonNull UserService userService;
     private final @NonNull TagsService tagsService;
-    private final @NonNull EventService eventService;
+    private final @NonNull ActionService actionService;
 
     @Inject
     public TagsCommand(
@@ -32,13 +33,13 @@ public final class TagsCommand implements PluginCommand {
             final @NonNull MessageService messageService,
             final @NonNull UserService userService,
             final @NonNull TagsService tagsService,
-            final @NonNull EventService eventService
+            final @NonNull ActionService actionService
     ) {
         this.argumentFactory = argumentFactory;
         this.messageService = messageService;
         this.userService = userService;
         this.tagsService = tagsService;
-        this.eventService = eventService;
+        this.actionService = actionService;
     }
 
     @Override
@@ -73,10 +74,9 @@ public final class TagsCommand implements PluginCommand {
         TagsUser user = this.userService.get(sender.uuid());
         ConstructedTag tag = context.get("tag");
 
-        TagChangeEvent event = new TagChangeEvent(user, tag);
-        this.eventService.post(event);
+        boolean success = this.actionService.select(user, tag);
 
-        if (!event.cancelled()) {
+        if (success) {
             sender.sendMessage(this.messageService.commandSelect(tag));
         }
     }
