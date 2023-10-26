@@ -2,11 +2,10 @@ package broccolai.tags.api.model.user.impl;
 
 import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-
 import java.util.Optional;
 import java.util.UUID;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class PlayerTagsUser implements TagsUser {
 
@@ -27,7 +26,7 @@ public final class PlayerTagsUser implements TagsUser {
     }
 
     @Override
-    public void setCurrent(final @Nullable ConstructedTag tag) {
+    public void current(final @Nullable ConstructedTag tag) {
         this.current = tag != null ? tag.id() : null;
     }
 

@@ -41,6 +41,8 @@ subprojects {
                 ci(true)
                 publishing(true)
             }
+
+            checkstyle("10.12.4")
         }
 
         processResources {

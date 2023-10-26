@@ -6,11 +6,10 @@ import broccolai.tags.api.service.DataService;
 import broccolai.tags.core.util.ResourceReader;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.jdbi.v3.core.Jdbi;
-
 import java.util.Optional;
 import java.util.UUID;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jdbi.v3.core.Jdbi;
 
 @Singleton
 public final class H2DataService implements DataService {

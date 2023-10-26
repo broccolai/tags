@@ -12,7 +12,7 @@ public final class TagChangeSubscriber implements EventListener {
     @Subscribe
     @PostOrder(PostOrders.LAST)
     public void onTagChange(final @NonNull TagChangeEvent event) {
-        event.user().setCurrent(event.tag());
+        event.user().current(event.tag());
     }
 
 }

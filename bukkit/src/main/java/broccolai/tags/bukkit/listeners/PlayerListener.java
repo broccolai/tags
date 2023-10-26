@@ -6,9 +6,7 @@ import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.TaskService;
 import broccolai.tags.api.service.UserService;
 import com.google.inject.Inject;
-
 import java.util.UUID;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

@@ -15,9 +15,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariDataSource;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.Collection;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Singleton
 public final class TagsPlugin {

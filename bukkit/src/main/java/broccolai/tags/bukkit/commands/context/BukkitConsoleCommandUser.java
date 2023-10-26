@@ -1,10 +1,9 @@
 package broccolai.tags.bukkit.commands.context;
 
 import broccolai.tags.api.model.user.impl.ConsoleTagsUser;
+import java.util.UUID;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.UUID;
 
 public final class BukkitConsoleCommandUser extends BukkitCommandUser {
 

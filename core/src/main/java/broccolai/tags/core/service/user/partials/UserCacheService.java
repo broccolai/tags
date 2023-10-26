@@ -8,14 +8,13 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.io.Closeable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Singleton
 public final class UserCacheService implements PartialUserService, Consumer<Map<UUID, TagsUser>>, Closeable {
@@ -29,7 +28,7 @@ public final class UserCacheService implements PartialUserService, Consumer<Map<
         this.dataService = dataService;
         this.uuidCache = CacheBuilder.newBuilder()
                 .maximumSize(100)
-                .<UUID, TagsUser>removalListener((notification) -> this.dataService.saveUser(notification.getValue()))
+                .<UUID, TagsUser>removalListener(notification -> this.dataService.saveUser(notification.getValue()))
                 .build();
     }
 

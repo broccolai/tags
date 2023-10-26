@@ -5,12 +5,11 @@ import broccolai.tags.api.service.DataService;
 import broccolai.tags.core.service.user.PartialUserService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Singleton
 public final class UserSQLService implements PartialUserService {

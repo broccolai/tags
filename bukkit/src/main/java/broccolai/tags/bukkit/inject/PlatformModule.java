@@ -9,11 +9,10 @@ import broccolai.tags.bukkit.service.BukkitPipelineUserService;
 import broccolai.tags.bukkit.service.BukkitTaskService;
 import broccolai.tags.core.platform.TagsPlatform;
 import com.google.inject.AbstractModule;
+import java.io.File;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.slf4j.Logger;
-
-import java.io.File;
 
 public final class PlatformModule extends AbstractModule {
 

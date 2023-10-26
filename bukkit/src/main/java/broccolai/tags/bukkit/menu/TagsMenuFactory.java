@@ -8,8 +8,10 @@ import broccolai.tags.api.service.TagsService;
 import broccolai.tags.core.config.LocaleConfiguration;
 import broccolai.tags.core.util.FormatingUtilites;
 import com.google.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -23,10 +25,6 @@ import org.incendo.interfaces.paper.element.ItemStackElement;
 import org.incendo.interfaces.paper.pane.ChestPane;
 import org.incendo.interfaces.paper.type.ChestInterface;
 import org.slf4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public final class TagsMenuFactory {
 
@@ -85,20 +83,18 @@ public final class TagsMenuFactory {
     private List<ItemStackElement<ChestPane>> createTagElements(final @NonNull TagsUser user) {
         return this.tagsService.allTags(user)
                 .stream()
-                .map((tag) -> createTagElement(user, tag))
+                .map(tag -> this.createTagElement(user, tag))
                 .toList();
     }
 
     private ItemStackElement<ChestPane> createTagElement(final @NonNull TagsUser user, final @NonNull ConstructedTag tag) {
-
-
-        Material material = matchMaterialOrDefault(tag.displayInformation().material());
+        Material material = this.matchMaterialOrDefault(tag.displayInformation().material());
         ItemStack item = PaperItemBuilder.ofType(material)
                 .name(tag.component())
                 .lore(this.createTagLore(tag))
                 .build();
 
-        return ItemStackElement.of(item, (ctx) -> {
+        return ItemStackElement.of(item, ctx -> {
             this.actionService.select(user, tag);
         });
     }
@@ -106,7 +102,7 @@ public final class TagsMenuFactory {
     private List<Component> createTagLore(final @NonNull ConstructedTag tag) {
         List<Component> result = new ArrayList<>();
 
-        result.addAll(formatTagReason(tag.reason()));
+        result.addAll(this.formatTagReason(tag.reason()));
 
         result.add(Component.empty());
         result.add(this.locale.equip.asComponent());
@@ -117,7 +113,7 @@ public final class TagsMenuFactory {
     private List<Component> formatTagReason(final @NonNull String reason) {
         return FormatingUtilites.splitString(reason, 30)
                 .stream()
-                .map((text) -> Component.text(text, NamedTextColor.WHITE))
+                .map(text -> Component.text(text, NamedTextColor.WHITE))
                 .collect(Collectors.toList());
     }
 

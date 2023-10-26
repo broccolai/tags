@@ -3,21 +3,19 @@ package broccolai.tags.core.service.data;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.model.user.impl.PlayerTagsUser;
 import broccolai.tags.api.service.DataService;
+import java.util.Optional;
+import java.util.UUID;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.MetaNode;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.Optional;
-import java.util.UUID;
-
 public final class LPDataService implements DataService {
 
     private static final String CURRENT_TAG_NODE = "current-tag";
 
     private final LuckPerms luckPerms = LuckPermsProvider.get();
-
 
     @Override
     public @NonNull Optional<@NonNull TagsUser> loadUser(

@@ -28,4 +28,7 @@ public final class FormatingUtilites {
         return lines;
     }
 
+    private FormatingUtilites() {
+    }
+
 }

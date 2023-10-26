@@ -3,7 +3,6 @@ package broccolai.tags.api.model.tag;
 import broccolai.tags.api.model.Permissible;
 import net.kyori.adventure.text.Component;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 public record ConstructedTag(
         int id,

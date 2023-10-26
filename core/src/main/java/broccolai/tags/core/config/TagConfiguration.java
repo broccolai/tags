@@ -3,7 +3,6 @@ package broccolai.tags.core.config;
 import broccolai.tags.api.model.tag.TagDisplayInformation;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
-import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
 @ConfigSerializable
@@ -17,13 +16,13 @@ public final class TagConfiguration {
     public String name;
 
     @Setting
-    public boolean secret = false;
+    public boolean secret;
 
     @Setting
     public String component;
 
     @Setting
-    public String reason = null;
+    public String reason;
 
     @Setting
     public TagDisplayInformation displayInformation = new TagDisplayInformation(

@@ -15,12 +15,11 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull ConstructedTag> {
 
@@ -87,7 +86,6 @@ public class TagArgument extends CommandArgument<@NonNull CommandUser, @NonNull 
                 } else {
                     user = commandContext.get("target");
                 }
-
 
                 if (!this.permissionService.has(user, tag)) {
                     return ArgumentParseResult.failure(new TagArgumentException(input));

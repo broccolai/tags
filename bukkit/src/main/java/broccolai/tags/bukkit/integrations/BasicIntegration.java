@@ -24,10 +24,10 @@ public final class BasicIntegration implements Listener {
 
     @EventHandler
     public void onChat(final @NonNull AsyncChatEvent event) {
-        event.renderer(((source, name, message, viewer) -> {
+        event.renderer((source, name, message, viewer) -> {
             ConstructedTag tag = this.tagsService.load(this.userService.get(source.getUniqueId()));
             return message.replaceText(builder -> builder.matchLiteral("%tag%").replacement(tag.component()));
-        }));
+        });
     }
 
 }

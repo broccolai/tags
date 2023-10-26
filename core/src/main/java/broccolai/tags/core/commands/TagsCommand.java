@@ -1,10 +1,8 @@
 package broccolai.tags.core.commands;
 
-import broccolai.tags.api.events.event.TagChangeEvent;
 import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.ActionService;
-import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.TagsService;
 import broccolai.tags.api.service.UserService;
@@ -15,9 +13,8 @@ import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.Collection;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class TagsCommand implements PluginCommand {
 

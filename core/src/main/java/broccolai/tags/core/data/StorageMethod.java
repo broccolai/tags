@@ -1,8 +1,8 @@
 package broccolai.tags.core.data;
 
 import broccolai.tags.api.service.DataService;
-import broccolai.tags.core.service.data.LPDataService;
 import broccolai.tags.core.service.data.H2DataService;
+import broccolai.tags.core.service.data.LPDataService;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum StorageMethod {

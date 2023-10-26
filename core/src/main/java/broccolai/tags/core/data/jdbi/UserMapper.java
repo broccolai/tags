@@ -2,14 +2,13 @@ package broccolai.tags.core.data.jdbi;
 
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.model.user.impl.PlayerTagsUser;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jdbi.v3.core.mapper.ColumnMapper;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.UUID;
 
 public final class UserMapper implements RowMapper<TagsUser> {
 

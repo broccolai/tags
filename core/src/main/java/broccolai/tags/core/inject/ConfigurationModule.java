@@ -8,6 +8,8 @@ import broccolai.tags.core.model.locale.LocaleEntry;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
 import net.kyori.coffee.functional.function.exceptional.Function2E;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
@@ -18,9 +20,6 @@ import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.loader.ConfigurationLoader;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import org.spongepowered.configurate.transformation.TransformAction;
-
-import java.io.File;
-import java.io.IOException;
 
 public final class ConfigurationModule extends AbstractModule {
 

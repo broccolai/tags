@@ -3,12 +3,11 @@ package broccolai.tags.core.service.user.partials;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.model.user.impl.PlayerTagsUser;
 import broccolai.tags.core.service.user.PartialUserService;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class UserCreateService implements PartialUserService {
 

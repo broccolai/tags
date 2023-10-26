@@ -7,12 +7,11 @@ import broccolai.tags.api.service.UserService;
 import broccolai.tags.core.config.LocaleConfiguration;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.Collection;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Collection;
 
 @Singleton
 public final class MiniMessageService implements MessageService {
@@ -22,8 +21,8 @@ public final class MiniMessageService implements MessageService {
 
     @Inject
     public MiniMessageService(
-            final @NonNull LocaleConfiguration locale,
-            final @NonNull UserService userService
+        final @NonNull LocaleConfiguration locale,
+        final @NonNull UserService userService
     ) {
         this.locale = locale;
         this.userService = userService;
@@ -66,8 +65,8 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandAdminGive(
-            final @NonNull ConstructedTag tag,
-            final @NonNull TagsUser target
+        final @NonNull ConstructedTag tag,
+        final @NonNull TagsUser target
     ) {
         TagResolver tagComponent = TagResolver.resolver("tag", Tag.inserting(tag.component()));
         TagResolver targetComponent = TagResolver.resolver("target", Tag.preProcessParsed(this.nameFromUser(target)));
@@ -77,8 +76,8 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandAdminRemove(
-            final @NonNull ConstructedTag tag,
-            final @NonNull TagsUser target
+        final @NonNull ConstructedTag tag,
+        final @NonNull TagsUser target
     ) {
         TagResolver tagComponent = TagResolver.resolver("tag", Tag.inserting(tag.component()));
         TagResolver targetComponent = TagResolver.resolver("target", Tag.preProcessParsed(this.nameFromUser(target)));

@@ -24,6 +24,7 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -32,8 +33,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Collection;
 
 public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform {
 
@@ -62,7 +61,7 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         this.plugin = injector.getInstance(TagsPlugin.class);
         this.plugin.start();
 
-        CommandManager<CommandUser> commandManager = this.getCommandManager(
+        CommandManager<CommandUser> commandManager = this.commandManager(
                 injector.getInstance(MessageService.class)
         );
 
@@ -77,7 +76,6 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
             );
         }
 
-
         this.plugin.commands(commandManager, BUKKIT_COMMANDS);
     }
 
@@ -86,7 +84,7 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         this.plugin.shutdown();
     }
 
-    private CommandManager<CommandUser> getCommandManager(
+    private CommandManager<CommandUser> commandManager(
             final @NonNull MessageService messageService
     ) {
         try {
@@ -107,7 +105,7 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
 
             new MinecraftExceptionHandler<CommandUser>()
                     .withDefaultHandlers()
-                    .apply(commandManager, (e) -> e);
+                    .apply(commandManager, e -> e);
 
             commandManager.registerExceptionHandler(UserArgument.UserArgumentException.class, (user, ex) -> {
                 user.sendMessage(messageService.commandErrorUserNotFound(ex.input()));

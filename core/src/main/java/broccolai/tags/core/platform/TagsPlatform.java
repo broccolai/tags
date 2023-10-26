@@ -14,15 +14,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public interface TagsPlatform {
 
     @NonNull Module @NonNull [] STANDARD_MODULES = new Module[]{
-            new ConfigurationModule(),
-            new PluginModule(),
-            new CloudArgumentFactoryModule(),
-            new ServiceModule()
+        new ConfigurationModule(),
+        new PluginModule(),
+        new CloudArgumentFactoryModule(),
+        new ServiceModule()
     };
 
     @NonNull Class<? extends PluginCommand>[] COMMANDS = ArrayUtilities.create(
-            TagsCommand.class,
-            TagsAdminCommand.class
+        TagsCommand.class,
+        TagsAdminCommand.class
     );
 
 }

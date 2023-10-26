@@ -16,7 +16,7 @@ public final class TagsApi {
         INJECTOR = injector;
     }
 
-    public static <T extends Service> T getService(final @NonNull Class<T> clazz) {
+    public static <T extends Service> T service(final @NonNull Class<T> clazz) {
         return INJECTOR.getInstance(clazz);
     }
 

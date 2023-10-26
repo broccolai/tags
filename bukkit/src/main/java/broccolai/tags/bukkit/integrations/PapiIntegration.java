@@ -48,7 +48,7 @@ public final class PapiIntegration extends PlaceholderExpansion {
     public String onRequest(final @NonNull OfflinePlayer player, final @NonNull String identifier) {
         TagsUser user = this.userService.get(player.getUniqueId());
 
-        if (identifier.equalsIgnoreCase("current")) {
+        if ("current".equalsIgnoreCase(identifier)) {
             ConstructedTag tag = this.tagsService.load(user);
             return LEGACY.serialize(tag.component());
         }
