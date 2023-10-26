@@ -11,7 +11,6 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-@SuppressWarnings("FieldMayBeFinal")
 @ConfigSerializable
 public final class LocaleConfiguration implements Configuration {
 

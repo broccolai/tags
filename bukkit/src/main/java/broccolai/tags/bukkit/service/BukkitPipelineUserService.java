@@ -20,7 +20,6 @@ public final class BukkitPipelineUserService extends PipelineUserService {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public @NonNull TagsUser get(final @NonNull String username) {
         return this.get(Bukkit.getOfflinePlayer(username).getUniqueId());
     }

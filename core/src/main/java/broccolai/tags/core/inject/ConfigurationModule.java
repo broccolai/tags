@@ -48,9 +48,7 @@ public final class ConfigurationModule extends AbstractModule {
         File file = new File(folder, "locale.conf");
 
         try {
-            return this.configuration(file, (loader, node) -> {
-                return LocaleConfiguration.loadFrom(node);
-            });
+            return this.configuration(file, (loader, node) -> LocaleConfiguration.loadFrom(node));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

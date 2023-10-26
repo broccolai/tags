@@ -45,7 +45,7 @@ public final class LPDataService implements DataService {
     public void saveUser(final @NonNull TagsUser user) {
         Optional<Integer> potentialId = user.current();
 
-        if (!potentialId.isPresent()) {
+        if (potentialId.isEmpty()) {
             return;
         }
 

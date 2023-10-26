@@ -34,7 +34,6 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
         }
 
         @Override
-        @SuppressWarnings("deprecation")
         public @NonNull ArgumentParseResult<TagsUser> parse(
                 final @NonNull CommandContext<@NonNull CommandUser> commandContext,
                 final @NonNull Queue<String> inputQueue
