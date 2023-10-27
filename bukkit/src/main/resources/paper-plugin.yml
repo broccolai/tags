@@ -1,8 +1,14 @@
 name : Tags
 version : $version
 main : broccolai.tags.bukkit.BukkitTagsPlatform
-api-version : 1.16
-depend : [ Vault ]
+loader: broccolai.tags.bukkit.PaperTagsLoader
+api-version : '1.20'
+dependencies:
+    server:
+        Vault:
+            load: BEFORE
+            required: true
+            join-classpath: true
 softdepend : [ PlaceholderAPI ]
 permissions :
   tags.user :
