@@ -29,11 +29,21 @@ import org.slf4j.Logger;
 public final class TagsMenuFactory {
 
     private static final ItemStackElement<ChestPane> BOTTOM_BAR_ELEMENT = new ItemStackElement<>(
-            PaperItemBuilder.ofType(Material.WHITE_STAINED_GLASS_PANE)
-                    .name(Component.empty())
-                    .build(),
-            ClickHandler.cancel()
+        PaperItemBuilder.ofType(Material.WHITE_STAINED_GLASS_PANE)
+            .name(Component.empty())
+            .build(),
+        ClickHandler.cancel()
     );
+
+    private static final ItemStack BACK_ITEM = PaperItemBuilder
+        .ofType(Material.RED_STAINED_GLASS_PANE)
+        .name(Component.text("Previous Page"))
+        .build();
+
+    private static final ItemStack FORWARD_ITEM = PaperItemBuilder
+        .ofType(Material.GREEN_STAINED_GLASS_PANE)
+        .name(Component.text("Next Page"))
+        .build();
 
     private final Logger logger;
     private final TagsService tagsService;
@@ -42,10 +52,10 @@ public final class TagsMenuFactory {
 
     @Inject
     public TagsMenuFactory(
-            final @NonNull Logger logger,
-            final @NonNull TagsService tagsService,
-            final @NonNull ActionService actionService,
-            final @NonNull LocaleConfiguration locale
+        final @NonNull Logger logger,
+        final @NonNull TagsService tagsService,
+        final @NonNull ActionService actionService,
+        final @NonNull LocaleConfiguration locale
     ) {
         this.logger = logger;
         this.tagsService = tagsService;
@@ -55,11 +65,11 @@ public final class TagsMenuFactory {
 
     public ChestInterface create(final @NonNull TagsUser user) {
         return ChestInterface.builder()
-                .title(this.locale.title.asComponent())
-                .rows(4)
-                .addTransform(this::createFillTransform)
-                .addReactiveTransform(this.createTagTransform(user))
-                .build();
+            .title(this.locale.title.asComponent())
+            .rows(4)
+            .addTransform(this::createFillTransform)
+            .addReactiveTransform(this.createTagTransform(user))
+            .build();
     }
 
     private ChestPane createFillTransform(ChestPane pane, InterfaceView<ChestPane, PlayerViewer> view) {
@@ -73,28 +83,43 @@ public final class TagsMenuFactory {
     }
 
     private PaginatedTransform<ItemStackElement<ChestPane>, ChestPane, PlayerViewer> createTagTransform(final @NonNull TagsUser user) {
-        return new PaginatedTransform<>(
-                Vector2.at(0, 0),
-                Vector2.at(8, 2),
-                () -> this.createTagElements(user)
+        PaginatedTransform<ItemStackElement<ChestPane>, ChestPane, PlayerViewer> transform = new PaginatedTransform<>(
+            Vector2.at(0, 0),
+            Vector2.at(8, 2),
+            () -> this.createTagElements(user)
         );
+
+        transform.backwardElement(Vector2.at(0, 3), unused -> {
+            return ItemStackElement.of(BACK_ITEM, ctx -> {
+                transform.previousPage();
+            });
+        });
+
+        transform.forwardElement(Vector2.at(8, 3), unused -> {
+            return ItemStackElement.of(FORWARD_ITEM, ctx -> {
+                transform.nextPage();
+            });
+        });
+
+        return transform;
     }
 
     private List<ItemStackElement<ChestPane>> createTagElements(final @NonNull TagsUser user) {
         return this.tagsService.allTags(user)
-                .stream()
-                .map(tag -> this.createTagElement(user, tag))
-                .toList();
+            .stream()
+            .map(tag -> this.createTagElement(user, tag))
+            .toList();
     }
 
     private ItemStackElement<ChestPane> createTagElement(final @NonNull TagsUser user, final @NonNull ConstructedTag tag) {
         Material material = this.matchMaterialOrDefault(tag.displayInformation().material());
         ItemStack item = PaperItemBuilder.ofType(material)
-                .name(tag.component())
-                .lore(this.createTagLore(tag))
-                .build();
+            .name(tag.component())
+            .lore(this.createTagLore(tag))
+            .build();
 
         return ItemStackElement.of(item, ctx -> {
+            ctx.cancel(true);
             this.actionService.select(user, tag);
         });
     }
@@ -112,9 +137,9 @@ public final class TagsMenuFactory {
 
     private List<Component> formatTagReason(final @NonNull String reason) {
         return FormatingUtilites.splitString(reason, 30)
-                .stream()
-                .map(text -> Component.text(text, NamedTextColor.WHITE))
-                .collect(Collectors.toList());
+            .stream()
+            .map(text -> Component.text(text, NamedTextColor.WHITE))
+            .collect(Collectors.toList());
     }
 
     private Material matchMaterialOrDefault(final @NonNull String input) {

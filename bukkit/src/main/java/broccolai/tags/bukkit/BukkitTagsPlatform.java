@@ -33,6 +33,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.interfaces.paper.PaperInterfaceListeners;
 
 public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform {
 
@@ -77,6 +78,8 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
         }
 
         this.plugin.commands(commandManager, BUKKIT_COMMANDS);
+
+        PaperInterfaceListeners.install(this);
     }
 
     @Override
