@@ -1,7 +1,7 @@
 name : Tags
 version : $version
 main : broccolai.tags.bukkit.BukkitTagsPlatform
-loader: broccolai.tags.bukkit.PaperTagsLoader
+loader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
 api-version : '1.20'
 dependencies:
     server:

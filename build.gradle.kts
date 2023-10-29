@@ -48,12 +48,6 @@ subprojects {
         processResources {
             expand("version" to rootProject.version)
         }
-
-        register("inspectDependencies") {
-            doLast {
-                inspectDependenciesForProject(project)
-            }
-        }
     }
 }
 
