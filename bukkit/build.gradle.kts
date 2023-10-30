@@ -54,6 +54,8 @@ tasks {
             include(dependency(libs.gremlin.get().toString()))
         }
 
+        relocate("xyz.jpenilla.gremlin", "broccolai.tags.lib.xyz.jpenilla.gremlin")
+
         archiveFileName.set(project.name + ".jar")
     }
 
