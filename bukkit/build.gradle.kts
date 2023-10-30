@@ -37,6 +37,8 @@ configurations.runtimeDownload {
     exclude("net.kyori", "adventure-api")
     exclude("net.kyori", "adventure-text-minimessage")
     exclude("net.kyori", "adventure-text-serializer-plain")
+    exclude("org.slf4j", "slf4j-api")
+    exclude("org.ow2.asm")
 }
 
 tasks {
