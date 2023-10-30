@@ -32,6 +32,13 @@ dependencies {
     runtimeDownload(libs.h2)
 }
 
+configurations.runtimeDownload {
+    exclude("io.papermc.paper")
+    exclude("net.kyori", "adventure-api")
+    exclude("net.kyori", "adventure-text-minimessage")
+    exclude("net.kyori", "adventure-text-serializer-plain")
+}
+
 tasks {
     runServer {
         minecraftVersion("1.20.2")
@@ -58,7 +65,7 @@ tasks {
         repos.set(listOf(
             "https://repo.papermc.io/repository/maven-public/",
             "https://repo.broccol.ai/releases",
-            "https://repo.jpenilla.xyz/snapshots/",
+            "https://oss.sonatype.org/content/repositories/snapshots/",
         ))
     }
 }
