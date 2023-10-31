@@ -11,7 +11,6 @@ import org.spongepowered.configurate.objectmapping.meta.Comment;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-@SuppressWarnings("FieldMayBeFinal")
 @ConfigSerializable
 public final class LocaleConfiguration implements Configuration {
 
@@ -22,6 +21,10 @@ public final class LocaleConfiguration implements Configuration {
     @Setting
     @Comment("Locales for command feedback related messages")
     public FeedbackLocaleConfiguration commands = new FeedbackLocaleConfiguration();
+
+    @Setting
+    @Comment("Locales for menu related translations")
+    public MenuLocaleConfiguration menu = new MenuLocaleConfiguration();
 
     @ConfigSerializable
     public static final class FeedbackLocaleConfiguration {
@@ -80,6 +83,20 @@ public final class LocaleConfiguration implements Configuration {
             public LocaleEntry tagNotFound = new BasicLocaleEntry("<prefix> Tag not found for: <input>");
 
         }
+
+    }
+
+    @ConfigSerializable
+    public static final class MenuLocaleConfiguration {
+
+        @Setting
+        public LocaleEntry title = new BasicLocaleEntry("Tags Menu");
+
+        @Setting
+        public LocaleEntry equip = new BasicLocaleEntry("<gray>Left click to equip");
+
+        @Setting
+        public LocaleEntry currentlyEquipped = new BasicLocaleEntry("<green>Currently Equipped");
 
     }
 

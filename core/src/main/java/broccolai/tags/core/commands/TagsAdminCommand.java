@@ -1,7 +1,7 @@
 package broccolai.tags.core.commands;
 
 import broccolai.tags.api.events.event.TagChangeEvent;
-import broccolai.tags.api.model.tag.Tag;
+import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
@@ -14,9 +14,8 @@ import cloud.commandframework.Command;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.Collection;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public final class TagsAdminCommand implements PluginCommand {
 
@@ -83,7 +82,7 @@ public final class TagsAdminCommand implements PluginCommand {
     private void handleGive(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
         TagsUser target = context.get("target");
-        Tag tag = context.get("tag");
+        ConstructedTag tag = context.get("tag");
 
         this.permissionService.grant(target, tag);
         sender.sendMessage(this.messageService.commandAdminGive(tag, target));
@@ -92,7 +91,7 @@ public final class TagsAdminCommand implements PluginCommand {
     private void handleRemove(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
         TagsUser target = context.get("target");
-        Tag tag = context.get("tag");
+        ConstructedTag tag = context.get("tag");
 
         this.permissionService.remove(target, tag);
         sender.sendMessage(this.messageService.commandAdminRemove(tag, target));
@@ -100,7 +99,7 @@ public final class TagsAdminCommand implements PluginCommand {
 
     private void handleList(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
-        Collection<Tag> tags = context.<TagsUser>getOptional("target")
+        Collection<ConstructedTag> tags = context.<TagsUser>getOptional("target")
                 .map(this.tagsService::allTags)
                 .orElse(this.tagsService.allTags());
 
@@ -110,7 +109,7 @@ public final class TagsAdminCommand implements PluginCommand {
     private void handleSet(final @NonNull CommandContext<CommandUser> context) {
         CommandUser sender = context.getSender();
         TagsUser target = context.get("target");
-        Tag tag = context.get("tag");
+        ConstructedTag tag = context.get("tag");
 
         TagChangeEvent event = new TagChangeEvent(target, tag);
         this.eventService.post(event);

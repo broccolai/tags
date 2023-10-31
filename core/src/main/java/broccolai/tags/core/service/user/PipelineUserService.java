@@ -8,12 +8,11 @@ import broccolai.tags.core.service.user.partials.UserSQLService;
 import cloud.commandframework.services.ServicePipeline;
 import com.google.inject.Injector;
 import io.leangen.geantyref.TypeToken;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public abstract class PipelineUserService implements UserService {
 

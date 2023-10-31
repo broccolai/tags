@@ -1,7 +1,6 @@
 import net.kyori.indra.IndraPublishingPlugin
 import net.kyori.indra.IndraCheckstylePlugin
 import net.kyori.indra.IndraPlugin
-import net.kyori.indra.repository.sonatypeSnapshots
 
 plugins {
     id("net.kyori.indra")
@@ -13,7 +12,7 @@ plugins {
 }
 
 group = "broccolai.tags"
-version = "1.3.0-SNAPSHOT"
+version = "2.0.0"
 
 subprojects {
     apply<IndraPlugin>()
@@ -22,7 +21,8 @@ subprojects {
 
     repositories {
         mavenCentral()
-        sonatypeSnapshots()
+        sonatype.ossSnapshots()
+        sonatype.s01Snapshots()
         maven("https://papermc.io/repo/repository/maven-public/")
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://jitpack.io")
@@ -42,6 +42,8 @@ subprojects {
                 ci(true)
                 publishing(true)
             }
+
+            checkstyle("10.12.4")
         }
 
         processResources {

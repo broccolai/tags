@@ -9,7 +9,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public class StorageConfiguration {
 
     @Setting
-    @Comment("Storage method. Current options are: LUCKPERMS, SQLITE")
-    public StorageMethod storageMethod = StorageMethod.LUCKPERMS;
+    @Comment("Storage method. Current options are: LUCKPERMS, H2")
+    public StorageMethod storageMethod = StorageMethod.H2;
 
 }

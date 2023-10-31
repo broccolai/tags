@@ -15,6 +15,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariDataSource;
+import java.util.Collection;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 @Singleton
@@ -43,7 +44,7 @@ public final class TagsPlugin {
 
     public void commands(
             final @NonNull CommandManager<@NonNull CommandUser> commandManager,
-            final @NonNull Class<? extends PluginCommand>[] commands
+            final @NonNull Collection<Class<? extends PluginCommand>> commands
     ) {
         for (final @NonNull Class<? extends PluginCommand> commandClass : commands) {
             this.injector.getInstance(commandClass).register(commandManager);

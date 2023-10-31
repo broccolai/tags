@@ -10,10 +10,9 @@ import cloud.commandframework.context.CommandContext;
 import cloud.commandframework.exceptions.parsing.NoInputProvidedException;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.assistedinject.AssistedInject;
-import org.checkerframework.checker.nullness.qual.NonNull;
-
 import java.util.List;
 import java.util.Queue;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull TagsUser> {
 
@@ -35,7 +34,6 @@ public class UserArgument extends CommandArgument<@NonNull CommandUser, @NonNull
         }
 
         @Override
-        @SuppressWarnings("deprecation")
         public @NonNull ArgumentParseResult<TagsUser> parse(
                 final @NonNull CommandContext<@NonNull CommandUser> commandContext,
                 final @NonNull Queue<String> inputQueue

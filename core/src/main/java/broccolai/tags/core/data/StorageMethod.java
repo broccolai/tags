@@ -1,12 +1,12 @@
 package broccolai.tags.core.data;
 
 import broccolai.tags.api.service.DataService;
+import broccolai.tags.core.service.data.H2DataService;
 import broccolai.tags.core.service.data.LPDataService;
-import broccolai.tags.core.service.data.SQLDataService;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 public enum StorageMethod {
-    SQLITE(SQLDataService.class),
+    H2(H2DataService.class),
     LUCKPERMS(LPDataService.class);
 
     private final Class<? extends DataService> clazz;

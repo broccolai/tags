@@ -4,5 +4,6 @@ public enum TagParserMode {
     SELF,
     TARGET,
     NON_SECRET,
-    ANY,
+    ANY
+
 }
