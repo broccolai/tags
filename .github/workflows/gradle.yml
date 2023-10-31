@@ -1,29 +1,16 @@
-on : [ push, pull_request ]
+name: "build"
 
-jobs :
-  build :
+on:
+    push:
+        branches: [ "**" ]
+        tags-ignore: [ "**" ]
+    pull_request:
+    release:
+        types: [ released ]
 
-    runs-on : ubuntu-latest
-
-    steps :
-      - uses : actions/checkout@v2
-      - name : Set up JDK 1.8
-        uses : actions/setup-java@v1
-        with :
-          java-version : 8
-      - name : Cache Gradle data
-        uses : actions/cache@v2
-        with :
-          path : |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key : ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys : ${{ runner.os }}-gradle
-      - name : Grant execute permission for gradlew
-        run : chmod +x gradlew
-      - name : Build with Gradle
-        run : ./gradlew build
-      - uses : actions/upload-artifact@v2
-        with :
-          name : tags-bukkit.jar
-          path : bukkit/build/libs/tags-bukkit.jar
+jobs:
+    call-build:
+        uses: "broccolai/actions/.github/workflows/shared-ci.yml@master"
+        secrets: inherit
+        with:
+            artifacts-path: 'paper/build/libs/tags-paper.jar'

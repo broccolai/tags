@@ -1,4 +1,4 @@
-package broccolai.tags.bukkit.integrations;
+package broccolai.tags.paper.integrations;
 
 import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.user.TagsUser;

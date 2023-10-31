@@ -11,7 +11,7 @@ plugins {
 
 rootProject.name = "tags"
 
-use("api", "core", "bukkit")
+use("api", "core", "paper")
 
 fun use(vararg names: String) {
     for (name in names) {
@@ -19,3 +19,5 @@ fun use(vararg names: String) {
         project(":$name").name = "${rootProject.name}-$name"
     }
 }
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

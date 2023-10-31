@@ -1,4 +1,4 @@
-package broccolai.tags.bukkit.service;
+package broccolai.tags.paper.service;
 
 import broccolai.corn.core.Lists;
 import broccolai.tags.api.model.user.TagsUser;
@@ -12,10 +12,10 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class BukkitPipelineUserService extends PipelineUserService {
+public final class PaperPipelineUserService extends PipelineUserService {
 
     @Inject
-    public BukkitPipelineUserService(final @NonNull Injector injector) {
+    public PaperPipelineUserService(final @NonNull Injector injector) {
         super(injector);
     }
 

@@ -1,15 +1,15 @@
-package broccolai.tags.bukkit;
+package broccolai.tags.paper;
 
 import broccolai.tags.api.service.MessageService;
-import broccolai.tags.bukkit.commands.BukkitTagsCommand;
-import broccolai.tags.bukkit.commands.context.BukkitCommandUser;
-import broccolai.tags.bukkit.commands.context.BukkitConsoleCommandUser;
-import broccolai.tags.bukkit.commands.context.BukkitPlayerCommandUser;
-import broccolai.tags.bukkit.inject.PlatformModule;
-import broccolai.tags.bukkit.inject.VaultModule;
-import broccolai.tags.bukkit.integrations.BasicIntegration;
-import broccolai.tags.bukkit.integrations.PapiIntegration;
-import broccolai.tags.bukkit.listeners.PlayerListener;
+import broccolai.tags.paper.commands.PaperTagsCommand;
+import broccolai.tags.paper.commands.context.PaperCommandUser;
+import broccolai.tags.paper.commands.context.PaperConsoleCommandUser;
+import broccolai.tags.paper.commands.context.PaperPlayerCommandUser;
+import broccolai.tags.paper.inject.PlatformModule;
+import broccolai.tags.paper.inject.VaultModule;
+import broccolai.tags.paper.integrations.BasicIntegration;
+import broccolai.tags.paper.integrations.PapiIntegration;
+import broccolai.tags.paper.listeners.PlayerListener;
 import broccolai.tags.core.TagsPlugin;
 import broccolai.tags.core.commands.PluginCommand;
 import broccolai.tags.core.commands.arguments.TagArgument;
@@ -35,16 +35,16 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.interfaces.paper.PaperInterfaceListeners;
 
-public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform {
+public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform {
 
-    private static final @NonNull Class<? extends Listener>[] BUKKIT_LISTENERS = ArrayUtilities.create(
+    private static final @NonNull Class<? extends Listener>[] PAPER_LISTENERS = ArrayUtilities.create(
             PlayerListener.class,
             BasicIntegration.class
     );
 
-    private static final @NonNull Collection<Class<? extends PluginCommand>> BUKKIT_COMMANDS = ArrayUtilities.merge(
+    private static final @NonNull Collection<Class<? extends PluginCommand>> PAPER_COMMANDS = ArrayUtilities.merge(
             COMMANDS,
-            BukkitTagsCommand.class
+            PaperTagsCommand.class
     );
 
     private @MonotonicNonNull TagsPlugin plugin;
@@ -70,14 +70,14 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
             injector.getInstance(PapiIntegration.class).register();
         }
 
-        for (final Class<? extends Listener> bukkitListener : BUKKIT_LISTENERS) {
+        for (final Class<? extends Listener> paperListener : PAPER_LISTENERS) {
             this.getServer().getPluginManager().registerEvents(
-                    injector.getInstance(bukkitListener),
+                    injector.getInstance(paperListener),
                     this
             );
         }
 
-        this.plugin.commands(commandManager, BUKKIT_COMMANDS);
+        this.plugin.commands(commandManager, PAPER_COMMANDS);
 
         PaperInterfaceListeners.install(this);
     }
@@ -94,8 +94,8 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
             PaperCommandManager<CommandUser> commandManager = new PaperCommandManager<>(
                     this,
                     AsynchronousCommandExecutionCoordinator.<CommandUser>builder().build(),
-                    BukkitTagsPlatform::from,
-                    user -> user.<BukkitCommandUser>cast().sender()
+                    PaperTagsPlatform::from,
+                    user -> user.<PaperCommandUser>cast().sender()
             );
 
             if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
@@ -126,9 +126,9 @@ public final class BukkitTagsPlatform extends JavaPlugin implements TagsPlatform
 
     private static CommandUser from(final @NonNull CommandSender sender) {
         if (sender instanceof ConsoleCommandSender console) {
-            return new BukkitConsoleCommandUser(console);
+            return new PaperConsoleCommandUser(console);
         } else if (sender instanceof Player player) {
-            return new BukkitPlayerCommandUser(player);
+            return new PaperPlayerCommandUser(player);
         }
 
         return null;

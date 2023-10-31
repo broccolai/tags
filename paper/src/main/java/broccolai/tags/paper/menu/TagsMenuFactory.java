@@ -1,4 +1,4 @@
-package broccolai.tags.bukkit.menu;
+package broccolai.tags.paper.menu;
 
 import broccolai.corn.paper.item.PaperItemBuilder;
 import broccolai.tags.api.model.tag.ConstructedTag;

@@ -1,12 +1,12 @@
-package broccolai.tags.bukkit.commands;
+package broccolai.tags.paper.commands;
 
 import broccolai.corn.paper.item.PaperItemBuilder;
 import broccolai.tags.api.model.tag.ConstructedTag;
 import broccolai.tags.api.model.tag.TagDisplayInformation;
 import broccolai.tags.api.model.user.TagsUser;
 import broccolai.tags.api.service.UserService;
-import broccolai.tags.bukkit.commands.context.BukkitPlayerCommandUser;
-import broccolai.tags.bukkit.menu.TagsMenuFactory;
+import broccolai.tags.paper.commands.context.PaperPlayerCommandUser;
+import broccolai.tags.paper.menu.TagsMenuFactory;
 import broccolai.tags.core.commands.PluginCommand;
 import broccolai.tags.core.commands.arguments.modes.TagParserMode;
 import broccolai.tags.core.commands.context.CommandUser;
@@ -20,14 +20,14 @@ import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.interfaces.paper.PlayerViewer;
 
-public final class BukkitTagsCommand implements PluginCommand {
+public final class PaperTagsCommand implements PluginCommand {
 
     private final UserService userService;
     private final CloudArgumentFactory argumentFactory;
     private final TagsMenuFactory tagsMenuFactory;
 
     @Inject
-    public BukkitTagsCommand(
+    public PaperTagsCommand(
             final @NonNull UserService userService,
             final @NonNull CloudArgumentFactory argumentFactory,
             final @NonNull TagsMenuFactory tagsMenuFactory
@@ -66,12 +66,12 @@ public final class BukkitTagsCommand implements PluginCommand {
                 .customModelData(displayInformation.customModelData())
                 .build();
 
-        BukkitPlayerCommandUser user = context.getSender().cast();
+        PaperPlayerCommandUser user = context.getSender().cast();
         user.player().getInventory().addItem(item);
     }
 
     private void handleMenu(final @NonNull CommandContext<CommandUser> context) {
-        BukkitPlayerCommandUser sender = context.getSender().cast();
+        PaperPlayerCommandUser sender = context.getSender().cast();
         TagsUser user = this.userService.get(sender.uuid());
 
         this.tagsMenuFactory.create(user).open(PlayerViewer.of(sender.player()));

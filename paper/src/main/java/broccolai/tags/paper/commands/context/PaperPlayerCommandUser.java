@@ -1,14 +1,14 @@
-package broccolai.tags.bukkit.commands.context;
+package broccolai.tags.paper.commands.context;
 
 import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class BukkitPlayerCommandUser extends BukkitCommandUser {
+public final class PaperPlayerCommandUser extends PaperCommandUser {
 
     private final Player player;
 
-    public BukkitPlayerCommandUser(
+    public PaperPlayerCommandUser(
             final @NonNull Player player
     ) {
         super(player);

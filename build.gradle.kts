@@ -22,6 +22,7 @@ subprojects {
     repositories {
         mavenCentral()
         sonatype.ossSnapshots()
+        sonatype.s01Snapshots()
         maven("https://papermc.io/repo/repository/maven-public/")
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://jitpack.io")

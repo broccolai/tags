@@ -1,4 +1,4 @@
-package broccolai.tags.bukkit.service;
+package broccolai.tags.paper.service;
 
 import broccolai.tags.api.service.TaskService;
 import com.google.inject.Inject;
@@ -6,12 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class BukkitTaskService implements TaskService {
+public final class PaperTaskService implements TaskService {
 
     private final @NonNull Plugin plugin;
 
     @Inject
-    public BukkitTaskService(final @NonNull Plugin plugin) {
+    public PaperTaskService(final @NonNull Plugin plugin) {
         this.plugin = plugin;
     }
 

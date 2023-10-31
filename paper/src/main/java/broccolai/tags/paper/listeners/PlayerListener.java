@@ -1,4 +1,4 @@
-package broccolai.tags.bukkit.listeners;
+package broccolai.tags.paper.listeners;
 
 import broccolai.tags.api.events.event.UserLoginEvent;
 import broccolai.tags.api.model.user.TagsUser;
