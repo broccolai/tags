@@ -1,6 +1,13 @@
 package broccolai.tags.paper;
 
 import broccolai.tags.api.service.MessageService;
+import broccolai.tags.core.TagsPlugin;
+import broccolai.tags.core.commands.PluginCommand;
+import broccolai.tags.core.commands.arguments.TagArgument;
+import broccolai.tags.core.commands.arguments.UserArgument;
+import broccolai.tags.core.commands.context.CommandUser;
+import broccolai.tags.core.platform.TagsPlatform;
+import broccolai.tags.core.util.ArrayUtilities;
 import broccolai.tags.paper.commands.PaperTagsCommand;
 import broccolai.tags.paper.commands.context.PaperCommandUser;
 import broccolai.tags.paper.commands.context.PaperConsoleCommandUser;
@@ -10,13 +17,6 @@ import broccolai.tags.paper.inject.VaultModule;
 import broccolai.tags.paper.integrations.BasicIntegration;
 import broccolai.tags.paper.integrations.PapiIntegration;
 import broccolai.tags.paper.listeners.PlayerListener;
-import broccolai.tags.core.TagsPlugin;
-import broccolai.tags.core.commands.PluginCommand;
-import broccolai.tags.core.commands.arguments.TagArgument;
-import broccolai.tags.core.commands.arguments.UserArgument;
-import broccolai.tags.core.commands.context.CommandUser;
-import broccolai.tags.core.platform.TagsPlatform;
-import broccolai.tags.core.util.ArrayUtilities;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.bukkit.CloudBukkitCapabilities;
 import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;

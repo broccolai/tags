@@ -10,6 +10,7 @@ import broccolai.tags.core.util.FormatingUtilites;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,6 +18,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.incendo.interfaces.core.click.ClickHandler;
+import org.incendo.interfaces.core.transform.InterfaceProperty;
 import org.incendo.interfaces.core.transform.types.PaginatedTransform;
 import org.incendo.interfaces.core.util.Vector2;
 import org.incendo.interfaces.core.view.InterfaceView;
@@ -64,11 +66,15 @@ public final class TagsMenuFactory {
     }
 
     public ChestInterface create(final @NonNull TagsUser user) {
+        InterfaceProperty<UUID> refreshProperty = InterfaceProperty.of(UUID.randomUUID());
+        var tagTransform = this.createTagTransform(user, refreshProperty);
+
         return ChestInterface.builder()
             .title(this.locale.title.asComponent())
             .rows(4)
+            .cancelClicksInPlayerInventory(true)
             .addTransform(this::createFillTransform)
-            .addReactiveTransform(this.createTagTransform(user))
+            .addTransform(tagTransform, tagTransform.pageProperty(), refreshProperty)
             .build();
     }
 
@@ -82,11 +88,14 @@ public final class TagsMenuFactory {
         return result;
     }
 
-    private PaginatedTransform<ItemStackElement<ChestPane>, ChestPane, PlayerViewer> createTagTransform(final @NonNull TagsUser user) {
+    private PaginatedTransform<ItemStackElement<ChestPane>, ChestPane, PlayerViewer> createTagTransform(
+        final @NonNull TagsUser user,
+        final @NonNull InterfaceProperty<UUID> refreshProperty
+    ) {
         PaginatedTransform<ItemStackElement<ChestPane>, ChestPane, PlayerViewer> transform = new PaginatedTransform<>(
             Vector2.at(0, 0),
             Vector2.at(8, 2),
-            () -> this.createTagElements(user)
+            () -> this.createTagElements(user, refreshProperty)
         );
 
         transform.backwardElement(Vector2.at(0, 3), unused -> {
@@ -104,33 +113,46 @@ public final class TagsMenuFactory {
         return transform;
     }
 
-    private List<ItemStackElement<ChestPane>> createTagElements(final @NonNull TagsUser user) {
+    private List<ItemStackElement<ChestPane>> createTagElements(
+        final @NonNull TagsUser user,
+        final @NonNull InterfaceProperty<UUID> refreshProperty
+    ) {
         return this.tagsService.allTags(user)
             .stream()
-            .map(tag -> this.createTagElement(user, tag))
+            .map(tag -> this.createTagElement(user, tag, refreshProperty))
             .toList();
     }
 
-    private ItemStackElement<ChestPane> createTagElement(final @NonNull TagsUser user, final @NonNull ConstructedTag tag) {
+    private ItemStackElement<ChestPane> createTagElement(
+        final @NonNull TagsUser user,
+        final @NonNull ConstructedTag tag,
+        final @NonNull InterfaceProperty<UUID> refreshProperty
+    ) {
         Material material = this.matchMaterialOrDefault(tag.displayInformation().material());
         ItemStack item = PaperItemBuilder.ofType(material)
             .name(tag.component())
-            .lore(this.createTagLore(tag))
+            .lore(this.createTagLore(user, tag))
             .build();
 
         return ItemStackElement.of(item, ctx -> {
             ctx.cancel(true);
             this.actionService.select(user, tag);
+            refreshProperty.set(UUID.randomUUID());
         });
     }
 
-    private List<Component> createTagLore(final @NonNull ConstructedTag tag) {
+    private List<Component> createTagLore(final @NonNull TagsUser user, final @NonNull ConstructedTag tag) {
         List<Component> result = new ArrayList<>();
 
         result.addAll(this.formatTagReason(tag.reason()));
 
         result.add(Component.empty());
-        result.add(this.locale.equip.asComponent());
+
+        if (this.userHasTagEquipped(user, tag)) {
+            result.add(Component.text("currently equipped"));
+        } else {
+            result.add(this.locale.equip.asComponent());
+        }
 
         return result;
     }
@@ -151,6 +173,10 @@ public final class TagsMenuFactory {
         }
 
         return material;
+    }
+
+    private boolean userHasTagEquipped(final @NonNull TagsUser user, final @NonNull ConstructedTag tag) {
+        return user.current().isPresent() && user.current().get() == tag.id();
     }
 
 }
