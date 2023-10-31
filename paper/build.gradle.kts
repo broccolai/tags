@@ -10,26 +10,25 @@ repositories {
     maven("https://repo.jpenilla.xyz/snapshots/")
 }
 
+fun DependencyHandler.runtimeDownloadApi(dependencyNotation: Any) {
+    api(dependencyNotation)
+    runtimeDownload(dependencyNotation)
+}
+
 dependencies {
-    api(project(":tags-core"))
-    runtimeDownload(project(":tags-core"))
+    runtimeDownloadApi(projects.tagsCore)
 
     compileOnly(libs.paper.api)
     compileOnly(libs.papi)
     compileOnly(libs.vault)
 
-    api(libs.cloud.paper)
-    runtimeDownload(libs.cloud.paper)
-    api(libs.cloud.extras)
-    runtimeDownload(libs.cloud.extras)
-    api(libs.corn.minecraft.paper)
-    runtimeDownload(libs.corn.minecraft.paper)
+    runtimeDownloadApi(libs.cloud.paper)
+    runtimeDownloadApi(libs.cloud.extras)
+    runtimeDownloadApi(libs.corn.minecraft.paper)
 
-    api(libs.interfaces.paper)
-    runtimeDownload(libs.interfaces.paper)
+    runtimeDownloadApi(libs.interfaces.paper)
 
-    api(libs.h2)
-    runtimeDownload(libs.h2)
+    runtimeDownloadApi(libs.h2)
 }
 
 configurations.runtimeDownload {
