@@ -47,7 +47,7 @@ public final class MainConfiguration implements Configuration {
                     1,
                     "example",
                 false,
-                    "<red><bold>example",
+                    "<red><bold>example</bold></red>",
                     "Acquired by playing for an hour",
                     new TagDisplayInformation(
                             "stick",
