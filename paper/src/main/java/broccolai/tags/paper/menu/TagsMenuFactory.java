@@ -101,12 +101,14 @@ public final class TagsMenuFactory {
         transform.backwardElement(Vector2.at(0, 3), unused -> {
             return ItemStackElement.of(BACK_ITEM, ctx -> {
                 transform.previousPage();
+                ctx.cancel(true);
             });
         });
 
         transform.forwardElement(Vector2.at(8, 3), unused -> {
             return ItemStackElement.of(FORWARD_ITEM, ctx -> {
                 transform.nextPage();
+                ctx.cancel(true);
             });
         });
 
@@ -149,7 +151,7 @@ public final class TagsMenuFactory {
         result.add(Component.empty());
 
         if (this.userHasTagEquipped(user, tag)) {
-            result.add(Component.text("currently equipped"));
+            result.add(this.locale.currentlyEquipped.asComponent());
         } else {
             result.add(this.locale.equip.asComponent());
         }

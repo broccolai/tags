@@ -95,6 +95,9 @@ public final class LocaleConfiguration implements Configuration {
         @Setting
         public LocaleEntry equip = new BasicLocaleEntry("<gray>Left click to equip");
 
+        @Setting
+        public LocaleEntry currentlyEquipped = new BasicLocaleEntry("<green>Currently Equipped");
+
     }
 
     //region Configurate
