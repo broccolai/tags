@@ -30,12 +30,12 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public TagResolver prefix() {
-        return TagResolver.resolver("prefix", Tag.inserting(this.locale.prefix.asComponent()));
+        return TagResolver.resolver("prefix", Tag.selfClosingInserting(this.locale.prefix.asComponent()));
     }
 
     @Override
     public Component commandSelect(final @NonNull ConstructedTag tag) {
-        TagResolver tagComponent = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+        TagResolver tagComponent = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
 
         return this.locale.commands.player.select.asComponent(this.prefix(), tagComponent);
     }
@@ -46,7 +46,7 @@ public final class MiniMessageService implements MessageService {
 
         for (ConstructedTag tag : tags) {
             TagResolver nameTemplate = TagResolver.resolver("name", Tag.preProcessParsed(tag.name()));
-            TagResolver tagComponent = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+            TagResolver tagComponent = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
 
             component = component.append(this.locale.commands.player.listEntry.asComponent(nameTemplate, tagComponent));
         }
@@ -57,7 +57,7 @@ public final class MiniMessageService implements MessageService {
     @Override
     public Component commandInfo(final @NonNull ConstructedTag tag) {
         TagResolver nameTemplate = TagResolver.resolver("name", Tag.preProcessParsed(tag.name()));
-        TagResolver tagTemplate = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+        TagResolver tagTemplate = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
         TagResolver reasonTemplate = TagResolver.resolver("reason", Tag.preProcessParsed(tag.reason()));
 
         return this.locale.commands.player.info.asComponent(this.prefix(), nameTemplate, tagTemplate, reasonTemplate);
@@ -68,7 +68,7 @@ public final class MiniMessageService implements MessageService {
         final @NonNull ConstructedTag tag,
         final @NonNull TagsUser target
     ) {
-        TagResolver tagComponent = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+        TagResolver tagComponent = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
         TagResolver targetComponent = TagResolver.resolver("target", Tag.preProcessParsed(this.nameFromUser(target)));
 
         return this.locale.commands.admin.give.asComponent(this.prefix(), tagComponent, targetComponent);
@@ -79,7 +79,7 @@ public final class MiniMessageService implements MessageService {
         final @NonNull ConstructedTag tag,
         final @NonNull TagsUser target
     ) {
-        TagResolver tagComponent = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+        TagResolver tagComponent = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
         TagResolver targetComponent = TagResolver.resolver("target", Tag.preProcessParsed(this.nameFromUser(target)));
 
         return this.locale.commands.admin.remove.asComponent(this.prefix(), tagComponent, targetComponent);
@@ -91,7 +91,7 @@ public final class MiniMessageService implements MessageService {
 
         for (ConstructedTag tag : tags) {
             TagResolver nameTemplate = TagResolver.resolver("name", Tag.preProcessParsed(tag.name()));
-            TagResolver tagTemplate = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+            TagResolver tagTemplate = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
 
             component = component.append(this.locale.commands.admin.listEntry.asComponent(nameTemplate, tagTemplate));
         }
@@ -101,7 +101,7 @@ public final class MiniMessageService implements MessageService {
 
     @Override
     public Component commandAdminSet(@NonNull final ConstructedTag tag, @NonNull final TagsUser target) {
-        TagResolver tagTemplate = TagResolver.resolver("tag", Tag.inserting(tag.component()));
+        TagResolver tagTemplate = TagResolver.resolver("tag", Tag.selfClosingInserting(tag.component()));
         TagResolver targetTemplate = TagResolver.resolver("target", Tag.preProcessParsed(this.nameFromUser(target)));
 
         return this.locale.commands.admin.set.asComponent(this.prefix(), tagTemplate, targetTemplate);
