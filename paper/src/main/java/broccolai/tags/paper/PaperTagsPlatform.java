@@ -53,6 +53,8 @@ public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform 
     public void onEnable() {
         this.getDataFolder().mkdirs();
 
+        PaperInterfaceListeners.install(this);
+
         Injector injector = Guice.createInjector(ArrayUtilities.merge(
                 STANDARD_MODULES,
                 new PlatformModule(this),
@@ -78,8 +80,6 @@ public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform 
         }
 
         this.plugin.commands(commandManager, PAPER_COMMANDS);
-
-        PaperInterfaceListeners.install(this);
     }
 
     @Override
