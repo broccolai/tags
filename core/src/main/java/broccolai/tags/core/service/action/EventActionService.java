@@ -22,7 +22,7 @@ public final class EventActionService implements ActionService {
         TagChangeEvent event = new TagChangeEvent(user, tag);
         this.eventService.post(event);
 
-        return event.cancelled();
+        return !event.cancelled();
     }
 
     @Override
