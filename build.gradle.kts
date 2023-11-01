@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "broccolai.tags"
-version = "2.0.0-SNAPSHOT"
+version = "2.0.0"
 
 subprojects {
     apply<IndraPlugin>()
