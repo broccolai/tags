@@ -15,6 +15,7 @@ import broccolai.tags.paper.commands.context.PaperPlayerCommandUser;
 import broccolai.tags.paper.inject.PlatformModule;
 import broccolai.tags.paper.inject.VaultModule;
 import broccolai.tags.paper.integrations.BasicIntegration;
+import broccolai.tags.paper.integrations.MiniIntegration;
 import broccolai.tags.paper.integrations.PapiIntegration;
 import broccolai.tags.paper.listeners.PlayerListener;
 import cloud.commandframework.CommandManager;
@@ -30,6 +31,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -68,9 +70,7 @@ public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform 
                 injector.getInstance(MessageService.class)
         );
 
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            injector.getInstance(PapiIntegration.class).register();
-        }
+        this.registerIntegrations(injector);
 
         for (final Class<? extends Listener> paperListener : PAPER_LISTENERS) {
             this.getServer().getPluginManager().registerEvents(
@@ -121,6 +121,19 @@ public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform 
             return commandManager;
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    //todo(josh): genericize this
+    private void registerIntegrations(final Injector injector) {
+        PluginManager pluginManager = Bukkit.getPluginManager();
+
+        if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
+            injector.getInstance(PapiIntegration.class).register();
+        }
+
+        if (pluginManager.isPluginEnabled("MiniPlaceholders")) {
+            injector.getInstance(MiniIntegration.class).registerExpansion();
         }
     }
 

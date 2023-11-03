@@ -8,8 +8,13 @@ dependencies:
         Vault:
             load: BEFORE
             required: true
-            join-classpath: true
-softdepend : [ PlaceholderAPI ]
+        PlaceholderAPI:
+            load: BEFORE
+            required: false
+        MiniPlaceholders:
+            load: BEFORE
+            required: false
+
 permissions :
   tags.user :
     default : true

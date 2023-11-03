@@ -29,6 +29,8 @@ dependencies {
     runtimeDownloadApi(libs.interfaces.paper)
 
     runtimeDownloadApi(libs.h2)
+
+    compileOnly(libs.miniplaceholders)
 }
 
 configurations.runtimeDownload {
@@ -45,6 +47,7 @@ tasks {
         minecraftVersion("1.20.2")
         downloadPlugins {
             url("https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar")
+            url("https://github.com/MiniPlaceholders/MiniPlaceholders/releases/download/2.2.1/MiniPlaceholders-Paper-2.2.1.jar")
         }
     }
 
