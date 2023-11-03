@@ -43,17 +43,17 @@ public final class MainConfiguration implements Configuration {
             """
     )
     public List<TagConfiguration> tags = List.of(
-            new TagConfiguration(
-                    1,
-                    "example",
-                false,
-                    "<red><bold>example</bold></red>",
-                    "Acquired by playing for an hour",
-                    new TagDisplayInformation(
-                            "stick",
-                            5
-                    )
+        new TagConfiguration(
+            1,
+            "example",
+            false,
+            "<red><bold>example</bold></red>",
+            "Acquired by playing for an hour",
+            new TagDisplayInformation(
+                "stick",
+                5
             )
+        )
     );
 
     //region Configurate

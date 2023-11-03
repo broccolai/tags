@@ -14,7 +14,6 @@ import broccolai.tags.paper.commands.context.PaperConsoleCommandUser;
 import broccolai.tags.paper.commands.context.PaperPlayerCommandUser;
 import broccolai.tags.paper.inject.PlatformModule;
 import broccolai.tags.paper.inject.VaultModule;
-import broccolai.tags.paper.integrations.BasicIntegration;
 import broccolai.tags.paper.integrations.MiniIntegration;
 import broccolai.tags.paper.integrations.PapiIntegration;
 import broccolai.tags.paper.listeners.PlayerListener;
@@ -40,8 +39,7 @@ import org.incendo.interfaces.paper.PaperInterfaceListeners;
 public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform {
 
     private static final @NonNull Class<? extends Listener>[] PAPER_LISTENERS = ArrayUtilities.create(
-            PlayerListener.class,
-            BasicIntegration.class
+            PlayerListener.class
     );
 
     private static final @NonNull Collection<Class<? extends PluginCommand>> PAPER_COMMANDS = ArrayUtilities.merge(
