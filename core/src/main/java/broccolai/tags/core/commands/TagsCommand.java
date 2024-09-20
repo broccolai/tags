@@ -9,12 +9,12 @@ import broccolai.tags.api.service.UserService;
 import broccolai.tags.core.commands.arguments.modes.TagParserMode;
 import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.core.factory.CloudArgumentFactory;
-import cloud.commandframework.Command;
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
 import java.util.Collection;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.cloud.Command;
+import org.incendo.cloud.CommandManager;
+import org.incendo.cloud.context.CommandContext;
 
 public final class TagsCommand implements PluginCommand {
 
@@ -48,7 +48,7 @@ public final class TagsCommand implements PluginCommand {
         commandManager.command(tagsCommand
                 .literal("select")
                 .permission("tags.command.user.select")
-                .argument(this.argumentFactory.tag("tag", TagParserMode.SELF))
+                .required("tag", this.argumentFactory.tag(TagParserMode.SELF))
                 .handler(this::handleSelect)
         );
 
@@ -61,13 +61,13 @@ public final class TagsCommand implements PluginCommand {
         commandManager.command(tagsCommand
                 .literal("info")
                 .permission("tags.command.user.info")
-                .argument(this.argumentFactory.tag("tag", TagParserMode.NON_SECRET))
+                .required("tag", this.argumentFactory.tag(TagParserMode.NON_SECRET))
                 .handler(this::handlePreview)
         );
     }
 
     private void handleSelect(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
+        CommandUser sender = context.sender();
         TagsUser user = this.userService.get(sender.uuid());
         ConstructedTag tag = context.get("tag");
 
@@ -79,7 +79,7 @@ public final class TagsCommand implements PluginCommand {
     }
 
     private void handleList(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
+        CommandUser sender = context.sender();
         TagsUser user = this.userService.get(sender.uuid());
         Collection<ConstructedTag> tags = this.tagsService.allTags(user);
 
@@ -87,7 +87,7 @@ public final class TagsCommand implements PluginCommand {
     }
 
     private void handlePreview(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
+        CommandUser sender = context.sender();
         ConstructedTag tag = context.get("tag");
 
         sender.sendMessage(this.messageService.commandInfo(tag));

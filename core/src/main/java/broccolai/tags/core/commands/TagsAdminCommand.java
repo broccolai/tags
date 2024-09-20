@@ -7,15 +7,16 @@ import broccolai.tags.api.service.EventService;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.api.service.PermissionService;
 import broccolai.tags.api.service.TagsService;
+import broccolai.tags.core.commands.arguments.UserParser;
 import broccolai.tags.core.commands.arguments.modes.TagParserMode;
 import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.core.factory.CloudArgumentFactory;
-import cloud.commandframework.Command;
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.context.CommandContext;
 import com.google.inject.Inject;
 import java.util.Collection;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.cloud.Command;
+import org.incendo.cloud.CommandManager;
+import org.incendo.cloud.context.CommandContext;
 
 public final class TagsAdminCommand implements PluginCommand {
 
@@ -24,6 +25,7 @@ public final class TagsAdminCommand implements PluginCommand {
     private final @NonNull MessageService messageService;
     private final @NonNull EventService eventService;
     private final @NonNull TagsService tagsService;
+    private final @NonNull UserParser userParser;
 
     @Inject
     public TagsAdminCommand(
@@ -31,13 +33,15 @@ public final class TagsAdminCommand implements PluginCommand {
             final @NonNull PermissionService permissionService,
             final @NonNull MessageService messageService,
             final @NonNull EventService eventService,
-            final @NonNull TagsService tagsService
+            final @NonNull TagsService tagsService,
+            final @NonNull UserParser userParser
     ) {
         this.argumentFactory = argumentFactory;
         this.permissionService = permissionService;
         this.messageService = messageService;
         this.eventService = eventService;
         this.tagsService = tagsService;
+        this.userParser = userParser;
     }
 
     @Override
@@ -50,37 +54,37 @@ public final class TagsAdminCommand implements PluginCommand {
         commandManager.command(tagsCommand
                 .literal("give")
                 .permission("tags.command.admin.give")
-                .argument(this.argumentFactory.user("target", true))
-                .argument(this.argumentFactory.tag("tag", TagParserMode.ANY))
+                .required("target", this.userParser)
+                .required("tag", this.argumentFactory.tag(TagParserMode.ANY))
                 .handler(this::handleGive)
         );
 
         commandManager.command(tagsCommand
                 .literal("remove")
                 .permission("tags.command.admin.remove")
-                .argument(this.argumentFactory.user("target", true))
-                .argument(this.argumentFactory.tag("tag", TagParserMode.ANY))
+                .required("target", this.userParser)
+                .required("tag", this.argumentFactory.tag(TagParserMode.ANY))
                 .handler(this::handleRemove)
         );
 
         commandManager.command(tagsCommand
                 .literal("list")
                 .permission("tags.command.admin.list")
-                .argument(this.argumentFactory.user("target", false))
+                .optional("target", this.userParser)
                 .handler(this::handleList)
         );
 
         commandManager.command(tagsCommand
                 .literal("set")
                 .permission("tags.command.admin.set")
-                .argument(this.argumentFactory.user("target", true))
-                .argument(this.argumentFactory.tag("tag", TagParserMode.TARGET))
+                .required("target", this.userParser)
+                .required("tag", this.argumentFactory.tag(TagParserMode.TARGET))
                 .handler(this::handleSet)
         );
     }
 
     private void handleGive(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
+        CommandUser sender = context.sender();
         TagsUser target = context.get("target");
         ConstructedTag tag = context.get("tag");
 
@@ -89,7 +93,7 @@ public final class TagsAdminCommand implements PluginCommand {
     }
 
     private void handleRemove(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
+        CommandUser sender = context.sender();
         TagsUser target = context.get("target");
         ConstructedTag tag = context.get("tag");
 
@@ -98,8 +102,8 @@ public final class TagsAdminCommand implements PluginCommand {
     }
 
     private void handleList(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
-        Collection<ConstructedTag> tags = context.<TagsUser>getOptional("target")
+        CommandUser sender = context.sender();
+        Collection<ConstructedTag> tags = context.<TagsUser>optional("target")
                 .map(this.tagsService::allTags)
                 .orElse(this.tagsService.allTags());
 
@@ -107,7 +111,7 @@ public final class TagsAdminCommand implements PluginCommand {
     }
 
     private void handleSet(final @NonNull CommandContext<CommandUser> context) {
-        CommandUser sender = context.getSender();
+        CommandUser sender = context.sender();
         TagsUser target = context.get("target");
         ConstructedTag tag = context.get("tag");
 

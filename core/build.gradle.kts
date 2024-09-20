@@ -15,7 +15,9 @@ dependencies {
 
     api(libs.corn.misc)
 
+    api(platform(libs.cloud.bom))
     api(libs.cloud.core)
+    api(libs.cloud.services)
     api(libs.event.asm)
     api(libs.coffee)
 }

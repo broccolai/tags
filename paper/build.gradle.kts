@@ -22,6 +22,7 @@ dependencies {
     compileOnly(libs.papi)
     compileOnly(libs.vault)
 
+    runtimeDownloadApi(platform(libs.cloud.minecraft.bom))
     runtimeDownloadApi(libs.cloud.paper)
     runtimeDownloadApi(libs.cloud.extras)
     runtimeDownloadApi(libs.corn.minecraft.paper)
