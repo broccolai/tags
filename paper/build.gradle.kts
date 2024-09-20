@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("xyz.jpenilla.run-paper") version "2.2.0"
-    id("com.github.johnrengelman.shadow")
+    id("xyz.jpenilla.run-paper")
+    id("com.gradleup.shadow")
     id("xyz.jpenilla.gremlin-gradle")
 }
 
