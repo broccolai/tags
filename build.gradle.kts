@@ -6,7 +6,7 @@ plugins {
     id("net.kyori.indra")
     id("net.kyori.indra.publishing")
     id("net.kyori.indra.checkstyle")
-    id("com.github.johnrengelman.shadow")
+    id("com.gradleup.shadow")
     id("com.github.ben-manes.versions")
     id("net.ltgt.errorprone")
 }

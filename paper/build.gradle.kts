@@ -1,8 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("xyz.jpenilla.run-paper") version "2.2.0"
-    id("com.github.johnrengelman.shadow")
+    id("xyz.jpenilla.run-paper")
+    id("com.gradleup.shadow")
     id("xyz.jpenilla.gremlin-gradle")
 }
 
@@ -22,6 +22,7 @@ dependencies {
     compileOnly(libs.papi)
     compileOnly(libs.vault)
 
+    runtimeDownloadApi(platform(libs.cloud.minecraft.bom))
     runtimeDownloadApi(libs.cloud.paper)
     runtimeDownloadApi(libs.cloud.extras)
     runtimeDownloadApi(libs.corn.minecraft.paper)

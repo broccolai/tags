@@ -10,13 +10,13 @@ import broccolai.tags.core.data.StorageMethod;
 import broccolai.tags.core.service.user.partials.UserCacheService;
 import broccolai.tags.core.subscribers.TagChangeSubscriber;
 import broccolai.tags.core.util.ArrayUtilities;
-import cloud.commandframework.CommandManager;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.Collection;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.cloud.CommandManager;
 
 @Singleton
 public final class TagsPlugin {

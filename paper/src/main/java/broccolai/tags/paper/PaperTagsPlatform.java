@@ -3,8 +3,8 @@ package broccolai.tags.paper;
 import broccolai.tags.api.service.MessageService;
 import broccolai.tags.core.TagsPlugin;
 import broccolai.tags.core.commands.PluginCommand;
-import broccolai.tags.core.commands.arguments.TagArgument;
-import broccolai.tags.core.commands.arguments.UserArgument;
+import broccolai.tags.core.commands.arguments.TagParser;
+import broccolai.tags.core.commands.arguments.UserParser;
 import broccolai.tags.core.commands.context.CommandUser;
 import broccolai.tags.core.platform.TagsPlatform;
 import broccolai.tags.core.util.ArrayUtilities;
@@ -17,11 +17,6 @@ import broccolai.tags.paper.inject.VaultModule;
 import broccolai.tags.paper.integrations.MiniIntegration;
 import broccolai.tags.paper.integrations.PapiIntegration;
 import broccolai.tags.paper.listeners.PlayerListener;
-import cloud.commandframework.CommandManager;
-import cloud.commandframework.bukkit.CloudBukkitCapabilities;
-import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
-import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
-import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.util.Collection;
@@ -34,6 +29,12 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.incendo.cloud.CommandManager;
+import org.incendo.cloud.SenderMapper;
+import org.incendo.cloud.bukkit.CloudBukkitCapabilities;
+import org.incendo.cloud.execution.ExecutionCoordinator;
+import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler;
+import org.incendo.cloud.paper.LegacyPaperCommandManager;
 import org.incendo.interfaces.paper.PaperInterfaceListeners;
 
 public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform {
@@ -89,31 +90,34 @@ public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform 
             final @NonNull MessageService messageService
     ) {
         try {
-            PaperCommandManager<CommandUser> commandManager = new PaperCommandManager<>(
+            LegacyPaperCommandManager<CommandUser> commandManager = new LegacyPaperCommandManager<>(
                     this,
-                    AsynchronousCommandExecutionCoordinator.<CommandUser>builder().build(),
-                    PaperTagsPlatform::from,
-                    user -> user.<PaperCommandUser>cast().sender()
+                    ExecutionCoordinator.<CommandUser>builder()
+                        .suggestionsExecutor(task ->
+                            this.getServer().getScheduler().runTaskAsynchronously(this, b -> task.run()))
+                        .build(),
+                    SenderMapper.create(
+                        PaperTagsPlatform::from,
+                        user -> user.<PaperCommandUser>cast().sender()
+                    )
             );
-
-            if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
-                commandManager.registerAsynchronousCompletions();
-            }
 
             if (commandManager.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
                 commandManager.registerBrigadier();
+            } else if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+                commandManager.registerAsynchronousCompletions();
             }
 
-            new MinecraftExceptionHandler<CommandUser>()
-                    .withDefaultHandlers()
-                    .apply(commandManager, e -> e);
+            MinecraftExceptionHandler.<CommandUser>createNative()
+                    .defaultHandlers()
+                    .registerTo(commandManager);
 
-            commandManager.registerExceptionHandler(UserArgument.UserArgumentException.class, (user, ex) -> {
-                user.sendMessage(messageService.commandErrorUserNotFound(ex.input()));
+            commandManager.exceptionController().registerHandler(UserParser.UserParseException.class, ctx -> {
+                ctx.context().sender().sendMessage(messageService.commandErrorUserNotFound(ctx.exception().input()));
             });
 
-            commandManager.registerExceptionHandler(TagArgument.TagArgumentException.class, (user, ex) -> {
-                user.sendMessage(messageService.commandErrorTagNotFound(ex.input()));
+            commandManager.exceptionController().registerHandler(TagParser.TagParseException.class, ctx -> {
+                ctx.context().sender().sendMessage(messageService.commandErrorTagNotFound(ctx.exception().input()));
             });
 
             return commandManager;
