@@ -22,7 +22,6 @@ import com.google.inject.Injector;
 import java.util.Collection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -140,13 +139,10 @@ public final class PaperTagsPlatform extends JavaPlugin implements TagsPlatform 
     }
 
     private static CommandUser from(final @NonNull CommandSender sender) {
-        if (sender instanceof ConsoleCommandSender console) {
-            return new PaperConsoleCommandUser(console);
-        } else if (sender instanceof Player player) {
+        if (sender instanceof Player player) {
             return new PaperPlayerCommandUser(player);
         }
-
-        return null;
+        return new PaperConsoleCommandUser(sender);
     }
 
 }
